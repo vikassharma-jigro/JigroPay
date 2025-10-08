@@ -1,0 +1,53 @@
+class AppImages {
+  static String splashIcon = "assets/images/splash.png";
+  static String businessIcon = "assets/images/business.png";
+  static String userIcon = "assets/images/user.png";
+  static String emailIcon = "assets/images/email.png";
+  static String phoneIcon = "assets/images/phone.png";
+  static String emailVerifiedIcon = "assets/images/emailVerifid.png";
+  static String emailCampaionIcon = "assets/images/emailCampaion.png";
+  static String mobileVerifiedIcon = "assets/images/mobileVerified.png";
+  static String personalPhotoIcon = "assets/images/personal_photo.png";
+  static String documentIcon = "assets/images/document.png";
+  static String bannerIcon = "assets/images/banner1.png";
+  static String user1Icon = "assets/images/user1.png";
+  static String bankIcon = "assets/images/bank.png";
+  static String selfAcIcon = "assets/images/selfAc.png";
+  static String checkBalIcon = "assets/images/checkBal.png";
+  static String mobilerechargeIcon = "assets/images/mobilerecharge.png";
+  static String dishiconIcon = "assets/images/dishicon.png";
+  static String electricityIcon = "assets/images/electricity.png";
+  static String rentpaymentIcon = "assets/images/rentpayment.png";
+  static String loanRepaymentIcon = "assets/images/loanRepayment.png";
+  static String cylinderIcon = "assets/images/cylinder.png";
+  static String walletIcon = "assets/images/wallet.png";
+  static String RewardiconIcon = "assets/images/Rewardicon.png";
+  static String refericonIcon = "assets/images/refericon.png";
+  static String bikeIcon = "assets/images/bike.png";
+  static String carIcon = "assets/images/car.png";
+  static String accidentIcon = "assets/images/accident.png";
+  static String termLifeIcon = "assets/images/termlife.png";
+  static String traveLinsuranceIcon = "assets/images/travelinsurance.png";
+  static String insuranceRenewalIcon = "assets/images/insuranceRenewal.png";
+  static String helthIcon = "assets/images/helth.png";
+  static String upiIcon = "assets/images/upi.png";
+  static String flightsIcon = "assets/images/flights.png";
+  static String busIcon = "assets/images/bus.png";
+  static String trainsIcon = "assets/images/trains.png";
+  static String hotelIcon = "assets/images/hotel.png";
+  static String divIcon = "assets/images/div.png";
+  static String addIcon = "assets/images/add.png";
+  static String goldIcon = "assets/images/gold.png";
+  static String bankImage = "assets/images/div2.svg";
+  static String upiAcImage = "assets/images/upiAc.svg";
+  static String selfAImage = "assets/images/selfa.svg";
+  static String rajImage = "assets/images/raj.svg";
+  static String upiLiteImage = "assets/images/upiLite.svg";
+  static String walletImage = "assets/images/wallet.svg";
+  static String successImage = "assets/images/success.svg";
+  static String phoneBannerImage = "assets/images/phoneBanner.svg";
+  static String sunImage = "assets/images/sun.svg";
+  static String jvvnlImage = "assets/images/jvvnl.png";
+
+
+}
