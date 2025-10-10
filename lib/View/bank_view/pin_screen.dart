@@ -121,12 +121,14 @@ import '../../app_utils/app_colors.dart';
 import '../../app_utils/font_family.dart';
 import '../../app_utils/text_widget.dart';
 import '../../main.dart';
+import '../electricity_bill/bill_successfully_screen.dart';
 import 'mobile_recharge_screen/mobile_recharge_success_screen.dart';
 
 class UpiPinScreen extends StatefulWidget {
   final String? bankName;
   final  bool? isMobileRecharge;
-  const UpiPinScreen({super.key,this.bankName,this.isMobileRecharge});
+  final  bool? isElectricityBill;
+  const UpiPinScreen({super.key,this.bankName,this.isMobileRecharge,this.isElectricityBill});
 
   @override
   State<UpiPinScreen> createState() => _UpiPinScreenState();
@@ -220,6 +222,7 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
                       if (pin.length == 4) {
                        widget.isMobileRecharge==true?
                        Navigator.push(context, MaterialPageRoute(builder: (context) => MobileRechargeSuccessScreen(),)):
+                           widget.isElectricityBill==true?Navigator.push(context, MaterialPageRoute(builder: (context) => BillSuccessfullyScreen(),)):
                        Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentSuccessScreen(),));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('PIN Submitted: $pin')),

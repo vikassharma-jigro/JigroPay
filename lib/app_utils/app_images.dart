@@ -48,6 +48,7 @@ class AppImages {
   static String phoneBannerImage = "assets/images/phoneBanner.svg";
   static String sunImage = "assets/images/sun.svg";
   static String jvvnlImage = "assets/images/jvvnl.png";
+  static String billImage = "assets/images/bill_success.svg";
 
 
 }

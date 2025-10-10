@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:jigrotech/View/bank_view/pin_screen.dart';
 
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
@@ -73,6 +74,78 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 15,),
+
+              Center(
+                child: Card(
+                  color: white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Bill No",
+                                textColor:blackColor,fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                                fontWeight: FontWeight.w600),
+
+                            text("Bill Month Year",
+                                textColor:blackColor,fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                                fontWeight: FontWeight.w600),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("098525151562",
+                                textColor:blackColor,fontSize: 18,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600),
+
+                            text("092022",
+                                textColor:blackColor,fontSize: 18,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600),
+                          ],
+                        ),
+
+                        SizedBox(height: 40,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Bill Account",
+                                textColor:blackColor,fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                                fontWeight: FontWeight.w600),
+
+                            text("DUE Date",
+                                textColor:blackColor,fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                                fontWeight: FontWeight.w600),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("₹459",
+                                textColor:pinkColor,fontSize: 18,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600),
+
+                            text("19 Nov 29",
+                                textColor:blackColor,fontSize: 18,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
 
               SizedBox(height: 40,),
               text("Bill No",
@@ -111,6 +184,7 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                   filled: true,
                   fillColor: white,
                   hintText: "Bill No.",
+
                   hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
                   contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
                 ),
@@ -142,7 +216,7 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                     //borderRadius: BorderRadius.circular(40.0),
 
                     onPressed: (){
-
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UpiPinScreen(isElectricityBill: true,),));
                     }
 
 
