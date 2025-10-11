@@ -1,31 +1,31 @@
 
 import 'package:flutter/material.dart';
+import 'package:jigrotech/View/fast_tag_view/fast_tag_vehicle_screen.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
-import 'bill_number_screen.dart';
 
 
 
-class ElectricityBillServiceScreen extends StatefulWidget {
+class FastTagScreen extends StatefulWidget {
 
-  const ElectricityBillServiceScreen({super.key,});
+  const FastTagScreen({super.key,});
 
   @override
-  State<ElectricityBillServiceScreen> createState() => _ElectricityBillServiceScreenState();
+  State<FastTagScreen> createState() => _FastTagScreenState();
 }
 
 
-class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScreen> {
+class _FastTagScreenState extends State<FastTagScreen> {
   List<String> options = [
-    "Jaipur Vidyut Vitran Nigam Limited (JVVNL)",
-    "Ajmer Vidyut Vitran(AVVNL)",
-    "Jodhpur Vidyut Vitran(JDVVNL)",
-    "Kota Electricity (KEDL)",
-    "TP Ajmer Electricity (TPADL)",
+    "IDFC First Bank",
+    "ICICI Bank",
+    "State Bank of India (SBI)",
+    "Airtel Payments Bank",
+    "Axis Bank",
   ];
 
   TextEditingController searchController = TextEditingController();
@@ -50,7 +50,7 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
               child:  Icon(Icons.arrow_back_ios,color: white,),
             ),
             Expanded(
-              child: text("Pay Bill",
+              child: text("Select your FASTAG Pro",
                   textAlign: TextAlign.center,
                   isCentered: true,
                   textColor:white,fontSize: 18,
@@ -80,7 +80,7 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                 onChanged:(i){
 
                 },
-               // filterSearch,
+                // filterSearch,
                 // });
 
                 onSubmitted: (v) {
@@ -109,7 +109,7 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                   // search Icon ------------------
                   prefixIcon: GestureDetector(
                     onTap: () {
-                     // filterSearch(searchController.text);
+                      // filterSearch(searchController.text);
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
@@ -117,25 +117,28 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                     ),
                   ),
                   fillColor: white,
-                  hintText: "Search by name",
+                  hintText: "Search by provider",
                   hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
                   contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
                 ),
               ),
               SizedBox(height: 10,),
-              text("Enter Biller Name or Biller Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 12,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 20,),
-              text("All Billers",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              Center(
+                child: SizedBox(
+                  width: 400,
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: text("How to find your FASTag Bank ?",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor:greyColor,fontSize: 12,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
+              ),
 
               SizedBox(height: 15),
               ListView.builder(
@@ -146,16 +149,16 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0.0),
                     child:  GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => BillNumberScreen(billServiceName: options[index],),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagVehicleScreen(fastTagBankName: options[index],),));
                           },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                           // border: Border.all(color:greyColor)
+                          borderRadius: BorderRadius.circular(10),
+                          // border: Border.all(color:greyColor)
                         ),
 
                         child: Column(
@@ -166,7 +169,13 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                               children: [
                                 Row(
                                   children: [
-                                    Image.asset(AppImages.jvvnlImage),
+                                    Container(
+                                      padding: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          border: Border.all(color: purpleGradientColor)
+                                        ),
+                                        child: Image.asset(AppImages.hdfcImage,height: 30,)),
                                     SizedBox(width: 20,),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +190,6 @@ class _ElectricityBillServiceScreenState extends State<ElectricityBillServiceScr
                                 ),
                               ],
                             ),
-                            Divider(thickness: .5,)
                           ],
                         ),
                       ),

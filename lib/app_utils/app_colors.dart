@@ -20,3 +20,5 @@ const Color lightorangeColor = Color(0xfff3e8ff);
 const Color lightYellowColor = Color(0xfffed7aa);
 const Color lightBlueColor = Color(0xffe5e7eb);
 const Color lightPinkColor = Color(0xfff3e8ff);
+const Color lightPurpleColor = Color(0xffc882fd);
+const Color electricPurple = Color(0xff6e2ae9);
