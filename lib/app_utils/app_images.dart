@@ -1,7 +1,7 @@
 class AppImages {
   static String splashIcon = "assets/images/splash.png";
   static String businessIcon = "assets/images/business.png";
-  static String userIcon = "assets/images/user.png";
+  static String userIcon = "assets/images/userIcon.svg";
   static String emailIcon = "assets/images/email.png";
   static String phoneIcon = "assets/images/phone.png";
   static String emailVerifiedIcon = "assets/images/emailVerifid.png";
@@ -50,6 +50,23 @@ class AppImages {
   static String jvvnlImage = "assets/images/jvvnl.png";
   static String hdfcImage = "assets/images/hdfc.png";
   static String billImage = "assets/images/bill_success.svg";
+  static String qrDownloadImage = "assets/images/download.svg";
+  static String shareImage = "assets/images/share.svg";
+  static String creditCardImage = "assets/images/creditCard.svg";
+  static String resharesImage = "assets/images/reshares.svg";
+  static String ordersImage = "assets/images/orders.svg";
+  static String helpSupportsImage = "assets/images/helpSupport.svg";
+  static String referWinImage = "assets/images/referWin.svg";
+  static String IndiaImage = "assets/images/india.png";
+  static String addIconImage = "assets/images/addIcon.svg";
+  static String thunderIconImage = "assets/images/thunderIcon.svg";
+  static String bankBuildIconImage = "assets/images/bankBuildIcon.svg";
+  static String messageIconImage = "assets/images/messangerIcon.svg";
+  static String reshareIconImage = "assets/images/reshareIcon.svg";
+  static String graphIconImage = "assets/images/graphIcon.svg";
+  static String internetIconImage = "assets/images/internetIcon.svg";
+  static String robotIconImage = "assets/images/robotIcon.svg";
+  static String creditCardIcon = "assets/images/creditCardIconColor.svg";
   static String electricityImage = "assets/images/electricity.svg";
   static String cardImage = "assets/images/card.svg";
   static String fastImage = "assets/images/fast.svg";
@@ -77,6 +94,4 @@ class AppImages {
   static String pathologyImage = "assets/images/pathology.svg";
   static String tvDishImage = "assets/images/tvDish.svg";
   static String mobileReImage = "assets/images/mobileRe.png";
-
-
 }
