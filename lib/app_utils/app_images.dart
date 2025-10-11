@@ -48,7 +48,35 @@ class AppImages {
   static String phoneBannerImage = "assets/images/phoneBanner.svg";
   static String sunImage = "assets/images/sun.svg";
   static String jvvnlImage = "assets/images/jvvnl.png";
+  static String hdfcImage = "assets/images/hdfc.png";
   static String billImage = "assets/images/bill_success.svg";
+  static String electricityImage = "assets/images/electricity.svg";
+  static String cardImage = "assets/images/card.svg";
+  static String fastImage = "assets/images/fast.svg";
+  static String dthTvImage = "assets/images/dthTv.svg";
+  static String gasImage = "assets/images/gas.svg";
+  static String phoneImage = "assets/images/phone.svg";
+  static String cableImage = "assets/images/cable.svg";
+  static String nhmcImage = "assets/images/nhmcsvg.svg";
+  static String pipedGasImage = "assets/images/pipedGas.svg";
+  static String waterImage = "assets/images/water.svg";
+  static String wifiImage = "assets/images/wifi.svg";
+  static String mutualFundImage = "assets/images/mutualFund.svg";
+  static String insuranceImage = "assets/images/insurance.svg";
+  static String loanImage = "assets/images/loan.svg";
+  static String municipalImage = "assets/images/municipal.svg";
+  static String serviceImage = "assets/images/service.svg";
+  static String rdImage = "assets/images/rd.svg";
+  static String npsImage = "assets/images/nps.svg";
+  static String subscriptionImage = "assets/images/subscription.svg";
+  static String housingImage = "assets/images/housing.svg";
+  static String clubImage = "assets/images/club.svg";
+  static String hospitalImage = "assets/images/hospital.svg";
+  static String educationImage = "assets/images/education.svg";
+  static String donationImage = "assets/images/donation.svg";
+  static String pathologyImage = "assets/images/pathology.svg";
+  static String tvDishImage = "assets/images/tvDish.svg";
+  static String mobileReImage = "assets/images/mobileRe.png";
 
 
 }

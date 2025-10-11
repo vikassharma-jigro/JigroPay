@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jigrotech/View/auth_view/qr_code_screen.dart';
 import 'package:jigrotech/View/bank_view/bank_list_screen.dart';
 import 'package:jigrotech/View/bank_view/self_account_screen.dart';
+import 'package:jigrotech/View/dashdoard_view/see_all_services.dart';
 import 'package:jigrotech/View/dth_view/dth_service_screen.dart';
+import 'package:jigrotech/View/fast_tag_view/fast_tag_screen.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/app_images.dart';
 import '../../app_utils/font_family.dart';
@@ -10,6 +12,7 @@ import '../../app_utils/text_widget.dart';
 import '../../main.dart';
 import '../bank_view/check_balance_screen.dart';
 import '../bank_view/mobile_recharge_screen/recharge_plan_screen.dart';
+import '../bank_view/money_transfer_screen.dart';
 import '../electricity_bill/electricity_bill_service_screen.dart';
 
 
@@ -127,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           GestureDetector(
                             onTap: (){
                              // Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => RechargePlanScreen(),));
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => RechargePlanScreen(),));
                             },
                             child: Column(
                               children: [
@@ -417,51 +420,61 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            children: [
-                             Image.asset(AppImages.mobilerechargeIcon,height: 30,),
-                              SizedBox(height: 5,),
-                              Center(
-                                child: text(
-                                  "Mobile\nRecharge",
-                                  isCentered: true,
-                                  textColor: blackColor,
-                                  fontSize: 11,
-                                  fontFamily: FontFamily.plusJakartaSansRegular,
-                                  fontWeight: FontWeight.w400,
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                            },
+                            child: Column(
+                              children: [
+                               Image.asset(AppImages.mobilerechargeIcon,height: 30,),
+                                SizedBox(height: 5,),
+                                Center(
+                                  child: text(
+                                    "Mobile\nRecharge",
+                                    isCentered: true,
+                                    textColor: blackColor,
+                                    fontSize: 11,
+                                    fontFamily: FontFamily.plusJakartaSansRegular,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: orangeColor
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: orangeColor
+                                  ),
+                                  child: text(
+                                    "Popular",
+                                    isCentered: true,
+                                    textColor: blackColor,
+                                    fontSize: 11,
+                                    fontFamily: FontFamily.plusJakartaSansRegular,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                                child: text(
-                                  "Popular",
-                                  isCentered: true,
-                                  textColor: blackColor,
-                                  fontSize: 11,
-                                  fontFamily: FontFamily.plusJakartaSansRegular,
-                                  fontWeight: FontWeight.w400,
+                                SizedBox(height: 5,),
+                                Center(
+                                  child: text(
+                                    "Buy FASTag",
+                                    isCentered: true,
+                                    textColor: blackColor,
+                                    fontSize: 11,
+                                    fontFamily: FontFamily.plusJakartaSansRegular,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 5,),
-                              Center(
-                                child: text(
-                                  "Buy FASTag",
-                                  isCentered: true,
-                                  textColor: blackColor,
-                                  fontSize: 11,
-                                  fontFamily: FontFamily.plusJakartaSansRegular,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           GestureDetector(
                             onTap: (){
@@ -573,14 +586,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                  child: Icon(Icons.arrow_forward_ios,color: blackColor,),
                                ),
                                SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "See All",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                               GestureDetector(
+                                 onTap: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SeeAllServicesScreen(),));
+                                 },
+                                 child: Center(
+                                   child: text(
+                                     "See All",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
                                ),
                              ],
