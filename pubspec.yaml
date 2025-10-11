@@ -42,6 +42,9 @@ dependencies:
   dotted_border: ^2.0.0
   qr_flutter: ^4.1.0
   #qr_code_scanner:
+  pdf:
+  path_provider:
+  open_file:
 
 dev_dependencies:
   flutter_test:
