@@ -113,7 +113,6 @@
 // }
 //
 
-
 import 'package:flutter/material.dart';
 import 'package:jigrotech/View/bank_view/payment_success_screen.dart';
 
@@ -126,9 +125,14 @@ import 'mobile_recharge_screen/mobile_recharge_success_screen.dart';
 
 class UpiPinScreen extends StatefulWidget {
   final String? bankName;
-  final  bool? isMobileRecharge;
-  final  bool? isElectricityBill;
-  const UpiPinScreen({super.key,this.bankName,this.isMobileRecharge,this.isElectricityBill});
+  final bool? isMobileRecharge;
+  final bool? isElectricityBill;
+  const UpiPinScreen({
+    super.key,
+    this.bankName,
+    this.isMobileRecharge,
+    this.isElectricityBill,
+  });
 
   @override
   State<UpiPinScreen> createState() => _UpiPinScreenState();
@@ -146,9 +150,9 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
       if (pin.length == 6) {
         Future.delayed(const Duration(milliseconds: 200), () {
           // TODO: Handle PIN submit (API call or verification)
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Entered PIN: $pin')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Entered PIN: $pin')));
         });
       }
     }
@@ -189,8 +193,9 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
         child: text(
           number,
           fontSize: 18,
-          fontFamily: FontFamily.plusJakartaSansBold,fontWeight: FontWeight.w600,
-          textColor: blackColor
+          fontFamily: FontFamily.plusJakartaSansBold,
+          fontWeight: FontWeight.w600,
+          textColor: blackColor,
         ),
       ),
     );
@@ -221,17 +226,38 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
                     onTap: () {
                       if (pin.length == 4) {
                         FocusScope.of(context).unfocus();
-                       widget.isMobileRecharge==true?
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => MobileRechargeSuccessScreen(),)):
-                           widget.isElectricityBill==true?Navigator.push(context, MaterialPageRoute(builder: (context) => BillSuccessfullyScreen(),)):
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentSuccessScreen(),));
+                        widget.isMobileRecharge == true
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MobileRechargeSuccessScreen(),
+                                ),
+                              )
+                            : widget.isElectricityBill == true
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      BillSuccessfullyScreen(),
+                                ),
+                              )
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentSuccessScreen(),
+                                ),
+                              );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('PIN Submitted: $pin')),
                         );
                       }
                     },
-                    child: const Icon(Icons.check_circle,
-                        color: purpleGradientColor, size: 34),
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: purpleGradientColor,
+                      size: 34,
+                    ),
                   );
                 } else {
                   return buildNumberButton(label);
@@ -246,15 +272,15 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             // SizedBox(width: 10,),
           ],
@@ -265,17 +291,22 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
           children: [
-          text(widget.bankName??"",
-                        textAlign: TextAlign.start,
-                        isCentered: true,
-                        textColor:blackColor,fontSize: 15,
-                        fontFamily: FontFamily.plusJakartaSansMedium,
-                        fontWeight: FontWeight.w500),
+            text(
+              widget.bankName ?? "",
+              textAlign: TextAlign.start,
+              isCentered: true,
+              textColor: blackColor,
+              fontSize: 15,
+              fontFamily: FontFamily.plusJakartaSansMedium,
+              fontWeight: FontWeight.w500,
+            ),
             const SizedBox(height: 30),
-             text(
+            text(
               "ENTER 4-DIGIT UPI PIN",
-              fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold,
-               fontSize: 18,textColor: blackColor
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontSize: 18,
+              textColor: blackColor,
             ),
             buildPinDots(),
             const SizedBox(height: 40),
@@ -286,4 +317,3 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
     );
   }
 }
-

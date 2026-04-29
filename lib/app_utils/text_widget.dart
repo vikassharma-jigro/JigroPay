@@ -3,33 +3,39 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'font_family.dart';
 
-
-Widget text(String text,
-    {double fontSize = 10,
-      textColor = white,
-      String fontFamily = FontFamily.plusJakartaSansRegular,
-      FontWeight fontWeight = FontWeight.normal,
-      FontStyle fontStyle = FontStyle.normal,
-      textAlign = TextAlign.center,
-      bool isCentered = false,
-      int maxLine = 200,
-      bool lineThrough = false,
-      double latterSpacing = 0.0,
-      bool textAllCaps = false,
-      bool isLongText = false}) {
-  return Text(textAllCaps ? text.toUpperCase() : text,
-      textAlign: isCentered ? TextAlign.center : TextAlign.start,
-      maxLines: isLongText ? null : maxLine,overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-          color: textColor,
-          fontFamily: fontFamily,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: fontStyle,
-          decoration:
-          lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
-          // height: 1.5,
-          letterSpacing: latterSpacing));
+Widget text(
+  String text, {
+  double fontSize = 10,
+  textColor = white,
+  String fontFamily = FontFamily.plusJakartaSansRegular,
+  FontWeight fontWeight = FontWeight.normal,
+  FontStyle fontStyle = FontStyle.normal,
+  textAlign = TextAlign.center,
+  bool isCentered = false,
+  int maxLine = 200,
+  bool lineThrough = false,
+  double latterSpacing = 0.0,
+  bool textAllCaps = false,
+  bool isLongText = false,
+}) {
+  return Text(
+    textAllCaps ? text.toUpperCase() : text,
+    textAlign: isCentered ? TextAlign.center : TextAlign.start,
+    maxLines: isLongText ? null : maxLine,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      color: textColor,
+      fontFamily: fontFamily,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      decoration: lineThrough
+          ? TextDecoration.lineThrough
+          : TextDecoration.none,
+      // height: 1.5,
+      letterSpacing: latterSpacing,
+    ),
+  );
 }
 
 class CommonButton extends StatelessWidget {
@@ -67,11 +73,7 @@ class CommonButton extends StatelessWidget {
         gradient: gradient,
         borderRadius: borderRadius,
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            offset: Offset(0, 4),
-            blurRadius: 5,
-          ),
+          BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5),
         ],
       ),
       child: Material(

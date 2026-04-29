@@ -6,16 +6,13 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
 
-
-
 class HousingDetailsScreen extends StatefulWidget {
   final String? housingSocietyName;
-  const HousingDetailsScreen({super.key,this.housingSocietyName});
+  const HousingDetailsScreen({super.key, this.housingSocietyName});
 
   @override
   State<HousingDetailsScreen> createState() => _HousingDetailsScreenState();
 }
-
 
 class _HousingDetailsScreenState extends State<HousingDetailsScreen> {
   TextEditingController houseNoController = TextEditingController();
@@ -27,28 +24,29 @@ class _HousingDetailsScreenState extends State<HousingDetailsScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text(widget.housingSocietyName??"",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              widget.housingSocietyName ?? "",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -62,100 +60,100 @@ class _HousingDetailsScreenState extends State<HousingDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(height: 10),
-              text("Enter your House No to retrieve your account details.",
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Enter your House No to retrieve your account details.",
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
               SizedBox(height: 15),
-              text("House No.",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              text(
+                "House No.",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:houseNoController,
+                controller: houseNoController,
 
                 keyboardType: TextInputType.phone,
                 hintText: "Enter your House Number ",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20),],
+                inputFormatters: [LengthLimitingTextInputFormatter(20)],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               GestureDetector(
-                onTap: (){
-                 // showDialogBox(context);
+                onTap: () {
+                  // showDialogBox(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: lightBlueColor
+                    borderRadius: BorderRadius.circular(10),
+                    color: lightBlueColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.copy,color: blue1Color,),
-                          SizedBox(width: 10,),
-                          text("View Sample Bill",
-                              textColor: blue1Color,
-                              fontWeight: FontWeight.w500,fontSize: 16,
-                              fontFamily: FontFamily.plusJakartaSansMedium
-                          )
+                          Icon(Icons.copy, color: blue1Color),
+                          SizedBox(width: 10),
+                          text(
+                            "View Sample Bill",
+                            textColor: blue1Color,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                          ),
                         ],
                       ),
-                      Icon(Icons.arrow_forward_ios,color: blue1Color,),
-
+                      Icon(Icons.arrow_forward_ios, color: blue1Color),
                     ],
                   ),
                 ),
               ),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Continue",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-
-                    }
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {},
                 ),
               ),
-              SizedBox(height: 20,),
-              text("We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
-                  textColor: greyColor,
-                  fontWeight: FontWeight.w400,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular
-              )
+              SizedBox(height: 20),
+              text(
+                "We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
+                textColor: greyColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
 }
-
-
-
-

@@ -104,18 +104,27 @@ class CustomRoundTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(6.0),
           ),
           disabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: purpleGradientColor),
-        borderRadius: BorderRadius.circular(6.0),
-      ),
-          suffixIconConstraints:
-          const BoxConstraints(minHeight: 20, minWidth: 20),
+            borderSide: const BorderSide(color: purpleGradientColor),
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+          suffixIconConstraints: const BoxConstraints(
+            minHeight: 20,
+            minWidth: 20,
+          ),
           counterText: "",
-          prefixIconConstraints: const BoxConstraints(minHeight: 30, minWidth: 30),
+          prefixIconConstraints: const BoxConstraints(
+            minHeight: 30,
+            minWidth: 30,
+          ),
           // labelText: "",
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           hintText: hintText,
-          hintStyle: TextStyle(fontSize: 14,fontFamily: FontFamily.plusJakartaSansRegular,fontWeight: FontWeight.w500),
+          hintStyle: TextStyle(
+            fontSize: 14,
+            fontFamily: FontFamily.plusJakartaSansRegular,
+            fontWeight: FontWeight.w500,
+          ),
           errorMaxLines: 4,
           contentPadding: const EdgeInsets.only(left: 2, top: 3.0, bottom: 15),
           filled: true,
@@ -127,7 +136,7 @@ class CustomRoundTextField extends StatelessWidget {
         onChanged: onChanged,
         keyboardType: keyboardType,
         autocorrect: false,
-      )
+      ),
     );
   }
 }

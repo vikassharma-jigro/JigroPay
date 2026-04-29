@@ -7,20 +7,14 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class DonationScreen extends StatefulWidget {
-
-  const DonationScreen({super.key,});
+  const DonationScreen({super.key});
 
   @override
   State<DonationScreen> createState() => _DonationScreenState();
 }
 
-
 class _DonationScreenState extends State<DonationScreen> {
-
-
   TextEditingController nameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -39,46 +33,50 @@ class _DonationScreenState extends State<DonationScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("AID India",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "AID India",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
           ],
         ),
       ),
-      bottomNavigationBar:  Padding(
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(AppImages.gasImage),
-            SizedBox(width: 10,),
-            text("Bharat Connect",
-                textColor:purpleGradientColor,fontSize: 18,
-                isCentered: true,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            SizedBox(width: 10),
+            text(
+              "Bharat Connect",
+              textColor: purpleGradientColor,
+              fontSize: 18,
+              isCentered: true,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
           ],
         ),
       ),
@@ -88,27 +86,29 @@ class _DonationScreenState extends State<DonationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Enter the details to retrieve your account",
-                  textColor:blackColor,fontSize: 14,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 30,),
-              text("Name",
-                  textColor:blackColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 10,),
+              text(
+                "Enter the details to retrieve your account",
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 30),
+              text(
+                "Name",
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 10),
 
               TextField(
                 controller: nameController,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: greyColor),
@@ -125,33 +125,39 @@ class _DonationScreenState extends State<DonationScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
                   fillColor: white,
                   hintText: "Name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: greyColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              SizedBox(height: 20,),
-              text("Address",
-                  textColor:blackColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 10,),
+              SizedBox(height: 20),
+              text(
+                "Address",
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 10),
 
               TextField(
                 controller: addressController,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: greyColor),
@@ -168,35 +174,41 @@ class _DonationScreenState extends State<DonationScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
                   fillColor: white,
                   hintText: "Address",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: greyColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Phone Number",
-                  textColor:blackColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 10,),
+              SizedBox(height: 20),
+              text(
+                "Phone Number",
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 10),
 
               TextField(
                 controller: phoneNumberController,
                 keyboardType: TextInputType.number,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: greyColor),
@@ -213,28 +225,42 @@ class _DonationScreenState extends State<DonationScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
                   fillColor: white,
                   hintText: "Enter Phone Number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: greyColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
 
               DropdownButtonFormField<String>(
                 value: selectedDonorType,
                 decoration: InputDecoration(
                   hintText: "Select Donor Type",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 items: donorOptions.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: text(value,textColor: blackColor,fontSize: 14,fontFamily: FontFamily.plusJakartaSansRegular),
+                    child: text(
+                      value,
+                      textColor: blackColor,
+                      fontSize: 14,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                    ),
                   );
                 }).toList(),
                 onChanged: (newValue) {
@@ -244,81 +270,87 @@ class _DonationScreenState extends State<DonationScreen> {
                 },
               ),
 
-              SizedBox(height: 40,),
+              SizedBox(height: 40),
               GestureDetector(
-                onTap: (){
-                  showDialogBox(context,nameController.text,phoneNumberController.text,addressController.text,selectedDonorType);
+                onTap: () {
+                  showDialogBox(
+                    context,
+                    nameController.text,
+                    phoneNumberController.text,
+                    addressController.text,
+                    selectedDonorType,
+                  );
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: lightColor,
-                      border: Border.all(color: pinkColor)
+                    borderRadius: BorderRadius.circular(10),
+                    color: lightColor,
+                    border: Border.all(color: pinkColor),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
-                      text("View Sample Bill",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:purpleGradientColor,fontSize: 14,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w600),
-                      Icon(Icons.arrow_forward_ios,color: purpleGradientColor,),
+                      text(
+                        "View Sample Bill",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: purpleGradientColor,
+                        fontSize: 14,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      Icon(Icons.arrow_forward_ios, color: purpleGradientColor),
                     ],
                   ),
                 ),
               ),
 
-
-
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Continue",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {},
                 ),
               ),
-              SizedBox(height: 20,),
-              text("We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-
-
+              SizedBox(height: 20),
+              text(
+                "We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-  void showDialogBox(BuildContext context,String? name,String? phoneNumber, String? address,String?donor) {
+
+  void showDialogBox(
+    BuildContext context,
+    String? name,
+    String? phoneNumber,
+    String? address,
+    String? donor,
+  ) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -327,17 +359,22 @@ class _DonationScreenState extends State<DonationScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("View Sample Bill",textColor: blackColor,fontSize: 18,
-                fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold
+            text(
+              "View Sample Bill",
+              textColor: blackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
             ),
             InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close)),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.close),
+            ),
           ],
         ),
-        content:  Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -356,105 +393,108 @@ class _DonationScreenState extends State<DonationScreen> {
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
-                              color: blackColor
+                              color: blackColor,
                             ),
                             child: text(
-                                "aid",
-                                textColor: white,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontSize: 14
+                              "aid",
+                              textColor: white,
+                              fontFamily: FontFamily.plusJakartaSansBold,
+                              fontSize: 14,
                             ),
                           ),
-                          SizedBox(width: 15,),
+                          SizedBox(width: 15),
                           text(
-                              "AID India",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansBold,
-                              fontSize: 14
+                            "AID India",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansBold,
+                            fontSize: 14,
                           ),
                         ],
                       ),
-                      SizedBox(height: 10,),
-                      Divider(thickness: .5,color: greyColor,),
-                      SizedBox(height: 10,),
+                      SizedBox(height: 10),
+                      Divider(thickness: .5, color: greyColor),
+                      SizedBox(height: 10),
                       Row(
-                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           text(
-                              "Name : ",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
+                            "Name : ",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
                           ),
-                          SizedBox(width: 15,),
+                          SizedBox(width: 15),
                           text(
-                              name??"",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
+                            name ?? "",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
                           ),
                         ],
                       ),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          text(
-                              "Phone : ",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
-                          ),
-                          SizedBox(width: 15,),
-                          text(
-                              name??"",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           text(
-                              "Address : ",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
+                            "Phone : ",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(width: 15),
+                          text(
+                            name ?? "",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          text(
+                            "Address : ",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
+                          ),
+                          SizedBox(width: 10),
                           Expanded(
                             child: text(
-                                address??"",
-                                maxLine: 2,
+                              address ?? "",
+                              maxLine: 2,
 
-                                textColor: blackColor,
-                                fontFamily: FontFamily.plusJakartaSansMedium,
-                                fontSize: 14
+                              textColor: blackColor,
+                              fontFamily: FontFamily.plusJakartaSansMedium,
+                              fontSize: 14,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(height: 10),
                       Row(
                         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           text(
-                              "Donor Type : ",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
+                            "Donor Type : ",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
                           ),
-                         SizedBox(width: 15,),
+                          SizedBox(width: 15),
                           text(
-                              donor??"",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14
+                            donor ?? "",
+                            textColor: blackColor,
+                            fontFamily: FontFamily.plusJakartaSansMedium,
+                            fontSize: 14,
                           ),
                         ],
                       ),
@@ -463,30 +503,27 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(height: 50),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Got it",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:16.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Got it",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 16.0,
 
-                  onPressed: (){
-                    Navigator.pop(context);
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
           ],
@@ -495,7 +532,3 @@ class _DonationScreenState extends State<DonationScreen> {
     );
   }
 }
-
-
-
-

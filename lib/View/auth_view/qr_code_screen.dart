@@ -26,9 +26,6 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
     qrData = "upi://pay?pa=$upiId&pn=$receiverName&cu=INR";
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
@@ -250,54 +247,59 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           // Settings Options
           Divider(),
           _buildSettingsCards(
-              "UPI & Payment Settings",
-              AppImages.creditCardImage,
-              "UPI PIN, Bank Account & more",
-              (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentSettingScreen()));
-              }
+            "UPI & Payment Settings",
+            AppImages.creditCardImage,
+            "UPI PIN, Bank Account & more",
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PaymentSettingScreen(),
+                ),
+              );
+            },
           ),
 
           _buildSettingsCards(
-              "Automatic Payments",
-              AppImages.resharesImage,
-              "Manage all your UPI Automatic Payments",
-                  (){}
+            "Automatic Payments",
+            AppImages.resharesImage,
+            "Manage all your UPI Automatic Payments",
+            () {},
           ),
 
           _buildSettingsCards(
-              "Orders & Bookings",
-              AppImages.ordersImage,
-              "Recharge , Travel & Others",
-                  (){}
+            "Orders & Bookings",
+            AppImages.ordersImage,
+            "Recharge , Travel & Others",
+            () {},
           ),
 
           _buildSettingsCards(
-              "UPI & Payment Settings",
-              AppImages.creditCardImage,
-              "UPI PIN, Bank Account & more",
-                  (){}
+            "UPI & Payment Settings",
+            AppImages.creditCardImage,
+            "UPI PIN, Bank Account & more",
+            () {},
           ),
 
           _buildSettingsCards(
-              "Profile",
-              AppImages.userIcon,
-              "Privacy , Notification & Language",
-                  (){}
+            "Profile",
+            AppImages.userIcon,
+            "Privacy , Notification & Language",
+            () {},
           ),
 
           _buildSettingsCards(
-              "Help & Support",
-              AppImages.helpSupportsImage,
-              "Customer Support , Your Queries & FAQs",
-                  (){}
+            "Help & Support",
+            AppImages.helpSupportsImage,
+            "Customer Support , Your Queries & FAQs",
+            () {},
           ),
 
           _buildSettingsCards(
-              "Refer & Win",
-              AppImages.referWinImage,
-              "Win up to ₹100 Cashback",
-                  (){}
+            "Refer & Win",
+            AppImages.referWinImage,
+            "Win up to ₹100 Cashback",
+            () {},
           ),
 
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
@@ -348,7 +350,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         ],
       ),
     );

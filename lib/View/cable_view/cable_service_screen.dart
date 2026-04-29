@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'cable_pay_screen.dart';
 
-
-
 class CableServiceScreen extends StatefulWidget {
-
-  const CableServiceScreen({super.key,});
+  const CableServiceScreen({super.key});
 
   @override
   State<CableServiceScreen> createState() => _CableServiceScreenState();
 }
-
 
 class _CableServiceScreenState extends State<CableServiceScreen> {
   List<String> options = [
@@ -36,28 +31,29 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Cable",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "Cable",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -71,15 +67,21 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Add New Connections",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 5,),
-              text("Select your cable TV provider",
-                  textColor:greyColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Add New Connections",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 5),
+              text(
+                "Select your cable TV provider",
+                textColor: greyColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w600,
+              ),
 
               SizedBox(height: 15),
               ListView.builder(
@@ -91,12 +93,22 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CablePayScreen(cableServiceName: options[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CablePayScreen(
+                              cableServiceName: options[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -111,40 +123,36 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(AppImages.tvDishImage),
-                                    SizedBox(width: 20,),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(options[index],
-                                            textColor:blackColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          options[index],
+                                          textColor: blackColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

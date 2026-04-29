@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/gas_view/piped_gas_details_screen.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class PipedGasServicesScreen extends StatefulWidget {
-
-  const PipedGasServicesScreen({super.key,});
+  const PipedGasServicesScreen({super.key});
 
   @override
   State<PipedGasServicesScreen> createState() => _PipedGasServicesScreenState();
 }
-
 
 class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
   TextEditingController searchController = TextEditingController();
@@ -43,6 +38,7 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
           .toList();
     });
   }
+
   @override
   void initState() {
     filteredOptions = options; // initially show all
@@ -60,21 +56,24 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text("Credit Card Payment",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "Credit Card Payment",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -90,12 +89,12 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged:(i){
+                onChanged: (i) {
                   _filterList(i);
                 },
+
                 // filterSearch,
                 // });
-
                 onSubmitted: (v) {
                   _filterList(v);
                 },
@@ -115,8 +114,6 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -125,21 +122,38 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
                       // filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 0,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: greyColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search by provider",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
               SizedBox(height: 15),
-              text("All Provider",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All Provider",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -150,12 +164,22 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PipedGasDetailsScreen(pipedServiceName: filteredOptions[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PipedGasDetailsScreen(
+                              pipedServiceName: filteredOptions[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -167,36 +191,31 @@ class _PipedGasServicesScreenState extends State<PipedGasServicesScreen> {
                             Row(
                               children: [
                                 SvgPicture.asset(AppImages.gasImage),
-                                SizedBox(width: 20,),
+                                SizedBox(width: 20),
                                 Expanded(
-                                  child: text(filteredOptions[index],
-                                      maxLine: 2,
-                                      textColor:blackColor,fontSize: 13,
-                                      fontFamily: FontFamily.plusJakartaSansMedium,
-                                      fontWeight: FontWeight.w500),
+                                  child: text(
+                                    filteredOptions[index],
+                                    maxLine: 2,
+                                    textColor: blackColor,
+                                    fontSize: 13,
+                                    fontFamily:
+                                        FontFamily.plusJakartaSansMedium,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

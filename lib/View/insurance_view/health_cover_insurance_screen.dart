@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
@@ -7,18 +6,16 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'package:intl/intl.dart';
 
-
-
 class HealthCoverInsuranceScreen extends StatefulWidget {
-
-  const HealthCoverInsuranceScreen({super.key,});
+  const HealthCoverInsuranceScreen({super.key});
 
   @override
-  State<HealthCoverInsuranceScreen> createState() => _HealthCoverInsuranceScreenState();
+  State<HealthCoverInsuranceScreen> createState() =>
+      _HealthCoverInsuranceScreenState();
 }
 
-
-class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen> {
+class _HealthCoverInsuranceScreenState
+    extends State<HealthCoverInsuranceScreen> {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   dynamic date;
@@ -29,7 +26,6 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -38,52 +34,64 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    text("Cover of ₹1 Crore",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:white,fontSize: 18,
-                        fontFamily: FontFamily.plusJakartaSansBold,
-                        fontWeight: FontWeight.w600),
+                    text(
+                      "Cover of ₹1 Crore",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: white,
+                      fontSize: 18,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ],
                 ),
-                text("Insuring 1 member",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:lightGreyColor,fontSize: 13,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w600),
+                text(
+                  "Insuring 1 member",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: lightGreyColor,
+                  fontSize: 13,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w600,
+                ),
               ],
             ),
 
             Row(
               children: [
-                text("ICICI",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:red1Color,fontSize: 13,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w600),
-                SizedBox(width: 5,),
-                text("Lombard",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:blueColor,fontSize: 13,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w600),
+                text(
+                  "ICICI",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: red1Color,
+                  fontSize: 13,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(width: 5),
+                text(
+                  "Lombard",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: blueColor,
+                  fontSize: 13,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w600,
+                ),
               ],
             ),
 
@@ -98,33 +106,41 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              text("How would you like to pay?",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "How would you like to pay?",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 20),
               Stack(
                 clipBehavior: Clip.none,
                 children: [
                   Container(
                     width: MediaQuery.sizeOf(context).width,
-                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: pinkColor)
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: pinkColor),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        text("Annually",textColor: blackColor,fontSize: 15,
-                            fontFamily: FontFamily.plusJakartaSansBold
+                        text(
+                          "Annually",
+                          textColor: blackColor,
+                          fontSize: 15,
+                          fontFamily: FontFamily.plusJakartaSansBold,
                         ),
 
-                        text("₹14,356 (₹1,196/month)",textColor: greyColor,fontSize: 15,
-                            fontFamily: FontFamily.plusJakartaSansRegular
+                        text(
+                          "₹14,356 (₹1,196/month)",
+                          textColor: greyColor,
+                          fontSize: 15,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
                         ),
                       ],
                     ),
@@ -133,26 +149,32 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
                     top: -10,
                     left: 10,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 2,
                       ),
-                      child: text("Save ₹11",textColor: white,fontSize: 15,
-                          fontFamily: FontFamily.plusJakartaSansRegular
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green,
+                      ),
+                      child: text(
+                        "Save ₹11",
+                        textColor: white,
+                        fontSize: 15,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Container(
                 width: MediaQuery.sizeOf(context).width,
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: lightorangeColor,
-                    border: Border.all(color: pinkColor)
+                  borderRadius: BorderRadius.circular(10),
+                  color: lightorangeColor,
+                  border: Border.all(color: pinkColor),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,101 +182,118 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        text("Monthly",textColor: blackColor,fontSize: 15,
-                            fontFamily: FontFamily.plusJakartaSansBold
+                        text(
+                          "Monthly",
+                          textColor: blackColor,
+                          fontSize: 15,
+                          fontFamily: FontFamily.plusJakartaSansBold,
                         ),
                         Container(
-                            padding: EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: purpleGradientColor,
-                                border: Border.all(color: pinkColor)
-                            ),
-                            child: Icon(Icons.check,color: white,size: 15,)),
+                          padding: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: purpleGradientColor,
+                            border: Border.all(color: pinkColor),
+                          ),
+                          child: Icon(Icons.check, color: white, size: 15),
+                        ),
                       ],
                     ),
 
-                    text("₹14,356 (₹1,196/month)",textColor: greyColor,fontSize: 15,
-                        fontFamily: FontFamily.plusJakartaSansRegular
+                    text(
+                      "₹14,356 (₹1,196/month)",
+                      textColor: greyColor,
+                      fontSize: 15,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
                     ),
-
-
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(Icons.arrow_upward,color: orangeColor,size: 15,),
+                  Icon(Icons.arrow_upward, color: orangeColor, size: 15),
                   Expanded(
-                    child: text("Higher 90-day waiting period to avail health check up",textColor: greyColor,
-                        fontSize: 13,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                        maxLine: 2
+                    child: text(
+                      "Higher 90-day waiting period to avail health check up",
+                      textColor: greyColor,
+                      fontSize: 13,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      maxLine: 2,
                     ),
                   ),
                 ],
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(Icons.check,color: Colors.green,size: 15,),
+                  Icon(Icons.check, color: Colors.green, size: 15),
                   Expanded(
-                    child: text("Automatic payments via UPI ",textColor: greyColor,
-                        fontSize: 13,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                        maxLine: 2
+                    child: text(
+                      "Automatic payments via UPI ",
+                      textColor: greyColor,
+                      fontSize: 13,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      maxLine: 2,
                     ),
                   ),
                 ],
               ),
 
-              SizedBox(height: 20,),
-              Divider(thickness: .5,color: greyColor,),
-              SizedBox(height: 10,),
+              SizedBox(height: 20),
+              Divider(thickness: .5, color: greyColor),
+              SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(Icons.supervised_user_circle_outlined,color: purpleGradientColor,size: 20,),
-                  SizedBox(width: 10,),
+                  Icon(
+                    Icons.supervised_user_circle_outlined,
+                    color: purpleGradientColor,
+                    size: 20,
+                  ),
+                  SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text("Your details ",textColor: blackColor,
-                          fontSize: 15,
-                          fontFamily: FontFamily.plusJakartaSansBold,
-                          maxLine: 2
+                      text(
+                        "Your details ",
+                        textColor: blackColor,
+                        fontSize: 15,
+                        fontFamily: FontFamily.plusJakartaSansBold,
+                        maxLine: 2,
                       ),
-                      text("Policy will be issued based on these details",textColor: greyColor,
-                          fontSize: 13,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          maxLine: 2
+                      text(
+                        "Policy will be issued based on these details",
+                        textColor: greyColor,
+                        fontSize: 13,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        maxLine: 2,
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
-              text("Full Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Full Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: fullNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
-                textCapitalization:
-                TextCapitalization.characters,
+                textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: pinkColor),
@@ -274,91 +313,123 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
 
                   fillColor: white,
                   hintText: "Enter your full name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              SizedBox(height: 10,),
-              text("Policy will be issued under this name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 20,),
-              text("Gender",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 10),
+              text(
+                "Policy will be issued under this name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 20),
+              text(
+                "Gender",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           isSelectedGender = true;
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: isSelectedGender==true?lightorangeColor:white,
-                            border: Border.all(color: pinkColor)
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
                         ),
-                        child: text("Male",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:blackColor,fontSize: 16,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w600),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: isSelectedGender == true
+                              ? lightorangeColor
+                              : white,
+                          border: Border.all(color: pinkColor),
+                        ),
+                        child: text(
+                          "Male",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: blackColor,
+                          fontSize: 16,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
 
                   Expanded(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
                           isSelectedGender = false;
                         });
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color:  isSelectedGender == true?white:lightorangeColor,
-                            border: Border.all(color: pinkColor)
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
                         ),
-                        child: text("Female",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:blackColor,fontSize: 16,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w600),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: isSelectedGender == true
+                              ? white
+                              : lightorangeColor,
+                          border: Border.all(color: pinkColor),
+                        ),
+                        child: text(
+                          "Female",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: blackColor,
+                          fontSize: 16,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
-
-
                 ],
               ),
 
-              SizedBox(height: 20,),
-              text("Date of Birth (DD/MM/YYYY)",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Date of Birth (DD/MM/YYYY)",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 readOnly: true,
@@ -368,10 +439,8 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
                 controller: dobController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -393,102 +462,123 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
 
                   fillColor: white,
                   hintText: "DD/MM/YYYY",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-             SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Premium (Incl. of GST)",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:greyColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansRegular,
-                      fontWeight: FontWeight.w600),
+                  text(
+                    "Premium (Incl. of GST)",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: greyColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                    fontWeight: FontWeight.w600,
+                  ),
 
-                  text("₹1,249/month",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:blackColor,fontSize: 16,
-                      fontFamily: FontFamily.plusJakartaSansBold,
-                      fontWeight: FontWeight.w600),
+                  text(
+                    "₹1,249/month",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: blackColor,
+                    fontSize: 16,
+                    fontFamily: FontFamily.plusJakartaSansBold,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Proceed",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:18.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Proceed",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 18.0,
 
-                    onPressed: (){
-                      //Navigator.push(context, MaterialPageRoute(builder: (context) => BikeReviewDetailsScreen(),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => BikeReviewDetailsScreen(),));
+                  },
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Center(
-                child: text("By clicking on 'Proceed' you agree that you are confirming details provided by you are accurate and you want to proceed... view more",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:greyColor,fontSize: 14,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w400),
+                child: text(
+                  "By clicking on 'Proceed' you agree that you are confirming details provided by you are accurate and you want to proceed... view more",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: greyColor,
+                  fontSize: 14,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   calenderForGetDay(BuildContext context) async {
     return await showDatePicker(
-        fieldHintText: "dd-MM-yyyy",
-        keyboardType: TextInputType.name,
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        context: context,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              primarySwatch: Colors.grey,
-              splashColor: Colors.blue,
-              hintColor: Colors.blue,
-              colorScheme: const ColorScheme.light(
-                  primary: purpleGradientColor,
-                  onSecondary: Colors.blue,
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                  secondary: Colors.white),
-              dialogBackgroundColor: Colors.white,
+      fieldHintText: "dd-MM-yyyy",
+      keyboardType: TextInputType.name,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            primarySwatch: Colors.grey,
+            splashColor: Colors.blue,
+            hintColor: Colors.blue,
+            colorScheme: const ColorScheme.light(
+              primary: purpleGradientColor,
+              onSecondary: Colors.blue,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+              secondary: Colors.white,
             ),
-            child: child ?? const Text(''),
-          );
-        },
-        initialDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day))
-        .then((selectedDate) {
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child ?? const Text(''),
+        );
+      },
+      initialDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ).then((selectedDate) {
       if (selectedDate != null) {
         date = DateFormat('yyyy-MM-dd').format(selectedDate);
         print("date>>>>${date}");
@@ -497,7 +587,3 @@ class _HealthCoverInsuranceScreenState extends State<HealthCoverInsuranceScreen>
     });
   }
 }
-
-
-
-

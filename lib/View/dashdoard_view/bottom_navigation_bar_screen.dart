@@ -6,14 +6,12 @@ import '../../app_utils/font_family.dart';
 import 'history_screen.dart';
 import 'home_screen.dart';
 
-
-
 class DashboardScreen extends StatefulWidget {
   String? id;
   bool? isFromHome;
-  int?index;
-  DashboardScreen({Key? key, this.id, this.isFromHome = false,this.index})
-      : super(key: key);
+  int? index;
+  DashboardScreen({Key? key, this.id, this.isFromHome = false, this.index})
+    : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -26,10 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
-    _selectedIndex = widget.index??0;
+    _selectedIndex = widget.index ?? 0;
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +40,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               physics: const NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: const <Widget>[
-                 HomeScreen(),
-                 HomeScreen(),
-                 QrCodeScreen(),
-                 HomeScreen(),
-                 HistoryScreen(),
-
+                HomeScreen(),
+                HomeScreen(),
+                QrCodeScreen(),
+                HomeScreen(),
+                HistoryScreen(),
               ],
             ),
           ],
@@ -85,8 +81,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return AlertDialog(
           insetPadding: const EdgeInsets.all(10),
           title: const Align(
-              alignment: Alignment.center,
-              child: Text('Do you want to quit app?',style: TextStyle(color: blueColor,fontSize: 18,fontFamily: FontFamily.plusJakartaSansRegular),)),
+            alignment: Alignment.center,
+            child: Text(
+              'Do you want to quit app?',
+              style: TextStyle(
+                color: blueColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+              ),
+            ),
+          ),
           actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: [
             Row(
@@ -97,32 +101,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     SystemNavigator.pop();
                   },
                   child: Container(
-                      height: 40,
-                      width: MediaQuery.sizeOf(context).width/3,
-                      padding: const EdgeInsets.only(left: 22,right: 22),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: blueColor)
+                    height: 40,
+                    width: MediaQuery.sizeOf(context).width / 3,
+                    padding: const EdgeInsets.only(left: 22, right: 22),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: blueColor),
+                    ),
+                    child: const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(
+                          color: blueColor,
+                          fontSize: 18,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                        ),
                       ),
-                      child: const Align(
-                          alignment: Alignment.center,
-                          child: Text('Yes',style: TextStyle(color: blueColor,fontSize: 18,fontFamily: FontFamily.plusJakartaSansRegular),))),
+                    ),
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
                   child: Container(
-                      height: 40,
-                      width: MediaQuery.sizeOf(context).width/3,
-                      padding: const EdgeInsets.only(left: 22,right: 22),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),color: blueColor,
-                          border: Border.all(color: blueColor)
+                    height: 40,
+                    width: MediaQuery.sizeOf(context).width / 3,
+                    padding: const EdgeInsets.only(left: 22, right: 22),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: blueColor,
+                      border: Border.all(color: blueColor),
+                    ),
+                    child: const Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'No',
+                        style: TextStyle(
+                          color: white,
+                          fontSize: 18,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                        ),
                       ),
-                      child: const Align(
-                          alignment: Alignment.center,
-                          child: Text('No',style: TextStyle(color: white,fontSize: 18,fontFamily: FontFamily.plusJakartaSansRegular),))),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -150,9 +173,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           unselectedLabelStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-              color: purpleGradientColor),
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            color: purpleGradientColor,
+          ),
           selectedLabelStyle: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 12,
@@ -163,10 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _onTappedBar(index);
           },
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
               icon: Icon(Icons.help_outline),
               label: 'Help',
@@ -215,7 +236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               ),
               child: ClipOval(
-                child: Icon(Icons.qr_code,size: 30,color: white,)
+                child: Icon(Icons.qr_code, size: 30, color: white),
               ),
             ),
           ),
@@ -231,7 +252,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
     _pageController.jumpToPage(value);
   }
-
-
-
 }

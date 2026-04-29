@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'education_enrollment_screen.dart';
 
-
-
 class EducationScreen extends StatefulWidget {
-
-  const EducationScreen({super.key,});
+  const EducationScreen({super.key});
 
   @override
   State<EducationScreen> createState() => _EducationScreenState();
 }
-
 
 class _EducationScreenState extends State<EducationScreen> {
   TextEditingController searchController = TextEditingController();
@@ -38,6 +33,7 @@ class _EducationScreenState extends State<EducationScreen> {
     filteredList = options;
     super.initState();
   }
+
   void filterSearch(String query) {
     setState(() {
       filteredList = options
@@ -51,21 +47,24 @@ class _EducationScreenState extends State<EducationScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Education",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "Education",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -79,10 +78,13 @@ class _EducationScreenState extends State<EducationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("All States",
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All States",
+                textColor: blackColor,
+                fontSize: 20,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
               SizedBox(height: 10),
               TextField(
@@ -105,8 +107,6 @@ class _EducationScreenState extends State<EducationScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -115,14 +115,28 @@ class _EducationScreenState extends State<EducationScreen> {
                       filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 10, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 10,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: lightWhiteColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search for a State",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
               SizedBox(height: 10),
@@ -136,18 +150,30 @@ class _EducationScreenState extends State<EducationScreen> {
                   bool isSelected = selectIndex == index;
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
+                    child: GestureDetector(
+                      onTap: () {
                         setState(() {
                           selectIndex = index; // selected index update करो
                         });
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => EducationEnrollmentScreen(education: filteredList[index],),));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EducationEnrollmentScreen(
+                              education: filteredList[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: isSelected?blue1Color:greyColor)
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isSelected ? blue1Color : greyColor,
+                          ),
                         ),
 
                         child: Column(
@@ -159,21 +185,25 @@ class _EducationScreenState extends State<EducationScreen> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(AppImages.rajImage),
-                                    SizedBox(width: 20,),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(filteredList[index],
-                                            textColor:blackColor,fontSize: 16,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          filteredList[index],
+                                          textColor: blackColor,
+                                          fontSize: 16,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
 
-
-                                Icon(Icons.arrow_forward_ios,color: greyColor,)
+                                Icon(Icons.arrow_forward_ios, color: greyColor),
                               ],
                             ),
                           ],
@@ -181,20 +211,12 @@ class _EducationScreenState extends State<EducationScreen> {
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

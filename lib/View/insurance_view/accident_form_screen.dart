@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jigrotech/View/bank_view/pin_screen.dart';
@@ -8,16 +7,12 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'package:intl/intl.dart';
 
-
-
 class AccidentFormScreen extends StatefulWidget {
-
-  const AccidentFormScreen({super.key,});
+  const AccidentFormScreen({super.key});
 
   @override
   State<AccidentFormScreen> createState() => _AccidentFormScreenState();
 }
-
 
 class _AccidentFormScreenState extends State<AccidentFormScreen> {
   TextEditingController fullNameController = TextEditingController();
@@ -32,7 +27,6 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -41,23 +35,26 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Accident Insurance",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Accident Insurance",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -72,104 +69,127 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: purpleGradientColor
+                      color: purpleGradientColor,
                     ),
-                    child: text("A",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:white,fontSize: 18,
-                        fontFamily: FontFamily.plusJakartaSansBold,
-                        fontWeight: FontWeight.w600),
+                    child: text(
+                      "A",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: white,
+                      fontSize: 18,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text("ACKO",
-                          textColor:blackColor,fontSize: 18,
-                          fontFamily: FontFamily.plusJakartaSansBold,
-                          fontWeight: FontWeight.w600),
-                      text("Group Personal Accident Insurance",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:greyColor,fontSize: 14,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontWeight: FontWeight.w400),
+                      text(
+                        "ACKO",
+                        textColor: blackColor,
+                        fontSize: 18,
+                        fontFamily: FontFamily.plusJakartaSansBold,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      text(
+                        "Group Personal Accident Insurance",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: greyColor,
+                        fontSize: 14,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ],
                   ),
-
                 ],
               ),
-              SizedBox(height: 10,),
-              text("View Benefits",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blue1Color,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w500),
+              SizedBox(height: 10),
+              text(
+                "View Benefits",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blue1Color,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w500,
+              ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Row(
                 children: [
-                  text("Sum Insured:",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:blackColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansMedium,
-                      fontWeight: FontWeight.w500),
-                  SizedBox(width: 10,),
-                  text("₹50,000",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:greyColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansMedium,
-                      fontWeight: FontWeight.w500),
+                  text(
+                    "Sum Insured:",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: blackColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(width: 10),
+                  text(
+                    "₹50,000",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: greyColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ],
               ),
               //SizedBox(height: 10,),
               Row(
                 children: [
-                  text("Valid for:",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:blackColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansMedium,
-                      fontWeight: FontWeight.w500),
-                  SizedBox(width: 10,),
-                  text("1 year",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:greyColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansMedium,
-                      fontWeight: FontWeight.w500),
+                  text(
+                    "Valid for:",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: blackColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  SizedBox(width: 10),
+                  text(
+                    "1 year",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: greyColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ],
               ),
 
-              SizedBox(height: 20,),
-              text("Full Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Full Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: fullNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -190,30 +210,44 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
 
                   fillColor: white,
                   hintText: "Enter your full name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              text("As mentioned on govt. ID card",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 20,),
-              text("Email ID",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "As mentioned on govt. ID card",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 20),
+              text(
+                "Email ID",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -235,23 +269,38 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Email",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              text("Policy document will be mailed here",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 20,),
-              text("Date of birth",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Policy document will be mailed here",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 20),
+              text(
+                "Date of birth",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 readOnly: true,
@@ -261,10 +310,8 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
                 controller: dobController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -287,146 +334,180 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
 
                   fillColor: white,
                   hintText: "DD/MM/YYYY",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              text("Age should be between 18 and 65 years",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
+              text(
+                "Age should be between 18 and 65 years",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Checkbox(
-                      checkColor: Colors.white,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                          print("hhh>>>$isChecked");
-                        });
-                      },
-                      activeColor: purpleGradientColor,
-                      //checkColor: Colors.white,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      visualDensity: VisualDensity.compact,
-                      side: const BorderSide(color: purpleGradientColor,width: 1)
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                        print("hhh>>>$isChecked");
+                      });
+                    },
+                    activeColor: purpleGradientColor,
+                    //checkColor: Colors.white,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                    side: const BorderSide(
+                      color: purpleGradientColor,
+                      width: 1,
+                    ),
                   ),
 
-                 SizedBox(width: 10,),
-                 Expanded(
-                   child: text("I agree to the terms and conditions and confirm that I am in good health and have not purchased any other accident policy.",
-                   textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                     fontSize: 14,fontWeight: FontWeight.w400,
-                     maxLine: 3
-                   ),
-                 )
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: text(
+                      "I agree to the terms and conditions and confirm that I am in good health and have not purchased any other accident policy.",
+                      textColor: greyColor,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      maxLine: 3,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 10,),
-              text("Please note GST exemptions are not applicable on this plan .",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 10,),
-              Divider(thickness: .5,color: greyColor,),
-              const SizedBox(height: 30,),
+              SizedBox(height: 10),
+              text(
+                "Please note GST exemptions are not applicable on this plan .",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 10),
+              Divider(thickness: .5, color: greyColor),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text("₹25",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:blackColor,fontSize: 16,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500),
+                      text(
+                        "₹25",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: blackColor,
+                        fontSize: 16,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
 
-                      text("Total premium",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:greyColor,fontSize: 16,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500),
+                      text(
+                        "Total premium",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: greyColor,
+                        fontSize: 16,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ],
                   ),
 
                   SizedBox(
-                   // width: MediaQuery.sizeOf(context).width,
+                    // width: MediaQuery.sizeOf(context).width,
                     height: 55,
                     child: CommonButton(
-                        text: "PAY",
-                        textColor: white,
-                        gradient: const LinearGradient(
-                          colors: [pinkColor, purpleGradientColor],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        fontWeight: FontWeight.w600,
-                        fontFamily: FontFamily.plusJakartaSansBold,
-                        fontSize:18.0,
-                        //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                        //borderRadius: BorderRadius.circular(40.0),
+                      text: "PAY",
+                      textColor: white,
+                      gradient: const LinearGradient(
+                        colors: [pinkColor, purpleGradientColor],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      fontWeight: FontWeight.w600,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                      fontSize: 18.0,
 
-                        onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UpiPinScreen(),));
-                        }
-
-
-
+                      //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                      //borderRadius: BorderRadius.circular(40.0),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpiPinScreen(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
               ),
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   calenderForGetDay(BuildContext context) async {
     return await showDatePicker(
-        fieldHintText: "dd-MM-yyyy",
-        keyboardType: TextInputType.name,
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        context: context,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              primarySwatch: Colors.grey,
-              splashColor: Colors.blue,
-              hintColor: Colors.blue,
-              colorScheme: const ColorScheme.light(
-                  primary: purpleGradientColor,
-                  onSecondary: Colors.blue,
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                  secondary: Colors.white),
-              dialogBackgroundColor: Colors.white,
+      fieldHintText: "dd-MM-yyyy",
+      keyboardType: TextInputType.name,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            primarySwatch: Colors.grey,
+            splashColor: Colors.blue,
+            hintColor: Colors.blue,
+            colorScheme: const ColorScheme.light(
+              primary: purpleGradientColor,
+              onSecondary: Colors.blue,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+              secondary: Colors.white,
             ),
-            child: child ?? const Text(''),
-          );
-        },
-        initialDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day))
-        .then((selectedDate) {
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child ?? const Text(''),
+        );
+      },
+      initialDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ).then((selectedDate) {
       if (selectedDate != null) {
         date = DateFormat('yyyy-MM-dd').format(selectedDate);
         print("date>>>>${date}");
@@ -435,7 +516,3 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
     });
   }
 }
-
-
-
-

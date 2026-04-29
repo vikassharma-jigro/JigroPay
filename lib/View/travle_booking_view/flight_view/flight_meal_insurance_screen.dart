@@ -31,28 +31,34 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text("Add-ons",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "Add-ons",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
 
-            text("Skip to Pay",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 14,
-                fontFamily: FontFamily.plusJakartaSansRegular,
-                fontWeight: FontWeight.w400),
+            text(
+              "Skip to Pay",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 14,
+              fontFamily: FontFamily.plusJakartaSansRegular,
+              fontWeight: FontWeight.w400,
+            ),
 
             // SizedBox(width: 10,),
           ],
@@ -60,23 +66,28 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child:DefaultTabController(
+        child: DefaultTabController(
           length: 2, // Specify the number of tabs here
           child: Column(
             children: [
               TabBar(
                 isScrollable: false,
                 controller: _tabController,
-                indicator:  UnderlineTabIndicator(
-                  borderSide: BorderSide(width: 2.0,color:blueColor ),
+                indicator: UnderlineTabIndicator(
+                  borderSide: BorderSide(width: 2.0, color: blueColor),
                   //insets: EdgeInsets.symmetric(horizontal:22.0)
                 ),
                 unselectedLabelColor: pinkColor,
-                indicatorPadding: const EdgeInsets.only(left: 10,right: 10),
+                indicatorPadding: const EdgeInsets.only(left: 10, right: 10),
                 labelColor: blueColor,
-                labelStyle:  TextStyle(color: blueColor,fontSize: 12,fontFamily: FontFamily.plusJakartaSansMedium,fontWeight: FontWeight.w400),
+                labelStyle: TextStyle(
+                  color: blueColor,
+                  fontSize: 12,
+                  fontFamily: FontFamily.plusJakartaSansMedium,
+                  fontWeight: FontWeight.w400,
+                ),
                 tabs: const [
-                  Tab(text: 'Meal',),
+                  Tab(text: 'Meal'),
                   Tab(text: 'Insurance'),
                 ],
               ),
@@ -91,7 +102,10 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                           children: [
                             const Text(
                               "Veg only",
-                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                             const Spacer(),
                             Switch(
@@ -109,195 +123,287 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                             physics: NeverScrollableScrollPhysics(),
                             children: [
                               buildMealCard(
-                                  "Cucumber Tomato Cheese and Lettuce Sandwich + beverage",
-                                  "₹425"),
-                              buildMealCard("6E Eats choice of the day (non-veg) + beverage",
-                                  "₹525"),
+                                "Cucumber Tomato Cheese and Lettuce Sandwich + beverage",
+                                "₹425",
+                              ),
+                              buildMealCard(
+                                "6E Eats choice of the day (non-veg) + beverage",
+                                "₹525",
+                              ),
                               buildMealCard("Fruit Cake", "₹225"),
-                              buildMealCard("Diabetic veg meal + beverage", "₹425"),
-                              buildMealCard("Chicken Junglee Sandwich + beverage", "₹525"),
+                              buildMealCard(
+                                "Diabetic veg meal + beverage",
+                                "₹425",
+                              ),
+                              buildMealCard(
+                                "Chicken Junglee Sandwich + beverage",
+                                "₹525",
+                              ),
                             ],
                           ),
                         ),
                       ],
                     ),
 
-
                     Column(
                       children: [
-                        SizedBox(height: 20,),
-                         Container(
-                           padding: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight: Radius.circular(10)),
-                             gradient: LinearGradient(
-                               colors: [blue1Color,yellowColor],
-                               begin: Alignment.topLeft,
-                               end: Alignment.bottomRight,
-                             ),
-                           ),
-                           child: Row(
-                             children: [
-                               text(
+                        SizedBox(height: 20),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            gradient: LinearGradient(
+                              colors: [blue1Color, yellowColor],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              text(
                                 "Protect your trip plans",
                                 textColor: white,
-                                 fontSize: 15,fontFamily: FontFamily.plusJakartaSansBold
-                                                       ),
-                             ],
-                           ),
-                         ),
+                                fontSize: 15,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                              ),
+                            ],
+                          ),
+                        ),
                         Card(
                           color: white,
-                          child:  Padding(
+                          child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    text("Travel Insurance",
-                                    textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                      fontSize: 20,fontWeight: FontWeight.w600
+                                    text(
+                                      "Travel Insurance",
+                                      textColor: blackColor,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansBold,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
                                     ),
 
-                                    text("Reliance General Insurance",
-                                    textColor: blackColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                                      fontSize: 12,fontWeight: FontWeight.w400
+                                    text(
+                                      "Reliance General Insurance",
+                                      textColor: blackColor,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansRegular,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20,),
+                                SizedBox(height: 20),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    text("Benefits",
-                                    textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                      fontSize: 16,fontWeight: FontWeight.w600
+                                    text(
+                                      "Benefits",
+                                      textColor: blackColor,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansBold,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
 
-                                    text("View All >",
-                                    textColor: pinkColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                                      fontSize: 12,fontWeight: FontWeight.w400
+                                    text(
+                                      "View All >",
+                                      textColor: pinkColor,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansRegular,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ],
                                 ),
 
-                                SizedBox(height: 20,),
+                                SizedBox(height: 20),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
                                       children: [
-                                        SvgPicture.asset(AppImages.bookingImage),
-                                        text("Lost Baggage",
-                                            textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                                            fontSize: 12,fontWeight: FontWeight.w400
+                                        SvgPicture.asset(
+                                          AppImages.bookingImage,
                                         ),
-                                        text("Up to ₹10,000",
-                                            textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                            fontSize: 12,fontWeight: FontWeight.w600
+                                        text(
+                                          "Lost Baggage",
+                                          textColor: greyColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        text(
+                                          "Up to ₹10,000",
+                                          textColor: blackColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansBold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ],
                                     ),
                                     Column(
                                       children: [
-                                        Image.asset(AppImages.pleanImage,height: 20,),
-                                        text("Trip Cancellation",
-                                            textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                                            fontSize: 12,fontWeight: FontWeight.w400
+                                        Image.asset(
+                                          AppImages.pleanImage,
+                                          height: 20,
                                         ),
-                                        text("Up to ₹9,000",
-                                            textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                            fontSize: 12,fontWeight: FontWeight.w600
+                                        text(
+                                          "Trip Cancellation",
+                                          textColor: greyColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        text(
+                                          "Up to ₹9,000",
+                                          textColor: blackColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansBold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ],
                                     ),
                                     Column(
                                       children: [
-                                        SvgPicture.asset(AppImages.bookingImage),
-                                        text("Trip Delay",
-                                            textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                                            fontSize: 12,fontWeight: FontWeight.w400
+                                        SvgPicture.asset(
+                                          AppImages.bookingImage,
                                         ),
-                                        text("Up to ₹9,000",
-                                            textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                            fontSize: 12,fontWeight: FontWeight.w600
+                                        text(
+                                          "Trip Delay",
+                                          textColor: greyColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        text(
+                                          "Up to ₹9,000",
+                                          textColor: blackColor,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansBold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ],
                                     ),
-
                                   ],
                                 ),
-                                SizedBox(height: 20,),
+                                SizedBox(height: 20),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    text("₹149 per traveller",
-                                        textColor: blackColor,fontFamily: FontFamily.plusJakartaSansBold,
-                                        fontSize: 16,fontWeight: FontWeight.w400
+                                    text(
+                                      "₹149 per traveller",
+                                      textColor: blackColor,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansBold,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                         gradient: const LinearGradient(
-                                          colors: [Color(0xff6E2AE9), Color(0xffC882FD)],
+                                          colors: [
+                                            Color(0xff6E2AE9),
+                                            Color(0xffC882FD),
+                                          ],
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: const Padding(
-                                        padding:
-                                        EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 14.0,
+                                          vertical: 6.0,
+                                        ),
                                         child: Text(
                                           "Add",
                                           style: TextStyle(
-                                            color: blackColor, fontWeight: FontWeight.w600,),
+                                            color: blackColor,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20,),
+                                SizedBox(height: 20),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Checkbox(
-                                        checkColor: Colors.white,
-                                        value: isChecked,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            isChecked = value!;
-                                            print("hhh>>>$isChecked");
-                                          });
-                                        },
-                                        activeColor: purpleGradientColor,
-                                        //checkColor: Colors.white,
-                                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        visualDensity: VisualDensity.compact,
-                                        side: const BorderSide(color: purpleGradientColor,width: 1)
+                                      checkColor: Colors.white,
+                                      value: isChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                          print("hhh>>>$isChecked");
+                                        });
+                                      },
+                                      activeColor: purpleGradientColor,
+                                      //checkColor: Colors.white,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      visualDensity: VisualDensity.compact,
+                                      side: const BorderSide(
+                                        color: purpleGradientColor,
+                                        width: 1,
+                                      ),
                                     ),
                                     RichText(
-                                      text:  const TextSpan(
-                                        text: 'I confirm that all travellers are under 70 years of\nage at the time of travel & I agree to the Good \nHealth Terms and the T&C',
-                                        style: TextStyle(color: blackColor,fontSize:14,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular),
+                                      text: const TextSpan(
+                                        text:
+                                            'I confirm that all travellers are under 70 years of\nage at the time of travel & I agree to the Good \nHealth Terms and the T&C',
+                                        style: TextStyle(
+                                          color: blackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                        ),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text: 'Sign Up',
-                                              style: TextStyle(color: pinkColor,fontSize:14,fontFamily: FontFamily.plusJakartaSansRegular,fontWeight: FontWeight.w400)),
+                                            text: 'Sign Up',
+                                            style: TextStyle(
+                                              color: pinkColor,
+                                              fontSize: 14,
+                                              fontFamily: FontFamily
+                                                  .plusJakartaSansRegular,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ),
-
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -323,18 +429,19 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children:  [
-
+                children: [
                   Text(
                     "₹7,289",
                     style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: Colors.grey),
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.grey,
+                    ),
                   ),
                   text(
                     "₹6,964",
                     fontFamily: FontFamily.plusJakartaSansBold,
-                    textColor: blackColor,fontSize: 16,
+                    textColor: blackColor,
+                    fontSize: 16,
                   ),
                 ],
               ),
@@ -346,7 +453,8 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 0,
                 ),
                 onPressed: () {},
@@ -364,9 +472,10 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                     child: const Text(
                       "Pay",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -395,14 +504,16 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                 text(
                   title,
                   fontFamily: FontFamily.plusJakartaSansRegular,
-                  textColor: blackColor,fontSize: 14,
-                  maxLine: 2
+                  textColor: blackColor,
+                  fontSize: 14,
+                  maxLine: 2,
                 ),
                 text(
                   price,
                   fontFamily: FontFamily.plusJakartaSansBold,
-                  textColor: blackColor,fontSize: 14,
-                  maxLine: 2
+                  textColor: blackColor,
+                  fontSize: 14,
+                  maxLine: 2,
                 ),
               ],
             ),
@@ -421,17 +532,21 @@ class _AddOnsMealScreenState extends State<AddOnsMealScreen>
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 14.0,
+                    vertical: 6.0,
+                  ),
                   child: Text(
                     "Add",
                     style: TextStyle(
-                        color: blackColor, fontWeight: FontWeight.w600,),
+                      color: blackColor,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

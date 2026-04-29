@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jigrotech/View/bank_view/pin_screen.dart';
@@ -7,16 +6,13 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class BikeReviewDetailsScreen extends StatefulWidget {
-
-  const BikeReviewDetailsScreen({super.key,});
+  const BikeReviewDetailsScreen({super.key});
 
   @override
-  State<BikeReviewDetailsScreen> createState() => _BikeReviewDetailsScreenState();
+  State<BikeReviewDetailsScreen> createState() =>
+      _BikeReviewDetailsScreenState();
 }
-
 
 class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
   TextEditingController fullNameController = TextEditingController();
@@ -31,7 +27,6 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -40,23 +35,26 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Review Other Details",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Review Other Details",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -71,12 +69,11 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: pinkColor.withOpacity(.4)
+                  color: pinkColor.withOpacity(.4),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,124 +81,149 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        text("Own Damage",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:greyColor,fontSize: 14,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w600),
-                        text("NCB",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:greyColor,fontSize: 14,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w600),
+                        text(
+                          "Own Damage",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: greyColor,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        text(
+                          "NCB",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: greyColor,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ],
                     ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        text("₹34,648",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:blackColor,fontSize: 18,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
-                        text("20%",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:blue1Color,fontSize: 18,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w600),
+                        text(
+                          "₹34,648",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: blackColor,
+                          fontSize: 18,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        text(
+                          "20%",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: blue1Color,
+                          fontSize: 18,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ],
                     ),
-                    Divider(
-                      thickness: .5,color: blue1Color,
+                    Divider(thickness: .5, color: blue1Color),
+
+                    text(
+                      "Hero Motocorp Splendor Plus",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: blackColor,
+                      fontSize: 14,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      fontWeight: FontWeight.w600,
                     ),
 
-                    text("Hero Motocorp Splendor Plus",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:blackColor,fontSize: 14,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                        fontWeight: FontWeight.w600),
-
-                    text("RJ-60-SB-0802",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:greyColor,fontSize: 12,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                        fontWeight: FontWeight.w600),
+                    text(
+                      "RJ-60-SB-0802",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: greyColor,
+                      fontSize: 12,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ],
                 ),
               ),
 
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
 
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: lightYellowColor.withOpacity(.2)
+                  borderRadius: BorderRadius.circular(10),
+                  color: lightYellowColor.withOpacity(.2),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 9,),
+                      padding: EdgeInsets.symmetric(horizontal: 9),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: brownColor
+                        borderRadius: BorderRadius.circular(10),
+                        color: brownColor,
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: text("i",
-                            textColor:white,fontSize: 14,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
+                        child: text(
+                          "i",
+                          textColor: white,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 10),
                     Expanded(
-                      child: text("You will need to complete the KYC after successful payment.",
-                          maxLine: 2,
-                          textColor:brownColor,fontSize: 13,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontWeight: FontWeight.w600),
+                      child: text(
+                        "You will need to complete the KYC after successful payment.",
+                        maxLine: 2,
+                        textColor: brownColor,
+                        fontSize: 13,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
               ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Row(
                 children: [
-                  text("Vehicle Owner Details ",textColor: blackColor,
-                      fontSize: 18,
-                      fontFamily: FontFamily.plusJakartaSansBold,
-                      maxLine: 2
+                  text(
+                    "Vehicle Owner Details ",
+                    textColor: blackColor,
+                    fontSize: 18,
+                    fontFamily: FontFamily.plusJakartaSansBold,
+                    maxLine: 2,
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
-              text("Full Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Full Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: fullNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -222,30 +244,39 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your full name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-              text("Mobile number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Mobile number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: mobileNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(10),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -266,25 +297,36 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Mobile number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Email Address",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Email Address",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -306,25 +348,36 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Email address",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Pan number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Pan number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: panNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
 
                   // FilteringTextInputFormatter.allow(
@@ -350,25 +403,36 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Pan number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Vehicle Registration Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Vehicle Registration Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: vehicleNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
 
                   // FilteringTextInputFormatter.allow(
@@ -394,12 +458,21 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Vehicle Registration Number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
 
               Card(
                 child: Padding(
@@ -409,91 +482,96 @@ class _BikeReviewDetailsScreenState extends State<BikeReviewDetailsScreen> {
                     children: [
                       Row(
                         children: [
-                          text("Communication Address",
-                              textAlign: TextAlign.center,
-                              isCentered: true,
-                              textColor:blackColor,fontSize: 18,
-                              fontFamily: FontFamily.plusJakartaSansRegular,
-                              fontWeight: FontWeight.w600),
+                          text(
+                            "Communication Address",
+                            textAlign: TextAlign.center,
+                            isCentered: true,
+                            textColor: blackColor,
+                            fontSize: 18,
+                            fontFamily: FontFamily.plusJakartaSansRegular,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ],
                       ),
-                      text("Vikas",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:blackColor,fontSize: 14,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontWeight: FontWeight.w600),
-                      text("Jaipur Rajasthan 302020",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:greyColor,fontSize: 14,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontWeight: FontWeight.w600),
+                      text(
+                        "Vikas",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: blackColor,
+                        fontSize: 14,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      text(
+                        "Jaipur Rajasthan 302020",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: greyColor,
+                        fontSize: 14,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
-              Divider(thickness: .5,color: greyColor,),
+              SizedBox(height: 10),
+              Divider(thickness: .5, color: greyColor),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Premium (Incl. of GST)",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:greyColor,fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansRegular,
-                      fontWeight: FontWeight.w600),
+                  text(
+                    "Premium (Incl. of GST)",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: greyColor,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                    fontWeight: FontWeight.w600,
+                  ),
 
-                  text("₹1,249/month",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:blackColor,fontSize: 16,
-                      fontFamily: FontFamily.plusJakartaSansBold,
-                      fontWeight: FontWeight.w600),
+                  text(
+                    "₹1,249/month",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: blackColor,
+                    fontSize: 16,
+                    fontFamily: FontFamily.plusJakartaSansBold,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ],
               ),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Proceed to Pay",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:18.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Proceed to Pay",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 18.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => UpiPinScreen(),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UpiPinScreen()),
+                    );
+                  },
                 ),
               ),
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

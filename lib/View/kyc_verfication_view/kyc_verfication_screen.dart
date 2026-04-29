@@ -10,15 +10,12 @@ import 'package:flutter/gestures.dart';
 
 import 'kyc_docoument_screen.dart';
 
-
-
 class KycVerficationScreen extends StatefulWidget {
   const KycVerficationScreen({super.key});
 
   @override
   State<KycVerficationScreen> createState() => _KycVerficationScreenState();
 }
-
 
 class _KycVerficationScreenState extends State<KycVerficationScreen> {
   TextEditingController nidNumberController = TextEditingController();
@@ -41,28 +38,30 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             // SizedBox(width: 10,),
             Expanded(
-              child: text("KYC Verification",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "KYC Verification",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
@@ -73,154 +72,186 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              const SizedBox(height: 30,),
-              Center(
-                child: Image.asset(AppImages.splashIcon,height: 100,),
+              const SizedBox(height: 30),
+              Center(child: Image.asset(AppImages.splashIcon, height: 100)),
+              const SizedBox(height: 30),
+              text(
+                "National ID",
+                textColor: blackColor,
+                fontSize: 22,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(height: 30,),
-              text("National ID",
-                  textColor:blackColor,fontSize: 22,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              const SizedBox(height: 5,),
+              const SizedBox(height: 5),
               RichText(
-                text:  TextSpan(
+                text: TextSpan(
                   text: 'Check your ',
-                  style:  TextStyle(color: greyColor,fontSize:12,fontFamily: FontFamily.plusJakartaSansMedium,
-                      fontWeight: FontWeight.w400
+                  style: TextStyle(
+                    color: greyColor,
+                    fontSize: 12,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
+                    fontWeight: FontWeight.w400,
                   ),
                   children: <TextSpan>[
                     TextSpan(
                       text: 'National ID ',
-                      style:  TextStyle(color: pinkColor,fontSize:12 ,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w400
+                      style: TextStyle(
+                        color: pinkColor,
+                        fontSize: 12,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w400,
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-
-                        },
+                      recognizer: TapGestureRecognizer()..onTap = () {},
                     ),
                     TextSpan(
                       text: 'information ',
-                      style:  TextStyle(color: blackColor,fontSize:12 ,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w400
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 12,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w400,
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-
-                        },
+                      recognizer: TapGestureRecognizer()..onTap = () {},
                     ),
-
                   ],
                 ),
               ),
 
-              const SizedBox(height: 40,),
-              text("NID Number",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 40),
+              text(
+                "NID Number",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:nidNumberController,
+                controller: nidNumberController,
                 keyboardType: TextInputType.number,
                 maxLines: 2,
                 hintText: "NID Number",
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(30),],
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
               ),
-              const SizedBox(height: 15,),
-              text("Applicant’s Name",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15),
+              text(
+                "Applicant’s Name",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:nameController,
+                controller: nameController,
                 hintText: "Applicant’s Name",
                 keyboardType: TextInputType.name,
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20),],
+                inputFormatters: [LengthLimitingTextInputFormatter(20)],
               ),
-              const SizedBox(height: 15,),
-              text("Applicant’s Father’s Name",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15),
+              text(
+                "Applicant’s Father’s Name",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:fatherNameController,
+                controller: fatherNameController,
                 keyboardType: TextInputType.name,
                 hintText: "Applicant’s Father’s Name",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 20,),
-              text("Applicant’s Mother’s Name",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 20),
+              text(
+                "Applicant’s Mother’s Name",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:motherNameController,
+                controller: motherNameController,
                 keyboardType: TextInputType.phone,
                 hintText: "Applicant’s Mother’s Name",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 20,),
-              text("Date of Birth",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 20),
+              text(
+                "Date of Birth",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:dobController,
+                controller: dobController,
                 keyboardType: TextInputType.phone,
                 hintText: "Date of Birth",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 20,),
-              text("Present Address",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 20),
+              text(
+                "Present Address",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:presentAddressController,
+                controller: presentAddressController,
                 keyboardType: TextInputType.phone,
                 hintText: "Present Address",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 20,),
-              text("Permanent Address",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 20),
+              text(
+                "Permanent Address",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:permanentAddressController,
+                controller: permanentAddressController,
                 keyboardType: TextInputType.phone,
                 hintText: "Permanent Address",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
 
-              const SizedBox(height: 10,),
-              text("Gender",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
+              const SizedBox(height: 10),
+              text(
+                "Gender",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 20, // gap between items
@@ -232,7 +263,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Male",
                         activeColor: pinkColor,
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value),
                       ),
                       const Text("Male"),
                     ],
@@ -244,7 +276,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Female",
                         activeColor: pinkColor,
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value),
                       ),
                       const Text("Female"),
                     ],
@@ -256,7 +289,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Other",
                         activeColor: pinkColor,
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value),
                       ),
                       const Text("Other"),
                     ],
@@ -264,10 +298,14 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                 ],
               ),
 
-              const SizedBox(height: 10,),
-              text("Purpose of Transaction",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
+              const SizedBox(height: 10),
+              text(
+                "Purpose of Transaction",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 20, // gap between items
@@ -279,7 +317,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Personal",
                         activeColor: pinkColor,
                         groupValue: _purposeTransaction,
-                        onChanged: (value) => setState(() => _purposeTransaction = value),
+                        onChanged: (value) =>
+                            setState(() => _purposeTransaction = value),
                       ),
                       const Text("Personal"),
                     ],
@@ -291,7 +330,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Other",
                         activeColor: pinkColor,
                         groupValue: _purposeTransaction,
-                        onChanged: (value) => setState(() => _purposeTransaction = value),
+                        onChanged: (value) =>
+                            setState(() => _purposeTransaction = value),
                       ),
                       const Text("Other"),
                     ],
@@ -299,11 +339,14 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                 ],
               ),
 
-
-              const SizedBox(height: 10,),
-              text("Occupation",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
+              const SizedBox(height: 10),
+              text(
+                "Occupation",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 20, // gap between items
@@ -315,7 +358,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Service",
                         activeColor: pinkColor,
                         groupValue: _occupation,
-                        onChanged: (value) => setState(() => _occupation = value),
+                        onChanged: (value) =>
+                            setState(() => _occupation = value),
                       ),
                       const Text("Service"),
                     ],
@@ -327,7 +371,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Business",
                         activeColor: pinkColor,
                         groupValue: _occupation,
-                        onChanged: (value) => setState(() => _occupation = value),
+                        onChanged: (value) =>
+                            setState(() => _occupation = value),
                       ),
                       const Text("Business"),
                     ],
@@ -339,7 +384,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Housewife",
                         activeColor: pinkColor,
                         groupValue: _occupation,
-                        onChanged: (value) => setState(() => _occupation = value),
+                        onChanged: (value) =>
+                            setState(() => _occupation = value),
                       ),
                       const Text("Housewife"),
                     ],
@@ -351,7 +397,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Student",
                         activeColor: pinkColor,
                         groupValue: _occupation,
-                        onChanged: (value) => setState(() => _occupation = value),
+                        onChanged: (value) =>
+                            setState(() => _occupation = value),
                       ),
                       const Text("Student"),
                     ],
@@ -363,7 +410,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Other",
                         activeColor: pinkColor,
                         groupValue: _occupation,
-                        onChanged: (value) => setState(() => _occupation = value),
+                        onChanged: (value) =>
+                            setState(() => _occupation = value),
                       ),
                       const Text("Other"),
                     ],
@@ -371,10 +419,14 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                 ],
               ),
 
-              const SizedBox(height: 10,),
-              text("Profit",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
+              const SizedBox(height: 10),
+              text(
+                "Profit",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
               Wrap(
                 alignment: WrapAlignment.start,
                 spacing: 20, // gap between items
@@ -386,7 +438,8 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "Yes",
                         activeColor: pinkColor,
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value),
                       ),
                       const Text("Yes"),
                     ],
@@ -398,61 +451,61 @@ class _KycVerficationScreenState extends State<KycVerficationScreen> {
                         value: "No",
                         activeColor: pinkColor,
                         groupValue: _selectedGender,
-                        onChanged: (value) => setState(() => _selectedGender = value),
+                        onChanged: (value) =>
+                            setState(() => _selectedGender = value),
                       ),
                       const Text("No"),
                     ],
                   ),
-
                 ],
               ),
 
-              const SizedBox(height: 30,),
+              const SizedBox(height: 30),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Continue",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                      // if(nameController.text.isEmpty){
-                      //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Full Name");
-                      // }else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(nameController.text)) {
-                      //   ShowAlertDialog().showErrorAlert(context, "Please enter valid first name");
-                      // }else if(emailNumberController.text.isEmpty){
-                      //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Email");
-                      // }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
-                      //   ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
-                      // }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
-                      //   ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
-                      // }else if(phoneController.text.isEmpty){
-                      //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Contact Number");
-                      // }else{
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => KycDocumentScreen(),));
-                      // }
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    // if(nameController.text.isEmpty){
+                    //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Full Name");
+                    // }else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(nameController.text)) {
+                    //   ShowAlertDialog().showErrorAlert(context, "Please enter valid first name");
+                    // }else if(emailNumberController.text.isEmpty){
+                    //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Email");
+                    // }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
+                    //   ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
+                    // }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
+                    //   ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
+                    // }else if(phoneController.text.isEmpty){
+                    //   ShowAlertDialog().showErrorAlert(context, "Please Enter Your Contact Number");
+                    // }else{
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => KycDocumentScreen(),
+                      ),
+                    );
+                    // }
+                  },
                 ),
               ),
-
             ],
           ),
         ),
       ),
     );
   }
-
 }

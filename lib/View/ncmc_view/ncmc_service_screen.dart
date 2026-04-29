@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/ncmc_view/ncmc_account_screen.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class NcmcServiceScreen extends StatefulWidget {
-
-  const NcmcServiceScreen({super.key,});
+  const NcmcServiceScreen({super.key});
 
   @override
   State<NcmcServiceScreen> createState() => _NcmcServiceScreenState();
 }
-
 
 class _NcmcServiceScreenState extends State<NcmcServiceScreen> {
   List<String> options = [
@@ -33,28 +28,29 @@ class _NcmcServiceScreenState extends State<NcmcServiceScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text("NCMC Recharge",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "NCMC Recharge",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -68,16 +64,21 @@ class _NcmcServiceScreenState extends State<NcmcServiceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              text("All Providers",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All Providers",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
-              text("Select your NCMC provider to recharge",
-                  textColor:blackColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
+              text(
+                "Select your NCMC provider to recharge",
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -88,12 +89,22 @@ class _NcmcServiceScreenState extends State<NcmcServiceScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => NcmcAccountScreen(ncmcServiceName: options[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NcmcAccountScreen(
+                              ncmcServiceName: options[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -108,40 +119,36 @@ class _NcmcServiceScreenState extends State<NcmcServiceScreen> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(AppImages.nhmcImage),
-                                    SizedBox(width: 20,),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(options[index],
-                                            textColor:blackColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          options[index],
+                                          textColor: blackColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

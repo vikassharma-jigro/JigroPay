@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,15 +10,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class BikeInsuranceScreen extends StatefulWidget {
-  const BikeInsuranceScreen({super.key,});
+  const BikeInsuranceScreen({super.key});
 
   @override
   State<BikeInsuranceScreen> createState() => _BikeInsuranceScreenState();
 }
-
 
 class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
   TextEditingController vehicleNumberController = TextEditingController();
@@ -29,15 +25,12 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
   // <-- phone number
 
   Future<void> _makePhoneCall(String number) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: number,
-    );
+    final Uri launchUri = Uri(scheme: 'tel', path: number);
     await launchUrl(launchUri);
   }
+
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -46,44 +39,53 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage,color: white,),
-                    text("Jigropay",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:white,fontSize: 18,
-                        fontFamily: FontFamily.plusJakartaSansBold,
-                        fontWeight: FontWeight.w600),
+                    SvgPicture.asset(AppImages.iImage, color: white),
+                    text(
+                      "Jigropay",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: white,
+                      fontSize: 18,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ],
                 ),
-                text("Insurance Broking",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:lightGreyColor,fontSize: 13,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w600),
+                text(
+                  "Insurance Broking",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: lightGreyColor,
+                  fontSize: 13,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w600,
+                ),
               ],
             ),
 
-            text("My Policies",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:lightGreyColor,fontSize: 13,
-                fontFamily: FontFamily.plusJakartaSansRegular,
-                fontWeight: FontWeight.w600),
+            text(
+              "My Policies",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: lightGreyColor,
+              fontSize: 13,
+              fontFamily: FontFamily.plusJakartaSansRegular,
+              fontWeight: FontWeight.w600,
+            ),
 
             // SizedBox(width: 10,),
           ],
@@ -96,52 +98,62 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text("Jigropay Insurance Broking Private Limited",
+            text(
+              "Jigropay Insurance Broking Private Limited",
               isCentered: true,
               fontSize: 16,
-              textColor: blackColor,fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold,
-
+              textColor: blackColor,
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
             ),
-            SizedBox(height: 15,),
-            text("Address: 136, 1st Floor, Devika Tower, Nehru Place, Delhi, India 110019.",
+            SizedBox(height: 15),
+            text(
+              "Address: 136, 1st Floor, Devika Tower, Nehru Place, Delhi, India 110019.",
               fontSize: 12,
-              textColor: greyColor,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular,
-
+              textColor: greyColor,
+              fontWeight: FontWeight.w400,
+              fontFamily: FontFamily.plusJakartaSansRegular,
             ),
 
-            SizedBox(height: 10,),
-            text("Registration No. 700, IRDA Direct Broker (Life & General).",
+            SizedBox(height: 10),
+            text(
+              "Registration No. 700, IRDA Direct Broker (Life & General).",
               fontSize: 12,
-              textColor: greyColor,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular,
-
+              textColor: greyColor,
+              fontWeight: FontWeight.w400,
+              fontFamily: FontFamily.plusJakartaSansRegular,
             ),
-            text("Valid till 16/02/2026. CIN - U66000DL2019PTC355671",
+            text(
+              "Valid till 16/02/2026. CIN - U66000DL2019PTC355671",
               fontSize: 12,
-              textColor: greyColor,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular,
-
+              textColor: greyColor,
+              fontWeight: FontWeight.w400,
+              fontFamily: FontFamily.plusJakartaSansRegular,
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                text("Terms & Conditions",
+                text(
+                  "Terms & Conditions",
                   fontSize: 14,
-                  textColor: purpleGradientColor,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular,
-
+                  textColor: purpleGradientColor,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     _makePhoneCall(phoneNumber);
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: purpleGradientColor
+                      color: purpleGradientColor,
                     ),
-                    child: Icon(Icons.phone,color: white,),
+                    child: Icon(Icons.phone, color: white),
                   ),
-                )
+                ),
               ],
             ),
           ],
@@ -153,13 +165,15 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              text("Vehicle Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Vehicle Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: vehicleNumberController,
@@ -167,15 +181,12 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
                 // onSubmitted: (v) => filterSearch(v),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
-                textCapitalization:
-                TextCapitalization.characters,
+                textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: lightorangeColor),
@@ -192,64 +203,67 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   fillColor: white,
                   hintText: "Enter your vehicle number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "View Free Quotes",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:18.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "View Free Quotes",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 18.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BikeViewQuotesScreen(),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BikeViewQuotesScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Center(
-                child: text("Don't remember bike number?",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:purpleGradientColor,fontSize: 14,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w400),
+                child: text(
+                  "Don't remember bike number?",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: purpleGradientColor,
+                  fontSize: 14,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

@@ -10,4 +10,4 @@ class FontFamily {
   static const String robotoMediumItalic = 'Roboto-MediumItalic';
   static const String plusJakartaSansRegular = 'PlusJakartaSans-Regular';
   static const String robotoThin = 'Roboto-Thin';
-  }
+}

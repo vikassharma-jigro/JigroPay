@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jigrotech/View/bank_view/pin_screen.dart';
@@ -10,16 +9,13 @@ import 'package:intl/intl.dart';
 
 import 'life_insurance_buy_screen.dart';
 
-
-
 class LifePolicyDetailsScreen extends StatefulWidget {
-
-  const LifePolicyDetailsScreen({super.key,});
+  const LifePolicyDetailsScreen({super.key});
 
   @override
-  State<LifePolicyDetailsScreen> createState() => _LifePolicyDetailsScreenState();
+  State<LifePolicyDetailsScreen> createState() =>
+      _LifePolicyDetailsScreenState();
 }
-
 
 class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
   TextEditingController fullNameController = TextEditingController();
@@ -37,7 +33,6 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -46,23 +41,26 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Policy Holder Details",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Policy Holder Details",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -77,23 +75,24 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Full Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Full Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: fullNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -114,25 +113,36 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your full name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("PAN number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "PAN number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: panNumberController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -154,26 +164,36 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Pan Number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-              text("Email ID",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Email ID",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -195,25 +215,36 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Email",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-               SizedBox(height: 20,),
-              text("Yearly income (pre-tax)",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Yearly income (pre-tax)",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: yearlyIncomeController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -235,26 +266,36 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Yearly income",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-              text("Pincode",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Pincode",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: pincodeController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -276,25 +317,36 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your pincode",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Industry",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Industry",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: industryController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -316,51 +368,52 @@ class _LifePolicyDetailsScreenState extends State<LifePolicyDetailsScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Industry",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              const SizedBox(height: 30,),
+              const SizedBox(height: 30),
               SizedBox(
                 // width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "PROCEED",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:18.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "PROCEED",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 18.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LifeInsuranceBuyScreen(),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LifeInsuranceBuyScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
 }
-
-
-
-

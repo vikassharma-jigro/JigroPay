@@ -34,4 +34,3 @@ const Color lightPink1Color = Color(0xfff3e8ff);
 const Color greenColor = Color(0xffdcfce7);
 const Color green1Color = Color(0xff22c55e);
 const Color asmaColor = Color(0xffe0f2fe);
-

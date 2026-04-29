@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
@@ -10,16 +9,13 @@ import 'package:intl/intl.dart';
 import 'car_review_insurance_details_screen.dart';
 import 'health_cover_insurance_screen.dart';
 
-
-
 class HealthInsuranceFromScreen extends StatefulWidget {
-
-  const HealthInsuranceFromScreen({super.key,});
+  const HealthInsuranceFromScreen({super.key});
 
   @override
-  State<HealthInsuranceFromScreen> createState() => _HealthInsuranceFromScreenState();
+  State<HealthInsuranceFromScreen> createState() =>
+      _HealthInsuranceFromScreenState();
 }
-
 
 class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
   TextEditingController mobileNumberController = TextEditingController();
@@ -37,7 +33,6 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -46,23 +41,26 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Health Insurance",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Health Insurance",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -79,25 +77,27 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
               // width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Proceed",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:18.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Proceed",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 18.0,
 
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => HealthCoverInsuranceScreen(),));
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HealthCoverInsuranceScreen(),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -110,23 +110,24 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Mobile Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Mobile Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: mobileNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(10),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -147,30 +148,44 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Mobile Number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              text("As registered on Paytm app",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 20,),
-              text("Email ID",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "As registered on Paytm app",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 20),
+              text(
+                "Email ID",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -192,29 +207,38 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Email",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Pincode",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Pincode",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: pincodeController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -236,38 +260,49 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Pincode",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
+              SizedBox(height: 20),
+              text(
+                "Nominee details",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 20,),
-              text("Nominee details",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
-
-              SizedBox(height: 20,),
-              text("Full Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Full Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: fullNameController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -289,19 +324,30 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Full Name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-              text("Date of Birth (DD/MM/YYYY)",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Date of Birth (DD/MM/YYYY)",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 readOnly: true,
@@ -311,10 +357,8 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
                 controller: dobController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -336,35 +380,47 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "DD/MM/YYYY",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              text("Age should be between 18 to 65 years",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 13,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
+              text(
+                "Age should be between 18 to 65 years",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 13,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
 
-              SizedBox(height: 20,),
-              text("Relationship",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Relationship",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: relationshipController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -386,71 +442,87 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Relationship",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Premium (Incl. of GST)",
-                      textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                      fontSize: 14,fontWeight: FontWeight.w400,
-                      maxLine: 3
+                  text(
+                    "Premium (Incl. of GST)",
+                    textColor: greyColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    maxLine: 3,
                   ),
-                  text("₹1,436/month",
-                      textAlign: TextAlign.center,
-                      isCentered: true,
-                      textColor:blackColor,fontSize: 16,
-                      fontFamily: FontFamily.plusJakartaSansBold,
-                      fontWeight: FontWeight.w600),
-
+                  text(
+                    "₹1,436/month",
+                    textAlign: TextAlign.center,
+                    isCentered: true,
+                    textColor: blackColor,
+                    fontSize: 16,
+                    fontFamily: FontFamily.plusJakartaSansBold,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ],
               ),
-
-
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   calenderForGetDay(BuildContext context) async {
     return await showDatePicker(
-        fieldHintText: "dd-MM-yyyy",
-        keyboardType: TextInputType.name,
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        context: context,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              primarySwatch: Colors.grey,
-              splashColor: Colors.blue,
-              hintColor: Colors.blue,
-              colorScheme: const ColorScheme.light(
-                  primary: purpleGradientColor,
-                  onSecondary: Colors.blue,
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                  secondary: Colors.white),
-              dialogBackgroundColor: Colors.white,
+      fieldHintText: "dd-MM-yyyy",
+      keyboardType: TextInputType.name,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            primarySwatch: Colors.grey,
+            splashColor: Colors.blue,
+            hintColor: Colors.blue,
+            colorScheme: const ColorScheme.light(
+              primary: purpleGradientColor,
+              onSecondary: Colors.blue,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+              secondary: Colors.white,
             ),
-            child: child ?? const Text(''),
-          );
-        },
-        initialDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day))
-        .then((selectedDate) {
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child ?? const Text(''),
+        );
+      },
+      initialDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ).then((selectedDate) {
       if (selectedDate != null) {
         date = DateFormat('yyyy-MM-dd').format(selectedDate);
         print("date>>>>${date}");
@@ -459,7 +531,3 @@ class _HealthInsuranceFromScreenState extends State<HealthInsuranceFromScreen> {
     });
   }
 }
-
-
-
-

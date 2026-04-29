@@ -14,15 +14,12 @@ import '../../getx_controller/auth_controller.dart';
 import '../../main.dart';
 import 'package:flutter/gestures.dart';
 
-
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
@@ -39,18 +36,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         //backgroundColor: white,
-          automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         title: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
-          child:  Icon(Icons.arrow_back_ios,color: white,),
+          child: Icon(Icons.arrow_back_ios, color: white),
         ),
       ),
       body: SingleChildScrollView(
@@ -59,133 +55,153 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              Center(
-                child: Image.asset(AppImages.splashIcon,height: 100,),
+              Center(child: Image.asset(AppImages.splashIcon, height: 100)),
+              const SizedBox(height: 30),
+              text(
+                "Create your account",
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(height: 30,),
-              text("Create your account",
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              const SizedBox(height: 5,),
-              text("User-friendly solutions. Join us now to unlock a brighter online journey.",
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  textColor:greyColor,fontSize: 14,fontWeight: FontWeight.w500),
-              const SizedBox(height: 40,),
-              text("First Name",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 5),
+              text(
+                "User-friendly solutions. Join us now to unlock a brighter online journey.",
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                textColor: greyColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              const SizedBox(height: 40),
+              text(
+                "First Name",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:nameController,
+                controller: nameController,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: SvgPicture.asset(AppImages.userIcon,),
+                  child: SvgPicture.asset(AppImages.userIcon),
                 ),
                 keyboardType: TextInputType.name,
                 maxLines: 2,
                 hintText: "Name",
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(30),],
+                inputFormatters: [LengthLimitingTextInputFormatter(30)],
               ),
-              const SizedBox(height: 15,),
-              text("Email",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15),
+              text(
+                "Email",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:emailNumberController,
+                controller: emailNumberController,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: Image.asset(AppImages.emailIcon,height: 5,),
+                  child: Image.asset(AppImages.emailIcon, height: 5),
                 ),
                 hintText: "Email",
                 keyboardType: TextInputType.emailAddress,
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20),],
+                inputFormatters: [LengthLimitingTextInputFormatter(20)],
               ),
-              const SizedBox(height: 15,),
-              text("Phone",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15),
+              text(
+                "Phone",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:phoneController,
+                controller: phoneController,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: Image.asset(AppImages.phoneIcon,height: 5,),
+                  child: Image.asset(AppImages.phoneIcon, height: 5),
                 ),
                 keyboardType: TextInputType.phone,
                 hintText: "Phone",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Checkbox(
-                      checkColor: Colors.white,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                          print("hhh>>>$isChecked");
-                        });
-                      },
-                      activeColor: purpleGradientColor,
-                      //checkColor: Colors.white,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      visualDensity: VisualDensity.compact,
-                      side: const BorderSide(color: purpleGradientColor,width: 1)
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                        print("hhh>>>$isChecked");
+                      });
+                    },
+                    activeColor: purpleGradientColor,
+                    //checkColor: Colors.white,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                    side: const BorderSide(
+                      color: purpleGradientColor,
+                      width: 1,
+                    ),
                   ),
 
                   Align(
                     alignment: Alignment.center,
                     child: RichText(
-                      text:  TextSpan(
-                        text: 'I certify that I am 18 years of age or older, and I agree to the\n',
-                        style:  TextStyle(color: greyColor,fontSize:10,fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontWeight: FontWeight.w400
+                      text: TextSpan(
+                        text:
+                            'I certify that I am 18 years of age or older, and I agree to the\n',
+                        style: TextStyle(
+                          color: greyColor,
+                          fontSize: 10,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontWeight: FontWeight.w400,
                         ),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'User Agreement ',
-                            style:  TextStyle(color: pinkColor,fontSize:12 ,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w400
+                            style: TextStyle(
+                              color: pinkColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w400,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-
-                              },
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                           TextSpan(
                             text: 'and ',
-                            style:  TextStyle(color: blackColor,fontSize:10 ,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w400
+                            style: TextStyle(
+                              color: blackColor,
+                              fontSize: 10,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w400,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-
-                              },
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                           TextSpan(
                             text: 'Privacy Policy',
-                            style:  TextStyle(color: pinkColor,fontSize:12 ,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w400
+                            style: TextStyle(
+                              color: pinkColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w400,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-
-                              },
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                         ],
                       ),
@@ -193,63 +209,91 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30,),
+              const SizedBox(height: 30),
               /*Obx((){
                 return authController.isLoading.value
                     ? const Center(child: CircularProgressIndicator())
-                    : */SizedBox(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: 55,
-                  child: CommonButton(
-                      text: "Continue",
-                      textColor: white,
-                      gradient: const LinearGradient(
-                        colors: [pinkColor, purpleGradientColor],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      fontWeight: FontWeight.w600,
-                      fontFamily: FontFamily.plusJakartaSansBold,
-                      fontSize:16.0,
-                      onPressed: (){
-                        if(nameController.text.isEmpty){
-                          ShowAlertDialog().showErrorAlert(context, "Please Enter Your Full Name");
-                        }else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(nameController.text)) {
-                          ShowAlertDialog().showErrorAlert(context, "Please enter valid first name");
-                        }else if(emailNumberController.text.isEmpty){
-                          ShowAlertDialog().showErrorAlert(context, "Please Enter Your Email");
-                        }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
-                          ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
-                        }else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(emailNumberController.text)) {
-                          ShowAlertDialog().showErrorAlert(context, "Please enter valid email address");
-                        }else if(phoneController.text.isEmpty){
-                          ShowAlertDialog().showErrorAlert(context, "Please Enter Your Contact Number");
-                        }else{
-                          authController.getProfileApi(context: context);
-                          // authController.getUserSignupApi(
-                          //   context: context,
-                          //   mobileNumber: phoneController.text,
-                          //   name: nameController.text,
-                          //   email: emailNumberController.text,
-                          //   deviceId: "12345",
-                          //   deviceToken: "abcdxyz",
-                          // );
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => VerifiedScreen(mobile: phoneController.text,email: emailNumberController.text,),));
-                        }
-                      }
-
-
-
+                    : */
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                height: 55,
+                child: CommonButton(
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                )
-      //})
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
+                  onPressed: () {
+                    if (nameController.text.isEmpty) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please Enter Your Full Name",
+                      );
+                    } else if (!RegExp(
+                      r'^[a-zA-Z\s]+$',
+                    ).hasMatch(nameController.text)) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please enter valid first name",
+                      );
+                    } else if (emailNumberController.text.isEmpty) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please Enter Your Email",
+                      );
+                    } else if (!RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(emailNumberController.text)) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please enter valid email address",
+                      );
+                    } else if (!RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                    ).hasMatch(emailNumberController.text)) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please enter valid email address",
+                      );
+                    } else if (phoneController.text.isEmpty) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please Enter Your Contact Number",
+                      );
+                    } else {
+                      authController.getProfileApi(context: context);
+                      // authController.getUserSignupApi(
+                      //   context: context,
+                      //   mobileNumber: phoneController.text,
+                      //   name: nameController.text,
+                      //   email: emailNumberController.text,
+                      //   deviceId: "12345",
+                      //   deviceToken: "abcdxyz",
+                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerifiedScreen(
+                            mobile: phoneController.text,
+                            email: emailNumberController.text,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
 
-
+              //})
             ],
           ),
         ),
-      )
+      ),
     );
   }
-
 }

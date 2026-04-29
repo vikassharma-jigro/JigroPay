@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:jigrotech/View/fast_tag_view/fast_tag_vehicle_screen.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
@@ -8,16 +7,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class FastTagScreen extends StatefulWidget {
-
-  const FastTagScreen({super.key,});
+  const FastTagScreen({super.key});
 
   @override
   State<FastTagScreen> createState() => _FastTagScreenState();
 }
-
 
 class _FastTagScreenState extends State<FastTagScreen> {
   List<String> options = [
@@ -34,28 +29,29 @@ class _FastTagScreenState extends State<FastTagScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Select your FASTAG Pro",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "Select your FASTAG Pro",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -69,23 +65,22 @@ class _FastTagScreenState extends State<FastTagScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Biller",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Biller",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 30,),
+              SizedBox(height: 30),
               TextField(
                 controller: searchController,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: purpleGradientColor),
@@ -102,8 +97,6 @@ class _FastTagScreenState extends State<FastTagScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -112,29 +105,46 @@ class _FastTagScreenState extends State<FastTagScreen> {
                       // filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 0,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: greyColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search by provider",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               Center(
                 child: SizedBox(
                   width: 400,
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: text("How to find your FASTag Bank ?",
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          textColor:greyColor,fontSize: 12,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontWeight: FontWeight.w600),
+                      child: text(
+                        "How to find your FASTag Bank ?",
+                        textAlign: TextAlign.center,
+                        isCentered: true,
+                        textColor: greyColor,
+                        fontSize: 12,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -150,12 +160,22 @@ class _FastTagScreenState extends State<FastTagScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(0.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagVehicleScreen(fastTagBankName: options[index],),));
-                          },
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FastTagVehicleScreen(
+                              fastTagBankName: options[index],
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -171,19 +191,30 @@ class _FastTagScreenState extends State<FastTagScreen> {
                                   children: [
                                     Container(
                                       padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: Border.all(color: purpleGradientColor)
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          color: purpleGradientColor,
                                         ),
-                                        child: Image.asset(AppImages.hdfcImage,height: 30,)),
-                                    SizedBox(width: 20,),
+                                      ),
+                                      child: Image.asset(
+                                        AppImages.hdfcImage,
+                                        height: 30,
+                                      ),
+                                    ),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(options[index],
-                                            textColor:blackColor,fontSize: 14,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          options[index],
+                                          textColor: blackColor,
+                                          fontSize: 14,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -195,20 +226,12 @@ class _FastTagScreenState extends State<FastTagScreen> {
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

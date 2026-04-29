@@ -6,19 +6,14 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class TravelBuyScreen extends StatefulWidget {
-
-  const TravelBuyScreen({super.key,});
+  const TravelBuyScreen({super.key});
 
   @override
   State<TravelBuyScreen> createState() => _TravelBuyScreenState();
 }
 
-
 class _TravelBuyScreenState extends State<TravelBuyScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -34,22 +29,23 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Review and Buy",
-                  textColor: white,
-                  isCentered: true,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold
+              child: text(
+                "Review and Buy",
+                textColor: white,
+                isCentered: true,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
             ),
           ],
@@ -68,52 +64,53 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-
                       Expanded(
-                        child: text("You're just one step away from securing your trip. Plus, a FREE International e-SIM awaits!",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            maxLine: 3,
-                            textColor:blackColor,fontSize: 14,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontWeight: FontWeight.w600),
+                        child: text(
+                          "You're just one step away from securing your trip. Plus, a FREE International e-SIM awaits!",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          maxLine: 3,
+                          textColor: blackColor,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansMedium,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
 
-                      Image.asset(AppImages.travelBuyImage,height: 50,),
+                      Image.asset(AppImages.travelBuyImage, height: 50),
                     ],
                   ),
                 ),
               ),
 
-              SizedBox(
-                height: 15,
+              SizedBox(height: 15),
+              text(
+                "Your Plan",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
-              text("Your Plan",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Group Silver Cover",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      fontFamily: FontFamily.plusJakartaSansBold
+                  text(
+                    "Group Silver Cover",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontFamily: FontFamily.plusJakartaSansBold,
                   ),
-                  text("View Benefits",
-                      textColor: pinkColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      fontFamily: FontFamily.plusJakartaSansMedium
+                  text(
+                    "View Benefits",
+                    textColor: pinkColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
                   ),
                 ],
               ),
@@ -121,19 +118,21 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Selected countries:",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansRegular
+                  text(
+                    "Selected countries:",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
-                  text("Vietnam",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      fontFamily: FontFamily.plusJakartaSansMedium
+                  text(
+                    "Vietnam",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
                   ),
                 ],
               ),
@@ -142,19 +141,21 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Cover validity:",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansRegular
+                  text(
+                    "Cover validity:",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
-                  text("16 Oct 2025 - 28 Oct 2025",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      fontFamily: FontFamily.plusJakartaSansMedium
+                  text(
+                    "16 Oct 2025 - 28 Oct 2025",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
                   ),
                 ],
               ),
@@ -162,112 +163,116 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  text("Sum insured:",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansRegular
+                  text(
+                    "Sum insured:",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
-                  text("250,000/traveller",
-                      textColor: blackColor,
-                      isCentered: true,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      fontFamily: FontFamily.plusJakartaSansMedium
+                  text(
+                    "250,000/traveller",
+                    textColor: blackColor,
+                    isCentered: true,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    fontFamily: FontFamily.plusJakartaSansMedium,
                   ),
                 ],
               ),
 
               SizedBox(height: 20),
-              text("Traveller details",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold
+              text(
+                "Traveller details",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
 
-              text("Traveller 1",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium
+              text(
+                "Traveller 1",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
               ),
-              text("Vikash Sharma",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold
+              text(
+                "Vikash Sharma",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
-              text("DOB: 01 Mar 2006",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium
+              text(
+                "DOB: 01 Mar 2006",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
               ),
-              text("Nominee: Default",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium
+              text(
+                "Nominee: Default",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
               ),
-              text("No medical conditions declared",
-                  textColor: blackColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium
+              text(
+                "No medical conditions declared",
+                textColor: blackColor,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
               ),
-              const SizedBox(height: 60,),
-              text("By proceeding, you agree to our Terms & Conditions and Privacy Policy. Premium includes taxes and fees. Coverage subject to policy terms and conditions.",
-                  textColor: greyColor,
-                  isCentered: true,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansMedium
+              const SizedBox(height: 60),
+              text(
+                "By proceeding, you agree to our Terms & Conditions and Privacy Policy. Premium includes taxes and fees. Coverage subject to policy terms and conditions.",
+                textColor: greyColor,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansMedium,
               ),
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "BUY ₹552",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "BUY ₹552",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SelectTravelDatesScreen(),));
-
-                    }
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectTravelDatesScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

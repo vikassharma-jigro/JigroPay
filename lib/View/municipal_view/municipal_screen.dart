@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/municipal_view/municipal_tax_no_screen.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class MunicipalServiceScreen extends StatefulWidget {
-
-  const MunicipalServiceScreen({super.key,});
+  const MunicipalServiceScreen({super.key});
 
   @override
   State<MunicipalServiceScreen> createState() => _MunicipalServiceScreenState();
 }
-
 
 class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
   TextEditingController searchController = TextEditingController();
@@ -37,28 +32,29 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text("Municipal Tax",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "Municipal Tax",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -74,15 +70,11 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: purpleGradientColor),
@@ -99,8 +91,6 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -109,21 +99,38 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
                       // filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 0,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: greyColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search by provider",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
               SizedBox(height: 15),
-              text("All Providers",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All Providers",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -134,12 +141,21 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MunicipalTaxNoScreen(serviceNo: options[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MunicipalTaxNoScreen(serviceNo: options[index]),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -154,40 +170,36 @@ class _MunicipalServiceScreenState extends State<MunicipalServiceScreen> {
                                 Row(
                                   children: [
                                     SvgPicture.asset(AppImages.tvDishImage),
-                                    SizedBox(width: 20,),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(options[index],
-                                            textColor:blackColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          options[index],
+                                          textColor: blackColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

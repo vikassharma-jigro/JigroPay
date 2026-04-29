@@ -16,86 +16,115 @@ class UseAppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_back_ios,color: purpleGradientColor,),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios, color: purpleGradientColor),
+            ),
+            SizedBox(height: 50),
+            Center(
+              child: Image.asset(
+                AppImages.splashIcon,
+                fit: BoxFit.cover,
+                height: 200,
               ),
-              SizedBox(height: 50,),
-              Center(
-                child: Image.asset(AppImages.splashIcon,
-                  fit: BoxFit.cover
-                  ,height: 200,
-                ),
+            ),
+            Center(
+              child: text(
+                "JIGROPAY",
+                textColor: purpleGradientColor,
+                fontSize: 22,
+                fontWeight: FontWeight.w400,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
-              Center(
-                child: text(
-                    "JIGROPAY",
-                    textColor: purpleGradientColor, fontSize: 22,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: FontFamily.plusJakartaSansBold
-                ),
-              ),
-              SizedBox(height: 20,),
-              Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  onTap: () async {
-                    Navigator.push(context, MaterialPageRoute(builder:(context) => const SignUpScreen(),));
-                  },
-                  child: RichText(
-                    text:  const TextSpan(
-                      text: 'Welcome to ',
-                      style: TextStyle(color: blackColor,fontSize:14,
-                          fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansBold),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'JIGROPAY ',
-                            style: TextStyle(color: pinkColor,fontSize:14,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontWeight: FontWeight.w600)),
-                      TextSpan(
-                            text: 'APP',
-                            style: TextStyle(color: blackColor,fontSize:14,
-                                fontFamily: FontFamily.plusJakartaSansBold,fontWeight: FontWeight.w400)),
-                      ],
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpScreen(),
                     ),
+                  );
+                },
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Welcome to ',
+                    style: TextStyle(
+                      color: blackColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'JIGROPAY ',
+                        style: TextStyle(
+                          color: pinkColor,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'APP',
+                        style: TextStyle(
+                          color: blackColor,
+                          fontSize: 14,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+            ),
+            SizedBox(height: 10),
 
-              Center(
-                child: text(
-                    "Introducing Jigropay  - Simplified Payments. Effortlessly request and make secure transactions anytime, anywhere. Join us now for seamless financial freedom.",
-                    textColor: blackColor, fontSize: 10,
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    fontWeight: FontWeight.w500,fontFamily: FontFamily.plusJakartaSansRegular
-                ),
+            Center(
+              child: text(
+                "Introducing Jigropay  - Simplified Payments. Effortlessly request and make secure transactions anytime, anywhere. Join us now for seamless financial freedom.",
+                textColor: blackColor,
+                fontSize: 10,
+                textAlign: TextAlign.center,
+                isCentered: true,
+                fontWeight: FontWeight.w500,
+                fontFamily: FontFamily.plusJakartaSansRegular,
               ),
-              SizedBox(height: 54,),
-              CommonButton(text: "USE APP",
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => KycVerficationScreen(),));
-                  },
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+            ),
+            SizedBox(height: 54),
+            CommonButton(
+              text: "USE APP",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KycVerficationScreen(),
                   ),
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-            ],
-          ),
-        )
+                );
+              },
+              gradient: const LinearGradient(
+                colors: [pinkColor, purpleGradientColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

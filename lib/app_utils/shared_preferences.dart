@@ -11,7 +11,6 @@ class SpUtil {
   static const String MEMBER_ID = "member_id";
   static const String FCM_TOKEN = 'fcm_token';
 
-
   static const String DARK_MODE = "dark";
 
   static SpUtil? _instance;
@@ -108,6 +107,5 @@ class SpUtil {
     remove(IS_LOGGED_IN);
     remove(MEMBER_ID);
     remove(USERNAME);
-
   }
 }

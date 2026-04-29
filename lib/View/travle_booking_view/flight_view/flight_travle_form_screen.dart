@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
@@ -9,16 +8,12 @@ import 'package:intl/intl.dart';
 
 import 'flight_meal_insurance_screen.dart';
 
-
-
 class FlightTravelFormScreen extends StatefulWidget {
-
-  const FlightTravelFormScreen({super.key,});
+  const FlightTravelFormScreen({super.key});
 
   @override
   State<FlightTravelFormScreen> createState() => _FlightTravelFormScreenState();
 }
-
 
 class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
   TextEditingController middleNameController = TextEditingController();
@@ -36,7 +31,6 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -45,23 +39,26 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Traveller Details",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Traveller Details",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -75,38 +72,40 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("₹6,964",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:blackColor,fontSize: 16,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "₹6,964",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: blackColor,
+              fontSize: 16,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             SizedBox(
               // width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Continue",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:18.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Continue",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 18.0,
 
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddOnsMealScreen(),));
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddOnsMealScreen()),
+                  );
+                },
               ),
             ),
-
           ],
         ),
       ),
@@ -125,72 +124,88 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
                       Container(
                         padding: EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: blue1Color
+                          borderRadius: BorderRadius.circular(5),
+                          color: blue1Color,
                         ),
-                        child: text("6E",textColor: white,fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,fontWeight: FontWeight.w600),
+                        child: text(
+                          "6E",
+                          textColor: white,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              text("JAI",
-                                  textAlign: TextAlign.center,
-                                  isCentered: true,
-                                  textColor:blackColor,fontSize: 14,
-                                  fontFamily: FontFamily.plusJakartaSansBold,
-                                  fontWeight: FontWeight.w600),
-                              Icon(Icons.arrow_forward,color: blackColor,),
-                              text("DEL",
-                                  textAlign: TextAlign.center,
-                                  isCentered: true,
-                                  textColor:blackColor,fontSize: 14,
-                                  fontFamily: FontFamily.plusJakartaSansBold,
-                                  fontWeight: FontWeight.w600),
+                              text(
+                                "JAI",
+                                textAlign: TextAlign.center,
+                                isCentered: true,
+                                textColor: blackColor,
+                                fontSize: 14,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              Icon(Icons.arrow_forward, color: blackColor),
+                              text(
+                                "DEL",
+                                textAlign: TextAlign.center,
+                                isCentered: true,
+                                textColor: blackColor,
+                                fontSize: 14,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ],
                           ),
-                          text("Wed, 15 Oct • Non-stop • 1h • Economy",
-                              textAlign: TextAlign.center,
-                              isCentered: true,
-                              textColor:blackColor,fontSize: 13,
-                              fontFamily: FontFamily.plusJakartaSansRegular,
-                              fontWeight: FontWeight.w400),
+                          text(
+                            "Wed, 15 Oct • Non-stop • 1h • Economy",
+                            textAlign: TextAlign.center,
+                            isCentered: true,
+                            textColor: blackColor,
+                            fontSize: 13,
+                            fontFamily: FontFamily.plusJakartaSansRegular,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ],
                       ),
-
                     ],
                   ),
-
                 ],
               ),
-              SizedBox(height: 20,),
-              text("Travellers",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 20,),
-              text("First & Middle Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Travellers",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 20),
+              text(
+                "First & Middle Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: middleNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(20),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -211,25 +226,36 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Enter your First & Middle Name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Last Name",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Last Name",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: lastNameController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   //LengthLimitingTextInputFormatter(10),
                 ],
                 decoration: InputDecoration(
@@ -251,44 +277,59 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Last Name",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Contact Details",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              SizedBox(height: 5,),
-              text("Your booking details will be sent here",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
+              SizedBox(height: 20),
+              text(
+                "Contact Details",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(height: 5),
+              text(
+                "Your booking details will be sent here",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
 
-              SizedBox(height: 20,),
-              text("Email",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Email",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -310,28 +351,37 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Email",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              SizedBox(height: 20,),
-              text("Mobile Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Mobile Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: mobileNumberController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(10),
-
                 ],
 
                 decoration: InputDecoration(
@@ -353,37 +403,49 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Mobile Number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Billing Address",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Billing Address",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 20,),
-              text("Pincode",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Pincode",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-                onTap: () {
-                },
+                onTap: () {},
                 controller: pincodeController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -405,28 +467,37 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Enter your Pincode",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-              text("Address",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Address",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: addressController,
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -448,60 +519,61 @@ class _FlightTravelFormScreenState extends State<FlightTravelFormScreen> {
 
                   fillColor: white,
                   hintText: "Address",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Checkbox(
-                      checkColor: Colors.white,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                          print("hhh>>>$isChecked");
-                        });
-                      },
-                      activeColor: purpleGradientColor,
-                      //checkColor: Colors.white,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      visualDensity: VisualDensity.compact,
-                      side: const BorderSide(color: purpleGradientColor,width: 1)
+                    checkColor: Colors.white,
+                    value: isChecked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                        print("hhh>>>$isChecked");
+                      });
+                    },
+                    activeColor: purpleGradientColor,
+                    //checkColor: Colors.white,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                    side: const BorderSide(
+                      color: purpleGradientColor,
+                      width: 1,
+                    ),
                   ),
 
-                  SizedBox(width: 10,),
+                  SizedBox(width: 10),
                   Expanded(
-                    child: text("By clicking on 'continue,' I confirm that I have read... Added Assured @ ₹809 /pax",
-                        textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                        fontSize: 14,fontWeight: FontWeight.w400,
-                        maxLine: 3
+                    child: text(
+                      "By clicking on 'continue,' I confirm that I have read... Added Assured @ ₹809 /pax",
+                      textColor: greyColor,
+                      fontFamily: FontFamily.plusJakartaSansRegular,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      maxLine: 3,
                     ),
-                  )
+                  ),
                 ],
               ),
-
-
-
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

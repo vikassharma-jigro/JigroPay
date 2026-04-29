@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 
-
 ValueNotifier<bool> isConnected = ValueNotifier(true);
+
 class ConnectionStatus {
   //This creates the single instance by calling
   // the `_internal` constructor specified below
@@ -28,9 +28,13 @@ class ConnectionStatus {
   //Hook into flutter_connectivity's Stream to listen for changes
   //And check the connection status out of the gate
   void initialize() {
-    _connectivity.onConnectivityChanged.listen((List<ConnectivityResult> results) {
+    _connectivity.onConnectivityChanged.listen((
+      List<ConnectivityResult> results,
+    ) {
       // Naye version me list milti hai, pehla element le lo
-      final result = results.isNotEmpty ? results.first : ConnectivityResult.none;
+      final result = results.isNotEmpty
+          ? results.first
+          : ConnectivityResult.none;
       _connectionChange(result);
     });
 

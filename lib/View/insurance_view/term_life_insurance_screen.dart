@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
@@ -10,16 +9,13 @@ import 'package:intl/intl.dart';
 import 'accident_form_screen.dart';
 import 'life_congratulations_screen.dart';
 
-
-
 class TermLifeInsuranceScreen extends StatefulWidget {
-
-  const TermLifeInsuranceScreen({super.key,});
+  const TermLifeInsuranceScreen({super.key});
 
   @override
-  State<TermLifeInsuranceScreen> createState() => _TermLifeInsuranceScreenState();
+  State<TermLifeInsuranceScreen> createState() =>
+      _TermLifeInsuranceScreenState();
 }
-
 
 class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
   dynamic date;
@@ -31,7 +27,6 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -40,23 +35,26 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Term Life Insurance",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Term Life Insurance",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -70,61 +68,66 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Checkbox(
-                    checkColor: Colors.white,
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                        print("hhh>>>$isChecked");
-                      });
-                    },
-                    activeColor: purpleGradientColor,
-                    //checkColor: Colors.white,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    visualDensity: VisualDensity.compact,
-                    side: const BorderSide(color: purpleGradientColor,width: 1)
+                  checkColor: Colors.white,
+                  value: isChecked,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value!;
+                      print("hhh>>>$isChecked");
+                    });
+                  },
+                  activeColor: purpleGradientColor,
+                  //checkColor: Colors.white,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                  side: const BorderSide(color: purpleGradientColor, width: 1),
                 ),
 
-                SizedBox(width: 10,),
+                SizedBox(width: 10),
                 Expanded(
-                  child: text("I would like to receive a call from Jigropay’s  expert advisors.",
-                      textColor: greyColor,fontFamily: FontFamily.plusJakartaSansRegular,
-                      fontSize: 14,fontWeight: FontWeight.w400,
-                      maxLine: 3
+                  child: text(
+                    "I would like to receive a call from Jigropay’s  expert advisors.",
+                    textColor: greyColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    maxLine: 3,
                   ),
-                )
+                ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 10),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "CHECK NOW",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:18.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "CHECK NOW",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 18.0,
 
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LifeCongratulationsScreen(),));
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LifeCongratulationsScreen(),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -136,63 +139,84 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("GST on Life Insurance drops to 0%",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "GST on Life Insurance drops to 0%",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     children: [
-                      Image.asset(AppImages.topInsurersImage,height: 50,),
-                      text("8+ Top Insurers",
-                          textColor:greyColor,fontSize: 13,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500),
+                      Image.asset(AppImages.topInsurersImage, height: 50),
+                      text(
+                        "8+ Top Insurers",
+                        textColor: greyColor,
+                        fontSize: 13,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ],
                   ),
                   Column(
                     children: [
-                      Image.asset(AppImages.managerImage,height: 50,),
-                      text("Relationship manager",
-                          textColor:greyColor,fontSize: 13,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500),
+                      Image.asset(AppImages.managerImage, height: 50),
+                      text(
+                        "Relationship manager",
+                        textColor: greyColor,
+                        fontSize: 13,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ],
                   ),
                   Column(
                     children: [
-                      Image.asset(AppImages.discountImage,height: 50,),
-                      text("Upto X discount",
-                          textColor:greyColor,fontSize: 13,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500),
+                      Image.asset(AppImages.discountImage, height: 50),
+                      text(
+                        "Upto X discount",
+                        textColor: greyColor,
+                        fontSize: 13,
+                        fontFamily: FontFamily.plusJakartaSansMedium,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
-             SizedBox(height: 20,),
-              text("Calculate your cover amount",
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w400),
+              SizedBox(height: 20),
+              text(
+                "Calculate your cover amount",
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w400,
+              ),
               //SizedBox(height: 10,),
-              text("Enter details to calculate your sum assured ",
-                  textColor:greyColor,fontSize: 10,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 20,),
-              text("Date of birth",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Enter details to calculate your sum assured ",
+                textColor: greyColor,
+                fontSize: 10,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 20),
+              text(
+                "Date of birth",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 readOnly: true,
@@ -201,10 +225,8 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
                 },
                 controller: dobController,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -227,28 +249,37 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
 
                   fillColor: white,
                   hintText: "DD/MM/YYYY",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("Annual Income",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Annual Income",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
-
                 controller: annualIncomeController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(14),
-
                 ],
 
                 decoration: InputDecoration(
@@ -270,52 +301,63 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
 
                   fillColor: white,
                   hintText: "Enter Your Annual Income",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-
-
-
-
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   calenderForGetDay(BuildContext context) async {
     return await showDatePicker(
-        fieldHintText: "dd-MM-yyyy",
-        keyboardType: TextInputType.name,
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        context: context,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            data: ThemeData(
-              primarySwatch: Colors.grey,
-              splashColor: Colors.blue,
-              hintColor: Colors.blue,
-              colorScheme: const ColorScheme.light(
-                  primary: purpleGradientColor,
-                  onSecondary: Colors.blue,
-                  onPrimary: Colors.white,
-                  surface: Colors.white,
-                  onSurface: Colors.black,
-                  secondary: Colors.white),
-              dialogBackgroundColor: Colors.white,
+      fieldHintText: "dd-MM-yyyy",
+      keyboardType: TextInputType.name,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData(
+            primarySwatch: Colors.grey,
+            splashColor: Colors.blue,
+            hintColor: Colors.blue,
+            colorScheme: const ColorScheme.light(
+              primary: purpleGradientColor,
+              onSecondary: Colors.blue,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black,
+              secondary: Colors.white,
             ),
-            child: child ?? const Text(''),
-          );
-        },
-        initialDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day),
-        firstDate: DateTime(1900),
-        lastDate: DateTime(DateTime.now().year - 18, DateTime.now().month, DateTime.now().day))
-        .then((selectedDate) {
+            dialogBackgroundColor: Colors.white,
+          ),
+          child: child ?? const Text(''),
+        );
+      },
+      initialDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(
+        DateTime.now().year - 18,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ).then((selectedDate) {
       if (selectedDate != null) {
         date = DateFormat('yyyy-MM-dd').format(selectedDate);
         print("date>>>>${date}");
@@ -324,7 +366,3 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
     });
   }
 }
-
-
-
-

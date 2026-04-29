@@ -9,7 +9,8 @@ class SelectTravelDatesScreen extends StatefulWidget {
   const SelectTravelDatesScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelectTravelDatesScreen> createState() => _SelectTravelDatesScreenState();
+  State<SelectTravelDatesScreen> createState() =>
+      _SelectTravelDatesScreenState();
 }
 
 class _SelectTravelDatesScreenState extends State<SelectTravelDatesScreen> {
@@ -51,9 +52,10 @@ class _SelectTravelDatesScreenState extends State<SelectTravelDatesScreen> {
             const SizedBox(height: 12),
             text(
               "Dates are in Indian Standard Time",
-              fontSize: 13,fontFamily: FontFamily.plusJakartaSansMedium,
-              textColor: greyColor
-              ),
+              fontSize: 13,
+              fontFamily: FontFamily.plusJakartaSansMedium,
+              textColor: greyColor,
+            ),
             const SizedBox(height: 12),
 
             // Calendar
@@ -115,19 +117,27 @@ class _SelectTravelDatesScreenState extends State<SelectTravelDatesScreen> {
                   ),
                   onPressed: (_startDate != null && _endDate != null)
                       ? () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => TravelCategoryScreen(),));
-                    // Handle next action
-                    print("Start: $_startDate, End: $_endDate");
-                  }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TravelCategoryScreen(),
+                            ),
+                          );
+                          // Handle next action
+                          print("Start: $_startDate, End: $_endDate");
+                        }
                       : null,
                   child: Text(
                     "NEXT",
                     style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -145,17 +155,21 @@ class _SelectTravelDatesScreenState extends State<SelectTravelDatesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text(label,
-                fontSize: 13,fontFamily: FontFamily.plusJakartaSansMedium,
-                textColor: greyColor),
+            text(
+              label,
+              fontSize: 13,
+              fontFamily: FontFamily.plusJakartaSansMedium,
+              textColor: greyColor,
+            ),
             SizedBox(height: 4),
             text(
               date != null
                   ? "${date.day} ${_monthName(date.month)} ${date.year}"
                   : "--",
-                fontSize: 14,fontFamily: FontFamily.plusJakartaSansBold,
-                textColor: blackColor
-                ),
+              fontSize: 14,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              textColor: blackColor,
+            ),
           ],
         ),
       ),
@@ -164,8 +178,18 @@ class _SelectTravelDatesScreenState extends State<SelectTravelDatesScreen> {
 
   String _monthName(int month) {
     const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
     ];
     return months[month - 1];
   }

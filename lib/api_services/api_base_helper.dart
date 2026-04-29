@@ -13,14 +13,14 @@ import 'api_config.dart';
 import 'app_exception.dart';
 
 class ApiBaseHelper {
- // SharedPreferences? prefs;
+  // SharedPreferences? prefs;
   Future<dynamic> postApiCall(
-      bool isShow,
-      String url,
-      BuildContext context,
-      Map<String, dynamic>? jsonData, {
-        bool? isPopup = true,
-      }) async {
+    bool isShow,
+    String url,
+    BuildContext context,
+    Map<String, dynamic>? jsonData, {
+    bool? isPopup = true,
+  }) async {
     bool isNetActive = await ConnectionStatus.getInstance().checkConnection();
     if (!isNetActive) {
       internetConnectionDialog(context);
@@ -101,30 +101,25 @@ class ApiBaseHelper {
     } catch (e) {
       if (isShow && Get.isDialogOpen!) Get.back();
       print("⚠️ API Exception: $e");
-      return {
-        "status": false,
-        "message": "Something went wrong",
-      };
+      return {"status": false, "message": "Something went wrong"};
     }
   }
 
   Future<dynamic> getApiCall(
-      BuildContext context, {
-        bool? isPopup = true,
-      }) async {
+    BuildContext context, {
+    bool? isPopup = true,
+  }) async {
     bool isNetActive = await ConnectionStatus.getInstance().checkConnection();
     if (!isNetActive) {
       internetConnectionDialog(context);
       return null;
     }
 
-
-      // Show loading dialog
-      Get.dialog(
-        const Center(child: CircularProgressIndicator()),
-        barrierDismissible: false,
-      );
-
+    // Show loading dialog
+    Get.dialog(
+      const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
 
     dynamic responseJson;
     var apiHeader = {
@@ -135,14 +130,18 @@ class ApiBaseHelper {
 
     try {
       final http.Response response = await http.get(
-        Uri.parse("https://discoveryprovider.audius.co/v1/tracks/k90zmzB/stream"),
+        Uri.parse(
+          "https://discoveryprovider.audius.co/v1/tracks/k90zmzB/stream",
+        ),
         headers: apiHeader,
       );
 
-      if ( Get.isDialogOpen!) Get.back();
+      if (Get.isDialogOpen!) Get.back();
 
       if (kDebugMode) {
-        print("🔹 API URL: ${"https://discoveryprovider.audius.co/v1/tracks/k90zmzB/stream"}");
+        print(
+          "🔹 API URL: ${"https://discoveryprovider.audius.co/v1/tracks/k90zmzB/stream"}",
+        );
         print("🔹 Header: $apiHeader");
         print("🔹 Status Code: ${response.statusCode}");
         log('🔹 Response Body: ${response.body}');
@@ -181,19 +180,15 @@ class ApiBaseHelper {
 
       return responseJson;
     } on SocketException {
-      if ( Get.isDialogOpen!) Get.back();
-       showToastMessage("No Internet connection");
-       throw FetchDataException('No Internet connection');
+      if (Get.isDialogOpen!) Get.back();
+      showToastMessage("No Internet connection");
+      throw FetchDataException('No Internet connection');
     } catch (e) {
-      if ( Get.isDialogOpen!) Get.back();
+      if (Get.isDialogOpen!) Get.back();
       print("⚠️ API Exception: $e");
-      return {
-        "status": false,
-        "message": "Something went wrong",
-      };
+      return {"status": false, "message": "Something went wrong"};
     }
   }
-
 
   dynamic _returnResponse(http.Response response) {
     switch (response.statusCode) {
@@ -206,15 +201,16 @@ class ApiBaseHelper {
       case 400:
         throw BadRequestException(response.body.toString());
       case 401:
-       throw UnauthorisedException(response.body.toString());
+        throw UnauthorisedException(response.body.toString());
       case 403:
         throw UnauthorisedException(response.body.toString());
       case 404:
-        //throw UnauthorisedException(response.body.toString());
+      //throw UnauthorisedException(response.body.toString());
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+          'Error occured while Communication with Server with StatusCode : ${response.statusCode}',
+        );
     }
   }
 
@@ -233,10 +229,7 @@ class ApiBaseHelper {
           'Please check your internet connection and try again.',
         ),
         actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('OK'),
-          ),
+          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
         ],
       ),
       barrierDismissible: false,

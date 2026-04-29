@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,15 +11,12 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'car_insurance_form_screen.dart';
 
-
-
 class CarInsuranceScreen extends StatefulWidget {
-  const CarInsuranceScreen({super.key,});
+  const CarInsuranceScreen({super.key});
 
   @override
   State<CarInsuranceScreen> createState() => _CarInsuranceScreenState();
 }
-
 
 class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
   TextEditingController vehicleNumberController = TextEditingController();
@@ -30,15 +26,12 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
   // <-- phone number
 
   Future<void> _makePhoneCall(String number) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: number,
-    );
+    final Uri launchUri = Uri(scheme: 'tel', path: number);
     await launchUrl(launchUri);
   }
+
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -47,44 +40,53 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage,color: white,),
-                    text("Jigropay",
-                        textAlign: TextAlign.center,
-                        isCentered: true,
-                        textColor:white,fontSize: 18,
-                        fontFamily: FontFamily.plusJakartaSansBold,
-                        fontWeight: FontWeight.w600),
+                    SvgPicture.asset(AppImages.iImage, color: white),
+                    text(
+                      "Jigropay",
+                      textAlign: TextAlign.center,
+                      isCentered: true,
+                      textColor: white,
+                      fontSize: 18,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ],
                 ),
-                text("Insurance Broking",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:lightGreyColor,fontSize: 13,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w600),
+                text(
+                  "Insurance Broking",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: lightGreyColor,
+                  fontSize: 13,
+                  fontFamily: FontFamily.plusJakartaSansRegular,
+                  fontWeight: FontWeight.w600,
+                ),
               ],
             ),
 
-            text("My Policies",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:lightGreyColor,fontSize: 13,
-                fontFamily: FontFamily.plusJakartaSansRegular,
-                fontWeight: FontWeight.w600),
+            text(
+              "My Policies",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: lightGreyColor,
+              fontSize: 13,
+              fontFamily: FontFamily.plusJakartaSansRegular,
+              fontWeight: FontWeight.w600,
+            ),
 
             // SizedBox(width: 10,),
           ],
@@ -98,29 +100,38 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(AppImages.carInImage),
-              SizedBox(height: 20,),
-              text("Buy Car Insurance starting from",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 20),
+              text(
+                "Buy Car Insurance starting from",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 20,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
               Center(
-                child: text("Rs 175/month",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:pinkColor,fontSize: 20,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 20),
-              text("Car Number",
+                child: text(
+                  "Rs 175/month",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+                  textColor: pinkColor,
+                  fontSize: 20,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 20),
+              text(
+                "Car Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 10),
               TextField(
                 controller: vehicleNumberController,
@@ -128,15 +139,12 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
                 // onSubmitted: (v) => filterSearch(v),
                 keyboardType: TextInputType.name,
                 inputFormatters: [
-                  FilteringTextInputFormatter.deny(
-                      RegExp(regexToRemoveEmoji)),
+                  FilteringTextInputFormatter.deny(RegExp(regexToRemoveEmoji)),
                   LengthLimitingTextInputFormatter(15),
 
-                  FilteringTextInputFormatter.allow(
-                      RegExp('[a-zA-Z0-9]'))
+                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]')),
                 ],
-                textCapitalization:
-                TextCapitalization.characters,
+                textCapitalization: TextCapitalization.characters,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: lightorangeColor),
@@ -153,55 +161,55 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   fillColor: white,
                   hintText: "Enter your car number",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: lightWhiteColor, fontFamily: 'Roboto-Light'),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: lightWhiteColor,
+                    fontFamily: 'Roboto-Light',
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Get quotes for free",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:18.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Get quotes for free",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 18.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => CarInsuranceFormScreen(),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CarInsuranceFormScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
-
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

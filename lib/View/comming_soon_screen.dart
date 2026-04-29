@@ -7,7 +7,6 @@ import '../app_utils/app_colors.dart';
 import '../app_utils/font_family.dart';
 import '../main.dart';
 
-
 class CommingSoonScreen extends StatefulWidget {
   const CommingSoonScreen({Key? key}) : super(key: key);
 
@@ -16,12 +15,9 @@ class CommingSoonScreen extends StatefulWidget {
 }
 
 class _CommingSoonScreenState extends State<CommingSoonScreen> {
-
-
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -34,25 +30,22 @@ class _CommingSoonScreenState extends State<CommingSoonScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-
 
             // SizedBox(width: 10,),
           ],
         ),
       ),
       body: Center(
-        child: Container(
-          child: Image.asset(AppImages.inProgressImage),
-        ),
+        child: Container(child: Image.asset(AppImages.inProgressImage)),
       ),
     );
   }

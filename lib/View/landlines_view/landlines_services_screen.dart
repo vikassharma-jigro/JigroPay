@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/gas_view/piped_gas_details_screen.dart';
@@ -10,16 +9,13 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'landline_details_screen.dart';
 
-
-
 class LandlinesServicesScreen extends StatefulWidget {
-
-  const LandlinesServicesScreen({super.key,});
+  const LandlinesServicesScreen({super.key});
 
   @override
-  State<LandlinesServicesScreen> createState() => _LandlinesServicesScreenState();
+  State<LandlinesServicesScreen> createState() =>
+      _LandlinesServicesScreenState();
 }
-
 
 class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
   TextEditingController searchController = TextEditingController();
@@ -31,7 +27,6 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
     "MTNL Mumbai Lease Circuit",
     "Mahanagar Telephone Nigam Limited - Delhi",
     "Mahanagar Telephone Nigam Limited - Mumbai",
-
   ];
   List<String> filteredOptions = [];
   void _filterList(String query) {
@@ -42,6 +37,7 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
           .toList();
     });
   }
+
   @override
   void initState() {
     filteredOptions = options; // initially show all
@@ -59,21 +55,24 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text("Landline",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              "Landline",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -89,12 +88,12 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged:(i){
+                onChanged: (i) {
                   _filterList(i);
                 },
+
                 // filterSearch,
                 // });
-
                 onSubmitted: (v) {
                   _filterList(v);
                 },
@@ -114,8 +113,6 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -124,21 +121,38 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
                       // filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 0,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: greyColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search by provider",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
               SizedBox(height: 15),
-              text("All Provider",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All Provider",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -149,12 +163,22 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LandlineDetailsScreen(serviceNo: filteredOptions[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LandlineDetailsScreen(
+                              serviceNo: filteredOptions[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -166,36 +190,31 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
                             Row(
                               children: [
                                 SvgPicture.asset(AppImages.phoneImage),
-                                SizedBox(width: 20,),
+                                SizedBox(width: 20),
                                 Expanded(
-                                  child: text(filteredOptions[index],
-                                      maxLine: 2,
-                                      textColor:blackColor,fontSize: 13,
-                                      fontFamily: FontFamily.plusJakartaSansMedium,
-                                      fontWeight: FontWeight.w500),
+                                  child: text(
+                                    filteredOptions[index],
+                                    maxLine: 2,
+                                    textColor: blackColor,
+                                    fontSize: 13,
+                                    fontFamily:
+                                        FontFamily.plusJakartaSansMedium,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

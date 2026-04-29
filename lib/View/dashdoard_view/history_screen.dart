@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
@@ -8,16 +7,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class HistoryScreen extends StatefulWidget {
-
-  const HistoryScreen({super.key,});
+  const HistoryScreen({super.key});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
-
 
 class _HistoryScreenState extends State<HistoryScreen> {
   TextEditingController searchController = TextEditingController();
@@ -27,7 +22,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     "GROCERY MART",
     "RESTAURANT ABC",
     "PRIYA SHARMA",
-
   ];
   List<String> filteredOptions = [];
   void _filterList(String query) {
@@ -38,6 +32,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           .toList();
     });
   }
+
   @override
   void initState() {
     filteredOptions = options; // initially show all
@@ -55,17 +50,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             Expanded(
-              child: text("History",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "History",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             Icon(Icons.help),
 
@@ -82,12 +79,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged:(i){
+                onChanged: (i) {
                   _filterList(i);
                 },
+
                 // filterSearch,
                 // });
-
                 onSubmitted: (v) {
                   _filterList(v);
                 },
@@ -107,8 +104,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
 
                   // Other decoration properties...
-
-
                   filled: true,
 
                   // search Icon ------------------
@@ -117,21 +112,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       // filterSearch(searchController.text);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 0, bottom: 5, top: 5),
+                      padding: const EdgeInsets.only(
+                        right: 8.0,
+                        left: 0,
+                        bottom: 5,
+                        top: 5,
+                      ),
                       child: const Icon(Icons.search, color: greyColor),
                     ),
                   ),
                   fillColor: white,
                   hintText: "Search by provider",
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
               SizedBox(height: 15),
-              text("All History",
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "All History",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -142,11 +154,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                           },
+                    child: GestureDetector(
+                      onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -162,57 +176,64 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Icon(Icons.history),
-                                    SizedBox(width: 20,),
+                                    SizedBox(width: 20),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        text(filteredOptions[index],
-                                            maxLine: 2,
-                                            textColor:blackColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansMedium,
-                                            fontWeight: FontWeight.w500),
+                                        text(
+                                          filteredOptions[index],
+                                          maxLine: 2,
+                                          textColor: blackColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansMedium,
+                                          fontWeight: FontWeight.w500,
+                                        ),
 
-                                        text("Today, 2:45 PM",
-                                            maxLine: 2,
-                                            textColor:greyColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansRegular,
-                                            fontWeight: FontWeight.w400),
-                                        text("Debited from",
-                                            maxLine: 2,
-                                            textColor:greyColor,fontSize: 13,
-                                            fontFamily: FontFamily.plusJakartaSansRegular,
-                                            fontWeight: FontWeight.w400),
+                                        text(
+                                          "Today, 2:45 PM",
+                                          maxLine: 2,
+                                          textColor: greyColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        text(
+                                          "Debited from",
+                                          maxLine: 2,
+                                          textColor: greyColor,
+                                          fontSize: 13,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
-                                text("₹27",
-                                    maxLine: 2,
-                                    textColor:blackColor,fontSize: 18,
-                                    fontFamily: FontFamily.plusJakartaSansBold,
-                                    fontWeight: FontWeight.w500),
+                                text(
+                                  "₹27",
+                                  maxLine: 2,
+                                  textColor: blackColor,
+                                  fontSize: 18,
+                                  fontFamily: FontFamily.plusJakartaSansBold,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ],
                             ),
-
                           ],
                         ),
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

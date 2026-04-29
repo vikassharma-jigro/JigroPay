@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:jigrotech/View/bank_view/pin_screen.dart';
 
@@ -7,47 +6,44 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class BillNumberScreen extends StatefulWidget {
-final String? billServiceName;
-  const BillNumberScreen({super.key,this.billServiceName});
+  final String? billServiceName;
+  const BillNumberScreen({super.key, this.billServiceName});
 
   @override
   State<BillNumberScreen> createState() => _BillNumberScreenState();
 }
 
-
 class _BillNumberScreenState extends State<BillNumberScreen> {
-
   TextEditingController billNumberController = TextEditingController();
   @override
   void initState() {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Pay Bill",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "Pay Bill",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -61,20 +57,23 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 50,),
+              SizedBox(height: 50),
               Center(
                 child: Card(
                   color: white,
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: text(widget.billServiceName??"",
-                        textColor:blackColor,fontSize: 16,
-                        fontFamily: FontFamily.plusJakartaSansMedium,
-                        fontWeight: FontWeight.w600),
+                    child: text(
+                      widget.billServiceName ?? "",
+                      textColor: blackColor,
+                      fontSize: 16,
+                      fontFamily: FontFamily.plusJakartaSansMedium,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
 
               Center(
                 child: Card(
@@ -86,59 +85,83 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Bill No",
-                                textColor:blackColor,fontSize: 12,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "Bill No",
+                              textColor: blackColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w600,
+                            ),
 
-                            text("Bill Month Year",
-                                textColor:blackColor,fontSize: 12,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "Bill Month Year",
+                              textColor: blackColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("098525151562",
-                                textColor:blackColor,fontSize: 18,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "098525151562",
+                              textColor: blackColor,
+                              fontSize: 18,
+                              fontFamily: FontFamily.plusJakartaSansBold,
+                              fontWeight: FontWeight.w600,
+                            ),
 
-                            text("092022",
-                                textColor:blackColor,fontSize: 18,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "092022",
+                              textColor: blackColor,
+                              fontSize: 18,
+                              fontFamily: FontFamily.plusJakartaSansBold,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ],
                         ),
 
-                        SizedBox(height: 40,),
+                        SizedBox(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Bill Account",
-                                textColor:blackColor,fontSize: 12,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "Bill Account",
+                              textColor: blackColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w600,
+                            ),
 
-                            text("DUE Date",
-                                textColor:blackColor,fontSize: 12,
-                                fontFamily: FontFamily.plusJakartaSansRegular,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "DUE Date",
+                              textColor: blackColor,
+                              fontSize: 12,
+                              fontFamily: FontFamily.plusJakartaSansRegular,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("₹459",
-                                textColor:pinkColor,fontSize: 18,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "₹459",
+                              textColor: pinkColor,
+                              fontSize: 18,
+                              fontFamily: FontFamily.plusJakartaSansBold,
+                              fontWeight: FontWeight.w600,
+                            ),
 
-                            text("19 Nov 29",
-                                textColor:blackColor,fontSize: 18,
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                fontWeight: FontWeight.w600),
+                            text(
+                              "19 Nov 29",
+                              textColor: blackColor,
+                              fontSize: 18,
+                              fontFamily: FontFamily.plusJakartaSansBold,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ],
                         ),
                       ],
@@ -147,26 +170,25 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                 ),
               ),
 
-              SizedBox(height: 40,),
-              text("Bill No",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 40),
+              text(
+                "Bill No",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 20,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
 
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               TextField(
                 controller: billNumberController,
-                onChanged:(i){
+                onChanged: (i) {},
 
-                },
                 // filterSearch,
                 // });
-
-                onSubmitted: (v) {
-
-                },
+                onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: purpleGradientColor),
@@ -185,56 +207,63 @@ class _BillNumberScreenState extends State<BillNumberScreen> {
                   fillColor: white,
                   hintText: "Bill No.",
 
-                  hintStyle: const TextStyle(fontSize: 16.0, color: blackColor, fontFamily: FontFamily.plusJakartaSansRegular),
-                  contentPadding: const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 0),
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansRegular,
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 5,
+                    left: 10,
+                    bottom: 5,
+                    right: 0,
+                  ),
                 ),
               ),
-              SizedBox(height: 10,),
-              text("Enter Biller Name or Biller Number",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 12,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 10),
+              text(
+                "Enter Biller Name or Biller Number",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 12,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Next ",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Next ",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => UpiPinScreen(isElectricityBill: true,),));
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            UpiPinScreen(isElectricityBill: true),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

@@ -7,7 +7,6 @@ import '../api_services/api_config.dart';
 import '../app_utils/app_colors.dart';
 import '../model/auth_model.dart';
 
-
 class AuthController extends GetxController {
   var isLoading = false.obs;
   var authModel = AuthModel().obs;
@@ -58,10 +57,10 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void>getProfileApi({BuildContext? context}) async {
+  Future<void> getProfileApi({BuildContext? context}) async {
     var response = await ApiBaseHelper().getApiCall(context!);
     print("response>>>>${response}");
-   // ProfileModel modal = ProfileModel.fromJson(response);
+    // ProfileModel modal = ProfileModel.fromJson(response);
 
     //return modal;
   }

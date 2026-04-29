@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,16 +9,13 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import 'accident_form_screen.dart';
 
-
-
 class AccidentInsuranceScreen extends StatefulWidget {
-
-  const AccidentInsuranceScreen({super.key,});
+  const AccidentInsuranceScreen({super.key});
 
   @override
-  State<AccidentInsuranceScreen> createState() => _AccidentInsuranceScreenState();
+  State<AccidentInsuranceScreen> createState() =>
+      _AccidentInsuranceScreenState();
 }
-
 
 class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
   String? _selectValue;
@@ -33,7 +29,6 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
   ];
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -42,23 +37,26 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
               child: Center(
-                child: text("Accident Insurance",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:white,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
+                child: text(
+                  "Accident Insurance",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: white,
+                  fontSize: 18,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
 
@@ -73,25 +71,25 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
           width: MediaQuery.sizeOf(context).width,
           height: 55,
           child: CommonButton(
-              text: "GET POLICY in just 2 minutes",
-              textColor: white,
-              gradient: const LinearGradient(
-                colors: [pinkColor, purpleGradientColor],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              fontWeight: FontWeight.w600,
-              fontFamily: FontFamily.plusJakartaSansBold,
-              fontSize:18.0,
-              //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              //borderRadius: BorderRadius.circular(40.0),
+            text: "GET POLICY in just 2 minutes",
+            textColor: white,
+            gradient: const LinearGradient(
+              colors: [pinkColor, purpleGradientColor],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            fontWeight: FontWeight.w600,
+            fontFamily: FontFamily.plusJakartaSansBold,
+            fontSize: 18.0,
 
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AccidentFormScreen(),));
-              }
-
-
-
+            //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+            //borderRadius: BorderRadius.circular(40.0),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AccidentFormScreen()),
+              );
+            },
           ),
         ),
       ),
@@ -99,41 +97,52 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Image.asset(AppImages.imgImage),
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Center(
-                child: text("Death due to accident",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:blackColor,fontSize: 18,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontWeight: FontWeight.w600),
-              ),
-
-              Center(
-                child: text("Legal Heir receives the full cover amount",
-                    textAlign: TextAlign.center,
-                    isCentered: true,
-                    textColor:greyColor,fontSize: 16,
-                    fontFamily: FontFamily.plusJakartaSansRegular,
-                    fontWeight: FontWeight.w400),
-              ),
-
-              SizedBox(height: 15,),
-
-              text("Select sum insured",
-                  textColor:blackColor,fontSize: 16,
+                child: text(
+                  "Death due to accident",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: blackColor,
+                  fontSize: 18,
                   fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w400),
-              //SizedBox(height: 10,),
-              text("Personal Accident cover for 1 year",
-                  textColor:greyColor,fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              Center(
+                child: text(
+                  "Legal Heir receives the full cover amount",
+                  textAlign: TextAlign.center,
+                  isCentered: true,
+                  textColor: greyColor,
+                  fontSize: 16,
                   fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 15,),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+
+              SizedBox(height: 15),
+
+              text(
+                "Select sum insured",
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w400,
+              ),
+              //SizedBox(height: 10,),
+              text(
+                "Personal Accident cover for 1 year",
+                textColor: greyColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 15),
 
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -149,7 +158,7 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: pinkColor)
+                        border: Border.all(color: pinkColor),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,54 +166,46 @@ class _AccidentInsuranceScreenState extends State<AccidentInsuranceScreen> {
                           Row(
                             children: [
                               Radio<String>(
-                                  value: item,
-                                  activeColor: lightGreenColor,
-                                  groupValue: _selectValue,
-                                  onChanged: (value) {
-                                    setState(() => _selectValue = value);
-
-                                  }
-
+                                value: item,
+                                activeColor: lightGreenColor,
+                                groupValue: _selectValue,
+                                onChanged: (value) {
+                                  setState(() => _selectValue = value);
+                                },
                               ),
-                              text(item,
-                                  textAlign: TextAlign.center,
-                                  isCentered: true,
-                                  textColor:blackColor,fontSize: 16,
-                                  fontFamily: FontFamily.plusJakartaSansMedium,
-                                  fontWeight: FontWeight.w400),
-
+                              text(
+                                item,
+                                textAlign: TextAlign.center,
+                                isCentered: true,
+                                textColor: blackColor,
+                                fontSize: 16,
+                                fontFamily: FontFamily.plusJakartaSansMedium,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ],
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 28.0),
-                            child: text("₹147",
-                                textAlign: TextAlign.center,
-                                isCentered: true,
-                                textColor:blackColor,fontSize: 16,
-                                fontFamily: FontFamily.plusJakartaSansMedium,
-                                fontWeight: FontWeight.w400),
+                            child: text(
+                              "₹147",
+                              textAlign: TextAlign.center,
+                              isCentered: true,
+                              textColor: blackColor,
+                              fontSize: 16,
+                              fontFamily: FontFamily.plusJakartaSansMedium,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ],
                       ),
                     ),
                   );
-
-                },),
-
-
-
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

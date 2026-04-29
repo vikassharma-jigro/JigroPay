@@ -12,22 +12,19 @@ import 'package:flutter/gestures.dart';
 import '../../main.dart';
 import 'championScreen.dart';
 
-
-
 class EmailOtpScreen extends StatefulWidget {
   final String? email;
   final String? mobile;
-  const EmailOtpScreen({super.key,this.email,this.mobile});
+  const EmailOtpScreen({super.key, this.email, this.mobile});
 
   @override
   State<EmailOtpScreen> createState() => _EmailOtpScreenState();
 }
 
-
 class _EmailOtpScreenState extends State<EmailOtpScreen> {
   // late OTPTextEditController phoneNumberController;
   TextEditingController emailNumberController = TextEditingController();
- Timer? _timer;
+  Timer? _timer;
   final interval = const Duration(seconds: 1);
   final int timerMaxSeconds = 60;
   int currentSeconds = 0;
@@ -58,14 +55,15 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   //   );
   // }
 
-
   @override
   void dispose() {
     // phoneNumberController.stopListen();
-    _timer?.cancel();// Stop SMS listening
+    _timer?.cancel(); // Stop SMS listening
     super.dispose();
   }
-  String get timerText => '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}:${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
+
+  String get timerText =>
+      '${((timerMaxSeconds - currentSeconds) ~/ 60).toString().padLeft(2, '0')}:${((timerMaxSeconds - currentSeconds) % 60).toString().padLeft(2, '0')}';
 
   startTimeout() {
     var duration = interval;
@@ -78,47 +76,51 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 10,),
+              SizedBox(height: 10),
               InkWell(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(Icons.arrow_back_ios,color: pinkColor,)),
-              SizedBox(height: 25,),
-              Center(
-                child: Image.asset(AppImages.splashIcon,height: 100,),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.arrow_back_ios, color: pinkColor),
               ),
-              const SizedBox(
-                height: 45,
+              SizedBox(height: 25),
+              Center(child: Image.asset(AppImages.splashIcon, height: 100)),
+              const SizedBox(height: 45),
+              text(
+                "Enter authentication code ",
+                textAlign: TextAlign.center,
+                textColor: blackColor,
+                fontSize: 19,
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
               ),
-              text("Enter authentication code "  ,
-                  textAlign: TextAlign.center,
-                  textColor:blackColor,fontSize: 19,fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold),
-              text("Enter the 6-digit code we just texted to your email address ${widget.email}."  ,
-                  textAlign: TextAlign.center,
-                  textColor:greyColor,fontSize: 14,fontWeight: FontWeight.w500,
-                  fontFamily: FontFamily.plusJakartaSansRegular),
+              text(
+                "Enter the 6-digit code we just texted to your email address ${widget.email}.",
+                textAlign: TextAlign.center,
+                textColor: greyColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+              ),
 
-
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               Padding(
-                padding:  const EdgeInsets.only(left:  15, right: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15),
                 child: PinCodeTextField(
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   appContext: context,
                   length: 6,
                   textStyle: const TextStyle(color: blackColor),
@@ -126,36 +128,34 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                   cursorColor: purpleGradientColor,
                   animationType: AnimationType.fade,
                   pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(10),
-                      fieldWidth: (MediaQuery.of(context).size.width / 6) - 17,
-                      activeFillColor: white,
-                      inactiveColor: purpleGradientColor,
-                      activeColor:pinkColor,
-                      disabledColor: blueColor,
-                      errorBorderColor: Colors.red,
-                      inactiveFillColor: white,
-                      selectedFillColor: white,
-                      borderWidth: 0,
-                      inactiveBorderWidth: 1,
-                      activeBoxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(10),
+                    fieldWidth: (MediaQuery.of(context).size.width / 6) - 17,
+                    activeFillColor: white,
+                    inactiveColor: purpleGradientColor,
+                    activeColor: pinkColor,
+                    disabledColor: blueColor,
+                    errorBorderColor: Colors.red,
+                    inactiveFillColor: white,
+                    selectedFillColor: white,
+                    borderWidth: 0,
+                    inactiveBorderWidth: 1,
+                    activeBoxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        spreadRadius: 1,
+                        offset: const Offset(2, 2),
+                      ),
+                    ],
 
-
-                      //borderWidth: 2,
-                      selectedColor: purpleGradientColor),
+                    //borderWidth: 2,
+                    selectedColor: purpleGradientColor,
+                  ),
                   animationDuration: const Duration(milliseconds: 800),
                   enableActiveFill: true,
                   controller: emailNumberController,
-                  onCompleted: (otp) {
-
-                  },
+                  onCompleted: (otp) {},
                   onChanged: (value) {
                     print(value);
                     setState(() {
@@ -165,7 +165,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                 ),
               ),
 
-              const SizedBox(height: 30,),
+              const SizedBox(height: 30),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
@@ -179,16 +179,22 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                   textColor: white,
                   fontWeight: FontWeight.w500,
                   fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:18.0,
+                  fontSize: 18.0,
                   //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                   borderRadius: BorderRadius.circular(15.0),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  VerifiedChampionScreen(mobile: widget.mobile,),));
-
-                  },),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            VerifiedChampionScreen(mobile: widget.mobile),
+                      ),
+                    );
+                  },
+                ),
               ),
 
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                   height: 3,
@@ -196,53 +202,56 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                   color: purpleGradientColor,
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               currentSeconds == 60
                   ? Center(
-                child: RichText(
-                    text: TextSpan(children: [
-                      const TextSpan(
-                          text: 'Dont receive the code? ',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontFamily:
-                              FontFamily.plusJakartaSansRegular)),
-                      TextSpan(
-                          text: 'Resend Code',
-                          recognizer:  TapGestureRecognizer()
-                            ..onTap = () {
-                              _timer?.cancel();
-                              startTimeout();
-                              startTimeout();
-                            },
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Dont receive the code? ',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'Resend Code',
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  _timer?.cancel();
+                                  startTimeout();
+                                  startTimeout();
+                                },
+                              style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: purpleGradientColor,
+                                fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "Time Left $timerText",
                           style: const TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: purpleGradientColor,
-                              fontSize: 12,
-                              fontFamily:
-                              FontFamily.plusJakartaSansRegular))
-                    ])),
-              ):
-              Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "Time Left ${timerText}",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: FontFamily.plusJakartaSansBold,
+                            fontSize: 14,
+                            fontFamily: FontFamily.plusJakartaSansBold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-
             ],
           ),
         ),
       ),
     );
   }
-
 }

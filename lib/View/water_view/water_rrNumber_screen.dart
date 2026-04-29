@@ -1,4 +1,3 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,17 +7,14 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
 
-
-
 class WaterRrnumberScreen extends StatefulWidget {
   final String? serviceNo;
 
-  const WaterRrnumberScreen({super.key,this.serviceNo});
+  const WaterRrnumberScreen({super.key, this.serviceNo});
 
   @override
   State<WaterRrnumberScreen> createState() => _WaterRrnumberScreenState();
 }
-
 
 class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
   TextEditingController rrNoController = TextEditingController();
@@ -27,32 +23,32 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text(widget.serviceNo??"",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  maxLine: 2,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                widget.serviceNo ?? "",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                maxLine: 2,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-
           ],
         ),
       ),
@@ -63,83 +59,84 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Enter your RR Number to retrieve your account details.",
-                  maxLine: 2,
-                  textColor:blackColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w400),
-              SizedBox(height: 10,),
+              text(
+                "Enter your RR Number to retrieve your account details.",
+                maxLine: 2,
+                textColor: blackColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w400,
+              ),
+              SizedBox(height: 10),
               CustomRoundTextField(
-                controller:rrNoController,
+                controller: rrNoController,
                 keyboardType: TextInputType.phone,
                 hintText: "RR Number",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20),],
+                inputFormatters: [LengthLimitingTextInputFormatter(20)],
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       Icon(Icons.copy),
-                      SizedBox(width: 10,),
-                      text("View Sample Bill",
-                          textColor: blackColor,
-                          fontWeight: FontWeight.w400,fontSize: 16,
-                          fontFamily: FontFamily.plusJakartaSansRegular
-                      )
+                      SizedBox(width: 10),
+                      text(
+                        "View Sample Bill",
+                        textColor: blackColor,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                      ),
                     ],
                   ),
                   Icon(Icons.arrow_forward_ios),
-
                 ],
               ),
 
-              const SizedBox(height: 150,),
+              const SizedBox(height: 150),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Continue",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                      showDialogBox(context);
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    showDialogBox(context);
+                  },
                 ),
               ),
-              SizedBox(height: 20,),
-              text("We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
-                  textColor: greyColor,
-                  fontWeight: FontWeight.w400,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular
-              )
+              SizedBox(height: 20),
+              text(
+                "We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
+                textColor: greyColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   void showDialogBox(BuildContext context) {
     showDialog(
       context: context,
@@ -148,17 +145,22 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("View Sample Bill",textColor: blackColor,fontSize: 18,
-                fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold
+            text(
+              "View Sample Bill",
+              textColor: blackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
             ),
             InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close)),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.close),
+            ),
           ],
         ),
-        content:  Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
@@ -177,44 +179,43 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        SizedBox(height: 30,),
-                        text("Tenement No - J8K067HB09678HB",
-                            textColor:blackColor,fontSize: 18,
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
+                        SizedBox(height: 30),
+                        text(
+                          "Tenement No - J8K067HB09678HB",
+                          textColor: blackColor,
+                          fontSize: 18,
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(height: 50),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Got it",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:16.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Got it",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 16.0,
 
-                  onPressed: (){
-                    Navigator.pop(context);
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
           ],
@@ -223,7 +224,3 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
     );
   }
 }
-
-
-
-

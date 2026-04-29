@@ -12,15 +12,12 @@ import 'package:flutter/gestures.dart';
 
 import 'otp_screen.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneController = TextEditingController();
@@ -32,11 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
-
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -44,75 +39,88 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_back_ios,color: purpleGradientColor,),
+                child: Icon(Icons.arrow_back_ios, color: purpleGradientColor),
               ),
-              const SizedBox(height: 30,),
-              Center(
-                child: Image.asset(AppImages.splashIcon,height: 100,),
+              const SizedBox(height: 30),
+              Center(child: Image.asset(AppImages.splashIcon, height: 100)),
+              const SizedBox(height: 50),
+              text(
+                "Login to JigroPay",
+                textColor: blackColor,
+                fontSize: 20,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
               ),
-              const SizedBox(height: 50,),
-              text("Login to JigroPay",
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
-              const SizedBox(height: 5,),
-              text("Login to Light is your pathway to a seamless digital experience.",
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  textColor:greyColor,fontSize: 14,fontWeight: FontWeight.w500),
-              const SizedBox(height: 40,),
-              text("Phone",
-                  fontFamily: FontFamily.plusJakartaSansMedium,
-                  textColor:blackColor,fontSize: 14,fontWeight: FontWeight.w400),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 5),
+              text(
+                "Login to Light is your pathway to a seamless digital experience.",
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                textColor: greyColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              const SizedBox(height: 40),
+              text(
+                "Phone",
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                textColor: blackColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+              const SizedBox(height: 10),
               CustomRoundTextField(
-                controller:phoneController,
+                controller: phoneController,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: Image.asset(AppImages.phoneIcon,height: 20,),
+                  child: Image.asset(AppImages.phoneIcon, height: 20),
                 ),
                 keyboardType: TextInputType.phone,
                 hintText: "Phone",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Login",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Login",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                       if(phoneController.text.isEmpty){
-                        ShowAlertDialog().showErrorAlert(context, "Please Enter Your Contact Number");
-                      }else{
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen(
-                           mobileNumber: phoneController.text,
-                         ),));
-                      }
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    if (phoneController.text.isEmpty) {
+                      ShowAlertDialog().showErrorAlert(
+                        context,
+                        "Please Enter Your Contact Number",
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              OtpScreen(mobileNumber: phoneController.text),
+                        ),
+                      );
                     }
-
-
-
+                  },
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                   height: 3,
@@ -125,16 +133,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () async {
-                    Navigator.push(context, MaterialPageRoute(builder:(context) => const SignUpScreen(),));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignUpScreen(),
+                      ),
+                    );
                   },
                   child: RichText(
-                    text:  const TextSpan(
+                    text: const TextSpan(
                       text: 'Don’t have an account?  ',
-                      style: TextStyle(color: blackColor,fontSize:14,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular),
+                      style: TextStyle(
+                        color: blackColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                      ),
                       children: <TextSpan>[
                         TextSpan(
-                            text: 'Sign Up',
-                            style: TextStyle(color: pinkColor,fontSize:14,fontFamily: FontFamily.plusJakartaSansRegular,fontWeight: FontWeight.w400)),
+                          text: 'Sign Up',
+                          style: TextStyle(
+                            color: pinkColor,
+                            fontSize: 14,
+                            fontFamily: FontFamily.plusJakartaSansRegular,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -229,5 +253,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/gas_view/gas_booking_form_screen.dart';
@@ -9,16 +8,12 @@ import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 
-
-
 class GasServicesScreen extends StatefulWidget {
-
-  const GasServicesScreen({super.key,});
+  const GasServicesScreen({super.key});
 
   @override
   State<GasServicesScreen> createState() => _GasServicesScreenState();
 }
-
 
 class _GasServicesScreenState extends State<GasServicesScreen> {
   List<String> options = [
@@ -33,28 +28,29 @@ class _GasServicesScreenState extends State<GasServicesScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("Gas Cylinder",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "Gas Cylinder",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -68,10 +64,13 @@ class _GasServicesScreenState extends State<GasServicesScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Add New Gas Provider",
-                  textColor:blackColor,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Add New Gas Provider",
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               ListView.builder(
                 padding: EdgeInsets.zero,
@@ -82,9 +81,16 @@ class _GasServicesScreenState extends State<GasServicesScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child:  GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => GasBookingFormScreen(gasServiceName: options[index],),));
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GasBookingFormScreen(
+                              gasServiceName: options[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Card(
                         color: white,
@@ -94,24 +100,33 @@ class _GasServicesScreenState extends State<GasServicesScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
                                       SvgPicture.asset(AppImages.gasImage),
-                                      SizedBox(width: 20,),
+                                      SizedBox(width: 20),
                                       Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          text(options[index],
-                                              textColor:blackColor,fontSize: 12,
-                                              fontFamily: FontFamily.plusJakartaSansMedium,
-                                              fontWeight: FontWeight.w500),
+                                          text(
+                                            options[index],
+                                            textColor: blackColor,
+                                            fontSize: 12,
+                                            fontFamily: FontFamily
+                                                .plusJakartaSansMedium,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                  Icon(Icons.arrow_forward_ios,color: greyColor,)
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: greyColor,
+                                  ),
                                 ],
                               ),
                             ],
@@ -120,20 +135,12 @@ class _GasServicesScreenState extends State<GasServicesScreen> {
                       ),
                     ),
                   );
-
-                },)
+                },
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
-
 }
-
-
-
-

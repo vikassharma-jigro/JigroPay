@@ -1,4 +1,3 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,17 +7,14 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
 
-
-
 class LandlineDetailsScreen extends StatefulWidget {
   final String? serviceNo;
 
-  const LandlineDetailsScreen({super.key,this.serviceNo});
+  const LandlineDetailsScreen({super.key, this.serviceNo});
 
   @override
   State<LandlineDetailsScreen> createState() => _LandlineDetailsScreenState();
 }
-
 
 class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
   TextEditingController mobileNumberController = TextEditingController();
@@ -27,28 +23,29 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
-            text(widget.serviceNo??"",
-                textAlign: TextAlign.center,
-                isCentered: true,
-                textColor:white,fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontWeight: FontWeight.w600),
+            text(
+              widget.serviceNo ?? "",
+              textAlign: TextAlign.center,
+              isCentered: true,
+              textColor: white,
+              fontSize: 18,
+              fontFamily: FontFamily.plusJakartaSansBold,
+              fontWeight: FontWeight.w600,
+            ),
             Icon(Icons.help),
 
             // SizedBox(width: 10,),
@@ -63,25 +60,25 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomRoundTextField(
-                controller:mobileNumberController,
+                controller: mobileNumberController,
                 keyboardType: TextInputType.phone,
                 hintText: "Telephone Number",
                 maxLines: 2,
                 fillColor: Colors.transparent,
                 //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(10),],
+                inputFormatters: [LengthLimitingTextInputFormatter(10)],
               ),
 
-              SizedBox(height: 20,),
+              SizedBox(height: 20),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   showDialogBox(context);
                 },
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: lightBlueColor
+                    color: lightBlueColor,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,36 +86,37 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
                       Row(
                         children: [
                           Icon(Icons.copy),
-                          SizedBox(width: 10,),
-                          text("View Sample Bill",
-                              textColor: blackColor,
-                              fontWeight: FontWeight.w400,fontSize: 16,
-                              fontFamily: FontFamily.plusJakartaSansRegular
-                          )
+                          SizedBox(width: 10),
+                          text(
+                            "View Sample Bill",
+                            textColor: blackColor,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            fontFamily: FontFamily.plusJakartaSansRegular,
+                          ),
                         ],
                       ),
                       Icon(Icons.arrow_forward_ios),
-
                     ],
                   ),
                 ),
               ),
 
-              SizedBox(height: 20,),
-              text("We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
-                  textColor: greyColor,
-                  fontWeight: FontWeight.w400,fontSize: 14,
-                  fontFamily: FontFamily.plusJakartaSansRegular
-              )
+              SizedBox(height: 20),
+              text(
+                "We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
+                textColor: greyColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+              ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   void showDialogBox(BuildContext context) {
     showDialog(
       context: context,
@@ -127,17 +125,22 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("View Sample Bill",textColor: blackColor,fontSize: 18,
-                fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold
+            text(
+              "View Sample Bill",
+              textColor: blackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
             ),
             InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close)),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.close),
+            ),
           ],
         ),
-        content:  Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
@@ -156,59 +159,64 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        SizedBox(height: 30),
+                        text(
+                          "BSNL",
+                          textColor: red1Color,
+                          fontSize: 18,
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
 
-                        SizedBox(height: 30,),
-                        text("BSNL",
-                            textColor:red1Color,fontSize: 18,
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
+                        text(
+                          "Connecting India",
+                          textColor: blueColor,
+                          fontSize: 15,
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          fontFamily: FontFamily.plusJakartaSansMedium,
+                          fontWeight: FontWeight.w500,
+                        ),
 
-                        text("Connecting India",
-                            textColor:blueColor,fontSize: 15,
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontWeight: FontWeight.w500),
-
-                        SizedBox(height: 10,),
-                        text("Telephone Number- 7865984537",
-                            textColor:blackColor,fontSize: 16,
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
+                        SizedBox(height: 10),
+                        text(
+                          "Telephone Number- 7865984537",
+                          textColor: blackColor,
+                          fontSize: 16,
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(height: 50),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Got it",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:16.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Got it",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 16.0,
 
-                  onPressed: (){
-                    Navigator.pop(context);
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
           ],
@@ -217,7 +225,3 @@ class _LandlineDetailsScreenState extends State<LandlineDetailsScreen> {
     );
   }
 }
-
-
-
-

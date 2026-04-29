@@ -6,7 +6,6 @@ import 'package:permission_handler/permission_handler.dart';
 mixin ImagePickerMixin<T extends StatefulWidget> on State<T> {
   final ImagePicker _picker = ImagePicker();
 
-
   Future<XFile?> pickImage({
     required ImageSource source,
     bool allowCrop = false, // placeholder if you want to integrate cropping
@@ -87,7 +86,4 @@ mixin ImagePickerMixin<T extends StatefulWidget> on State<T> {
 
   /// Optional helper to convert XFile -> File
   File? xFileToFile(XFile? xfile) => xfile == null ? null : File(xfile.path);
-
-
 }
-

@@ -4,6 +4,7 @@ import 'package:jigrotech/splash_screen.dart';
 import 'package:screen_protector/screen_protector.dart';
 import 'app_utils/app_colors.dart';
 import 'app_utils/shared_preferences.dart';
+
 SpUtil? sp;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,11 +12,13 @@ Future<void> main() async {
   await ScreenProtector.preventScreenshotOn();
 
   // Transparent status bar with light icons
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
-    statusBarBrightness: Brightness.dark,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+    ),
+  );
   sp = await SpUtil.getInstance();
   runApp(const MyApp());
 }
@@ -106,4 +109,3 @@ class GradientStatusBar extends StatelessWidget {
     );
   }
 }
-

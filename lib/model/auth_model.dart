@@ -8,14 +8,15 @@ class AuthModel {
   int? expiresIn;
   User? user;
 
-  AuthModel(
-      {this.status,
-        this.success,
-        this.message,
-        this.accessToken,
-        this.tokenType,
-        this.expiresIn,
-        this.user});
+  AuthModel({
+    this.status,
+    this.success,
+    this.message,
+    this.accessToken,
+    this.tokenType,
+    this.expiresIn,
+    this.user,
+  });
 
   AuthModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -63,26 +64,27 @@ class User {
   String? updatedAt;
   String? role;
 
-  User(
-      {this.id,
-        this.name,
-        this.username,
-        this.otp,
-        this.emailOtp,
-        this.mobile_otp,
-        this.email,
-        this.emailVerifiedAt,
-        this.password,
-        this.photo,
-        this.photoPath,
-        this.phone,
-        this.address,
-        this.latitude,
-        this.longitude,
-        this.status,
-        this.role,
-        this.createdAt,
-        this.updatedAt});
+  User({
+    this.id,
+    this.name,
+    this.username,
+    this.otp,
+    this.emailOtp,
+    this.mobile_otp,
+    this.email,
+    this.emailVerifiedAt,
+    this.password,
+    this.photo,
+    this.photoPath,
+    this.phone,
+    this.address,
+    this.latitude,
+    this.longitude,
+    this.status,
+    this.role,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];

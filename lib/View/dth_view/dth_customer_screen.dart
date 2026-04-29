@@ -1,4 +1,3 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,16 +10,12 @@ import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
 
-
-
 class DthCustomerScreen extends StatefulWidget {
-
-  const DthCustomerScreen({super.key,});
+  const DthCustomerScreen({super.key});
 
   @override
   State<DthCustomerScreen> createState() => _DthCustomerScreenState();
 }
-
 
 class _DthCustomerScreenState extends State<DthCustomerScreen> {
   TextEditingController customerController = TextEditingController();
@@ -29,28 +24,29 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return GradientAppScaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:   Row(
+        title: Row(
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child:  Icon(Icons.arrow_back_ios,color: white,),
+              child: Icon(Icons.arrow_back_ios, color: white),
             ),
             Expanded(
-              child: text("DTH",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:white,fontSize: 18,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              child: text(
+                "DTH",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: white,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
 
             // SizedBox(width: 10,),
@@ -64,29 +60,37 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SvgPicture.asset(AppImages.sunImage,color: red1Color,),
-              ],
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SvgPicture.asset(AppImages.sunImage, color: red1Color),
+                ],
+              ),
               SizedBox(height: 15),
-              text("Enter your Customer Id to retrieve your account details.",
-                  textColor:blackColor,fontSize: 20,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontWeight: FontWeight.w600),
+              text(
+                "Enter your Customer Id to retrieve your account details.",
+                textColor: blackColor,
+                fontSize: 20,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
               SizedBox(height: 15),
               Form(
                 //key: _formKey,
                 child: SizedBox(
                   height: 50,
                   child: TextFormField(
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Enter Customer Id",
-                      hintStyle: TextStyle(color: greyColor,fontSize: 14,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansRegular),
+                      hintStyle: TextStyle(
+                        color: greyColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                      ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: greyColor,),
+                        borderSide: const BorderSide(color: greyColor),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       enabledBorder: OutlineInputBorder(
@@ -98,84 +102,88 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     controller: customerController,
-                    style: const TextStyle(color: blackColor,fontSize: 16,fontWeight: FontWeight.w400,fontFamily: FontFamily.plusJakartaSansMedium),
+                    style: const TextStyle(
+                      color: blackColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: FontFamily.plusJakartaSansMedium,
+                    ),
                   ),
                 ),
               ),
 
-              SizedBox(height: 15,),
+              SizedBox(height: 15),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: pinkColor),
                   borderRadius: BorderRadius.circular(10),
-                  color: lightPinkColor
+                  color: lightPinkColor,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-
                       children: [
                         Icon(Icons.copy),
-                        SizedBox(width: 15,),
-                        text("View Sample Bill",
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            textColor:pinkColor,fontSize: 18,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontWeight: FontWeight.w600),
+                        SizedBox(width: 15),
+                        text(
+                          "View Sample Bill",
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          textColor: pinkColor,
+                          fontSize: 18,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ],
                     ),
                     Icon(Icons.arrow_forward_ios),
-
                   ],
                 ),
               ),
 
-              SizedBox(height: 50,),
-              text("We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
-                  textAlign: TextAlign.center,
-                  isCentered: true,
-                  textColor:greyColor,fontSize: 16,
-                  fontFamily: FontFamily.plusJakartaSansRegular,
-                  fontWeight: FontWeight.w600),
+              SizedBox(height: 50),
+              text(
+                "We'll save your details for future payments. You can always go to Bills to pay your upcoming dues.",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: greyColor,
+                fontSize: 16,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontWeight: FontWeight.w600,
+              ),
 
-              const SizedBox(height: 50,),
+              const SizedBox(height: 50),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
                 child: CommonButton(
-                    text: "Continue",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize:16.0,
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [pinkColor, purpleGradientColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
 
-                    onPressed: (){
-                      showDialogBox(context);
-                    }
-
-
-
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    showDialogBox(context);
+                  },
                 ),
               ),
             ],
           ),
         ),
       ),
-
-
-
     );
   }
+
   void showDialogBox(BuildContext context) {
     showDialog(
       context: context,
@@ -184,17 +192,22 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-             text("View Sample Bill",textColor: blackColor,fontSize: 18,
-             fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold
-             ),
+            text(
+              "View Sample Bill",
+              textColor: blackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: FontFamily.plusJakartaSansBold,
+            ),
             InkWell(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close)),
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.close),
+            ),
           ],
         ),
-        content:  Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
@@ -221,64 +234,62 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                               "AIRTEL",
                               textColor: blackColor,
                               fontFamily: FontFamily.plusJakartaSansBold,
-                              fontSize: 14
+                              fontSize: 14,
                             ),
                           ],
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(height: 10),
                         text(
-                            "AIRTEL DTH",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14
+                          "AIRTEL DTH",
+                          textColor: blackColor,
+                          fontFamily: FontFamily.plusJakartaSansBold,
+                          fontSize: 14,
                         ),
                         text(
-                            "DTH RECHARGE",
-                            textColor: greyColor,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                            fontSize: 14
+                          "DTH RECHARGE",
+                          textColor: greyColor,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                          fontSize: 14,
                         ),
-                        SizedBox(height: 10,),
-                        Divider(
-                          thickness: .5,color: greyColor,height: 10,
+                        SizedBox(height: 10),
+                        Divider(thickness: .5, color: greyColor, height: 10),
+                        SizedBox(height: 10),
+                        text(
+                          "Customer Id: 1598745630*",
+                          textColor: blackColor,
+                          fontSize: 14,
+                          textAlign: TextAlign.center,
+                          isCentered: true,
+                          fontFamily: FontFamily.plusJakartaSansMedium,
+                          fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 10,),
-                        text("Customer Id: 1598745630*",
-                            textColor:blackColor,fontSize: 14,
-                            textAlign: TextAlign.center,
-                            isCentered: true,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontWeight: FontWeight.w500),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 50,),
+            const SizedBox(height: 50),
             SizedBox(
               width: MediaQuery.sizeOf(context).width,
               height: 55,
               child: CommonButton(
-                  text: "Got it",
-                  textColor: white,
-                  gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  fontWeight: FontWeight.w600,
-                  fontFamily: FontFamily.plusJakartaSansBold,
-                  fontSize:16.0,
-                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                  //borderRadius: BorderRadius.circular(40.0),
+                text: "Got it",
+                textColor: white,
+                gradient: const LinearGradient(
+                  colors: [pinkColor, purpleGradientColor],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontSize: 16.0,
 
-                  onPressed: (){
-                    Navigator.pop(context);
-                  }
-
-
-
+                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                //borderRadius: BorderRadius.circular(40.0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
           ],
@@ -287,7 +298,3 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
     );
   }
 }
-
-
-
-
