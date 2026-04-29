@@ -22,3 +22,16 @@ const Color lightBlueColor = Color(0xffe5e7eb);
 const Color lightPinkColor = Color(0xfff3e8ff);
 const Color lightPurpleColor = Color(0xffc882fd);
 const Color electricPurple = Color(0xff6e2ae9);
+const Color brownColor = Color(0xff854d0e);
+const Color lightColor1 = Color(0xffeff6ff);
+const Color lightGreen = Color(0xfff0fdf4);
+const Color lightBtnColor = Color(0xffba75fc);
+const Color lightBtn1Color = Color(0xff7531ea);
+const Color yellowColor = Color(0xfffacc15);
+const Color lightRedColor = Color(0xfffee2e2);
+const Color lightWhite1Color = Color(0xfff3f4f6);
+const Color lightPink1Color = Color(0xfff3e8ff);
+const Color greenColor = Color(0xffdcfce7);
+const Color green1Color = Color(0xff22c55e);
+const Color asmaColor = Color(0xffe0f2fe);
+

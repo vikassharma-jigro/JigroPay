@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jigrotech/View/auth_view/qr_code_screen.dart';
 import 'package:jigrotech/splash_screen.dart';
+import 'package:screen_protector/screen_protector.dart';
 import 'app_utils/app_colors.dart';
-
+import 'app_utils/shared_preferences.dart';
+SpUtil? sp;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenProtector.preventScreenshotOn();
+  await ScreenProtector.preventScreenshotOn();
 
   // Transparent status bar with light icons
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -13,7 +16,7 @@ Future<void> main() async {
     statusBarIconBrightness: Brightness.light,
     statusBarBrightness: Brightness.dark,
   ));
-
+  sp = await SpUtil.getInstance();
   runApp(const MyApp());
 }
 

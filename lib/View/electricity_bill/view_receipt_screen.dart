@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jigrotech/View/dashdoard_view/bottom_navigation_bar_screen.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/font_family.dart';
@@ -44,7 +42,7 @@ class _ViewReceiptScreenState extends State<ViewReceiptScreen> {
       ),
 
       body: Container(
-        color: lightGreyColor,
+        color: white,
         width: double.infinity,
         height: double.infinity,
         child: SingleChildScrollView(

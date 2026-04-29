@@ -5,6 +5,12 @@ import 'package:jigrotech/View/bank_view/self_account_screen.dart';
 import 'package:jigrotech/View/dashdoard_view/see_all_services.dart';
 import 'package:jigrotech/View/dth_view/dth_service_screen.dart';
 import 'package:jigrotech/View/fast_tag_view/fast_tag_screen.dart';
+import 'package:jigrotech/View/gas_view/gas_services_screen.dart';
+import 'package:jigrotech/View/insurance_view/bike_insurance_screen.dart';
+import 'package:jigrotech/View/insurance_view/car_insurance_screen.dart';
+import 'package:jigrotech/View/insurance_view/travle_insurance_countries_screen.dart';
+import 'package:jigrotech/View/travle_booking_view/bus_view/bus_booking_point_screen.dart';
+import 'package:jigrotech/View/travle_booking_view/train_view/train_booking_screen.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/app_images.dart';
 import '../../app_utils/font_family.dart';
@@ -13,7 +19,13 @@ import '../../main.dart';
 import '../bank_view/check_balance_screen.dart';
 import '../bank_view/mobile_recharge_screen/recharge_plan_screen.dart';
 import '../bank_view/money_transfer_screen.dart';
+import '../comming_soon_screen.dart';
 import '../electricity_bill/electricity_bill_service_screen.dart';
+import '../insurance_view/accident_insurance_screen.dart';
+import '../insurance_view/helth_insurance_screen.dart';
+import '../insurance_view/term_life_insurance_screen.dart';
+import '../travle_booking_view/flight_view/flight_booking_screen.dart';
+import '../travle_booking_view/hotel_view/hotel_home_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -90,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                          child: Align(
                            alignment: Alignment.bottomCenter,
                            child: Padding(
-                             padding: const EdgeInsets.all(10.0),
+                             padding: const EdgeInsets.all(15.0),
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.center,
                                children: _buildPageIndicator(5,),
@@ -129,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                          children: [
                           GestureDetector(
                             onTap: (){
-                             // Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => CommingSoonScreen(),));
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => RechargePlanScreen(),));
                             },
                             child: Column(
@@ -526,71 +538,87 @@ class _HomeScreenState extends State<HomeScreen> {
                        Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                           Column(
-                             children: [
-                               Image.asset(AppImages.rentpaymentIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Rent\nPayment",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => CommingSoonScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.rentpaymentIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Rent Payment",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.loanRepaymentIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Loan\nRepayment",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => CommingSoonScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.loanRepaymentIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Loan\nRepayment",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.cylinderIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Book A\nCylinder",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => GasServicesScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.cylinderIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Book A\nCylinder",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
 
-                           Column(
-                             children: [
-                               Container(
-                                 padding: EdgeInsets.all(10),
-                                 decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(10),
-                                     color: darkPinkColor
+                           GestureDetector(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => SeeAllServicesScreen(),));
+
+                             },
+                             child: Column(
+                               children: [
+                                 Container(
+                                   padding: EdgeInsets.all(10),
+                                   decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.circular(10),
+                                       color: darkPinkColor
+                                   ),
+                                   child: Icon(Icons.arrow_forward_ios,color: blackColor,),
                                  ),
-                                 child: Icon(Icons.arrow_forward_ios,color: blackColor,),
-                               ),
-                               SizedBox(height: 5,),
-                               GestureDetector(
-                                 onTap: (){
-                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SeeAllServicesScreen(),));
-                                 },
-                                 child: Center(
+                                 SizedBox(height: 5,),
+                                 Center(
                                    child: text(
                                      "See All",
                                      isCentered: true,
@@ -600,8 +628,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                      fontWeight: FontWeight.w400,
                                    ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
                          ],
                        )
@@ -634,12 +662,12 @@ class _HomeScreenState extends State<HomeScreen> {
                            text(
                              "PIN-less Payments",
                              textColor: blackColor,
-                             fontSize: 14,
+                             fontSize: 12,
                              fontFamily: FontFamily.plusJakartaSansBold,
                              fontWeight: FontWeight.w600,
                            ),
                            Container(
-                             padding: EdgeInsets.symmetric(horizontal: 15,vertical: 4),
+                             padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
                              decoration: BoxDecoration(
                                borderRadius: BorderRadius.circular(15),
                                color: pinkColor
@@ -647,7 +675,7 @@ class _HomeScreenState extends State<HomeScreen> {
                              child: text(
                                "Try Now",
                                textColor: blackColor,
-                               fontSize: 14,
+                               fontSize: 11,
                                fontFamily: FontFamily.plusJakartaSansBold,
                                fontWeight: FontWeight.w600,
                              ) ,
@@ -678,70 +706,90 @@ class _HomeScreenState extends State<HomeScreen> {
                        Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                           Column(
-                             children: [
-                               Image.asset(AppImages.bikeIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Bike",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           GestureDetector(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => BikeInsuranceScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.bikeIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Bike",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.carIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Car",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder:(context) => CarInsuranceScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.carIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Car",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.helthIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Health",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => HealthInsuranceScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.helthIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Health",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
 
-                           Column(
-                             children: [
-                               Image.asset(AppImages.accidentIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Accident",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => AccidentInsuranceScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.accidentIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Accident",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
                          ],
                        ),
@@ -750,53 +798,68 @@ class _HomeScreenState extends State<HomeScreen> {
                        Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                           Column(
-                             children: [
-                               Image.asset(AppImages.termLifeIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Term\nLIfe",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => TermLifeInsuranceScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.termLifeIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Term LIfe",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.traveLinsuranceIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Travel\nInsurance",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => TravelInsuranceCountriesScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.traveLinsuranceIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Travel\nInsurance",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.insuranceRenewalIcon,height: 30,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Insurance\nRenewal",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => CommingSoonScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.insuranceRenewalIcon,height: 30,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Insurance\nRenewal",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
 
                            Column(
@@ -862,7 +925,7 @@ class _HomeScreenState extends State<HomeScreen> {
                          child: Align(
                            alignment: Alignment.bottomCenter,
                            child: Padding(
-                             padding: const EdgeInsets.all(10.0),
+                             padding: const EdgeInsets.all(15.0),
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.center,
                                children: _buildPageIndicator(5,),
@@ -897,70 +960,90 @@ class _HomeScreenState extends State<HomeScreen> {
                        Row(
                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
-                           Column(
-                             children: [
-                               Image.asset(AppImages.flightsIcon,height: 40,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Flights",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => FlightBookingScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.flightsIcon,height: 40,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Flights",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.busIcon,height: 40,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Bus",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => BusBookingPointScreen() ,));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.busIcon,height: 40,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Bus",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
-                           Column(
-                             children: [
-                               Image.asset(AppImages.trainsIcon,height: 40,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Trains",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => TrainBookingScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.trainsIcon,height: 40,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Trains",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
 
-                           Column(
-                             children: [
-                               Image.asset(AppImages.hotelIcon,height: 40,),
-                               SizedBox(height: 5,),
-                               Center(
-                                 child: text(
-                                   "Hotels",
-                                   isCentered: true,
-                                   textColor: blackColor,
-                                   fontSize: 11,
-                                   fontFamily: FontFamily.plusJakartaSansRegular,
-                                   fontWeight: FontWeight.w400,
+                           InkWell(
+                             onTap: (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => HotelHomeScreen(),));
+                             },
+                             child: Column(
+                               children: [
+                                 Image.asset(AppImages.hotelIcon,height: 40,),
+                                 SizedBox(height: 5,),
+                                 Center(
+                                   child: text(
+                                     "Hotels",
+                                     isCentered: true,
+                                     textColor: blackColor,
+                                     fontSize: 11,
+                                     fontFamily: FontFamily.plusJakartaSansRegular,
+                                     fontWeight: FontWeight.w400,
+                                   ),
                                  ),
-                               ),
-                             ],
+                               ],
+                             ),
                            ),
                          ],
                        ),

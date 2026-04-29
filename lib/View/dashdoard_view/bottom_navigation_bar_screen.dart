@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:jigrotech/View/auth_view/qr_code_screen.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/font_family.dart';
+import 'history_screen.dart';
 import 'home_screen.dart';
 
 
@@ -46,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                  HomeScreen(),
                  QrCodeScreen(),
                  HomeScreen(),
-                 HomeScreen(),
+                 HistoryScreen(),
 
               ],
             ),

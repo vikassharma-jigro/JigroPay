@@ -191,7 +191,7 @@ class _BillSuccessfullyScreenState extends State<BillSuccessfullyScreen> {
                       //borderRadius: BorderRadius.circular(40.0),
 
                       onPressed: (){
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => ViewReceiptScreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ViewReceiptScreen(),));
                       }
 
 

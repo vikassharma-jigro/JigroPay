@@ -96,7 +96,7 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CablePayScreen(cableServiceName: options[index],),));
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 7,vertical: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           // border: Border.all(color:greyColor)
@@ -116,7 +116,7 @@ class _CableServiceScreenState extends State<CableServiceScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         text(options[index],
-                                            textColor:blackColor,fontSize: 14,
+                                            textColor:blackColor,fontSize: 13,
                                             fontFamily: FontFamily.plusJakartaSansMedium,
                                             fontWeight: FontWeight.w500),
                                       ],

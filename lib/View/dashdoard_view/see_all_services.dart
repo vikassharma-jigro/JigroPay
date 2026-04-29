@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/cable_view/cable_service_screen.dart';
+import 'package:jigrotech/View/dth_view/dth_service_screen.dart';
+import 'package:jigrotech/View/housing_view/housing_service_screen.dart';
+import 'package:jigrotech/View/more_services_view/education_screen.dart';
+import 'package:jigrotech/View/municipal_view/municipal_screen.dart';
+import 'package:jigrotech/View/ncmc_view/ncmc_service_screen.dart';
+import 'package:jigrotech/View/subscription_view/subscription_services_screen.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/app_images.dart';
 import '../../app_utils/font_family.dart';
 import '../../app_utils/text_widget.dart';
 import '../../main.dart';
+import '../bank_view/money_transfer_screen.dart';
+import '../club_association_view/club_association_services_screen.dart';
+import '../comming_soon_screen.dart';
+import '../credit_card_view/credit_card_services_screen.dart';
 import '../electricity_bill/electricity_bill_service_screen.dart';
+import '../fast_tag_view/fast_tag_screen.dart';
+import '../gas_view/gas_services_screen.dart';
+import '../gas_view/piped_gas_services_screen.dart';
+import '../landlines_view/landlines_services_screen.dart';
+import '../more_services_view/donation_screen.dart';
+import '../mutual_fund_view/mutual_funds_service_screen.dart';
+import '../nps_view/nps_services_screen.dart';
+import '../water_view/water_service_screen.dart';
 
 
 class SeeAllServicesScreen extends StatefulWidget {
@@ -79,7 +97,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ElectricityBillServiceScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -100,7 +118,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CreditCardServicesScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -121,7 +139,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                               // Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -140,21 +158,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.fastImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "FASTag",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.fastImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "FASTag",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -164,38 +187,48 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
 
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.dthTvImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "DTH",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.dthTvImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "DTH",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.gasImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Book A\nCylinder",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => GasServicesScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.gasImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Book A\nCylinder",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
                             GestureDetector(
@@ -274,7 +307,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -314,21 +347,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.fastImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "FASTag",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.fastImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "FASTag",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -337,21 +375,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.nhmcImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "NCMC",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => NcmcServiceScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.nhmcImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "NCMC",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -388,7 +431,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ElectricityBillServiceScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -409,7 +452,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => GasServicesScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -430,7 +473,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => PipedGasServicesScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -449,21 +492,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.waterImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Water",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder:  (context) => WaterServiceScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.waterImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Water",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
 
                           ],
@@ -474,43 +522,53 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
 
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.phoneImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Postpaid",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.phoneImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Postpaid",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.wifiImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Broadband",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => LandlinesServicesScreen(),));
+                                },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.wifiImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Broadband",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
                             GestureDetector(
                               onTap: (){
-                              //  Navigator.push(context, MaterialPageRoute(builder: (context) => ElectricityBillServiceScreen(),));
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => LandlinesServicesScreen(),));
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,7 +622,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CreditCardServicesScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -586,7 +644,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             SizedBox(width: 1,),
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => MutualFundsServiceScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -627,21 +685,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 10,),
-                            GestureDetector(
+
+                          ],
+                        ),
+
+                        SizedBox(height: 15,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => ElectricityBillServiceScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) =>MunicipalServiceScreen(),));
                               },
                               child: Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(AppImages.loanImage,height: 50,),
+                                  SvgPicture.asset(AppImages.municipalImage,height: 50,),
                                   SizedBox(height: 5,),
                                   Center(
                                     child: text(
-                                      "Loan",
+                                      "Municipal",
                                       isCentered: true,
-                                      textAlign: TextAlign.center,
                                       textColor: blackColor,
                                       fontSize: 11,
                                       fontFamily: FontFamily.plusJakartaSansRegular,
@@ -651,81 +714,34 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
 
-                        SizedBox(height: 15,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.municipalImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Municipal",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            //SizedBox(width: 1,),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.serviceImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Service",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                           // SizedBox(width: 5,),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.rdImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "RD",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            Spacer(),
+                            Spacer(),
 
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.npsImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "NPS",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => NpsServicesScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.npsImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "NPS",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-
+                            Spacer(),
+                            Spacer(),
+                            Spacer(),
                           ],
                         ),
 
@@ -762,7 +778,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => MoneyTransferScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SubscriptionServicesScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -783,7 +799,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => FastTagScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => HousingServiceScreen(),));
                               },
                               child: Column(
                                 children: [
@@ -804,7 +820,8 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                             GestureDetector(
                               onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ClubAssociationServicesScreen(),));
+
                               },
                               child: Column(
                                 children: [
@@ -823,21 +840,26 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 ],
                               ),
                             ),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.hospitalImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Hospital",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CommingSoonScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.hospitalImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Hospital",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -847,57 +869,53 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
 
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.educationImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Education",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => EducationScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.educationImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Education",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
                             SizedBox(width: 20,),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.donationImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Donation",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => DonationScreen(),));
+                              },
+                              child: Column(
+                                children: [
+                                  SvgPicture.asset(AppImages.donationImage,height: 50,),
+                                  SizedBox(height: 5,),
+                                  Center(
+                                    child: text(
+                                      "Donation",
+                                      isCentered: true,
+                                      textColor: blackColor,
+                                      fontSize: 11,
+                                      fontFamily: FontFamily.plusJakartaSansRegular,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Spacer(),
-                            Column(
-                              children: [
-                                SvgPicture.asset(AppImages.pathologyImage,height: 50,),
-                                SizedBox(height: 5,),
-                                Center(
-                                  child: text(
-                                    "Pathology",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            Spacer(),
+
                             Spacer(),
                             Spacer(),
                           ],

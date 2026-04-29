@@ -27,7 +27,7 @@ Widget text(String text,
           fontWeight: fontWeight,
           fontStyle: fontStyle,
           decoration:
-          lineThrough ? TextDecoration.underline : TextDecoration.none,
+          lineThrough ? TextDecoration.lineThrough : TextDecoration.none,
           // height: 1.5,
           letterSpacing: latterSpacing));
 }

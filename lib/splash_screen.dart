@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:jigrotech/View/auth_view/welcome_screen.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 import 'package:jigrotech/app_utils/text_widget.dart';
 import 'app_utils/app_colors.dart';
 import 'app_utils/font_family.dart';
+import 'getx_controller/auth_controller.dart';
 import 'main.dart';
 
 class FirstSplash extends StatefulWidget {
@@ -18,9 +21,10 @@ class _FirstSplashState extends State<FirstSplash>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
-
+  final AuthController authController = Get.put(AuthController());
   @override
   void initState() {
+    authController.getProfileApi(context: context);
     super.initState();
 
     // Animation controller

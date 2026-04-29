@@ -220,6 +220,7 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
                   return GestureDetector(
                     onTap: () {
                       if (pin.length == 4) {
+                        FocusScope.of(context).unfocus();
                        widget.isMobileRecharge==true?
                        Navigator.push(context, MaterialPageRoute(builder: (context) => MobileRechargeSuccessScreen(),)):
                            widget.isElectricityBill==true?Navigator.push(context, MaterialPageRoute(builder: (context) => BillSuccessfullyScreen(),)):

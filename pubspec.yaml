@@ -45,6 +45,15 @@ dependencies:
   pdf:
   path_provider:
   open_file:
+  url_launcher:
+  intl: any
+  table_calendar:
+  fluttertoast:
+  get:
+  http:
+  connectivity_plus:
+  shared_preferences:
+  screen_protector:
 
 dev_dependencies:
   flutter_test:

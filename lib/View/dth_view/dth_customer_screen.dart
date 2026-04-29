@@ -187,7 +187,11 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
              text("View Sample Bill",textColor: blackColor,fontSize: 18,
              fontWeight: FontWeight.w600,fontFamily: FontFamily.plusJakartaSansBold
              ),
-            Icon(Icons.close),
+            InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.close)),
           ],
         ),
         content:  Column(
@@ -270,7 +274,7 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                   //borderRadius: BorderRadius.circular(40.0),
 
                   onPressed: (){
-
+                    Navigator.pop(context);
                   }
 
 

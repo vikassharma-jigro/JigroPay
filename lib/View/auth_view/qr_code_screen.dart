@@ -34,7 +34,12 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
     return GradientAppScaffold(
       body: Scaffold(
         backgroundColor: white,
-        appBar: AppBar(backgroundColor: Colors.black),
+        appBar: AppBar(
+          backgroundColor: white,
+          iconTheme: const IconThemeData(
+            color: purpleGradientColor, // <-- Drawer icon color
+          ),
+        ),
         drawer: _buildDrawer(),
       ),
     );
@@ -196,7 +201,6 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-          // Security Shield
           Container(
             padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
             decoration: BoxDecoration(
@@ -332,7 +336,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
 
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Text(
               "Terms & Conditions, Privacy policy, Grievance, Redressal Mechanism, See all policies",

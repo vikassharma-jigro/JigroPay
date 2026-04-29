@@ -104,7 +104,7 @@ class _RechargePayScreenState extends State<RechargePayScreen> {
                             fontWeight: FontWeight.w600),
                         GestureDetector(
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (cntext) => RechargePayScreen()));
+                            //Navigator.push(context, MaterialPageRoute(builder: (cntext) => RechargePayScreen()));
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 30,vertical: 4),
