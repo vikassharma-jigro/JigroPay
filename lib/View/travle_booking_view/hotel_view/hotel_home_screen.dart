@@ -29,7 +29,7 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -39,13 +39,13 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               "JigroPay",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -55,13 +55,13 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: white),
+                border: Border.all(color: blackColor),
               ),
               child: text(
                 "About",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,

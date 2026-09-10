@@ -29,7 +29,7 @@ class _HotelRoomDetailsScreenState extends State<HotelRoomDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -39,14 +39,14 @@ class _HotelRoomDetailsScreenState extends State<HotelRoomDetailsScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "New Delhi, India",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -81,7 +81,7 @@ class _HotelRoomDetailsScreenState extends State<HotelRoomDetailsScreen> {
                     text: "Continue Booking",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -674,7 +674,7 @@ class _HotelRoomDetailsScreenState extends State<HotelRoomDetailsScreen> {
                                 MaterialTapTargetSize.shrinkWrap,
                             visualDensity: VisualDensity.compact,
                             side: const BorderSide(
-                              color: purpleGradientColor,
+                              color: primaryColor,
                               width: 1,
                             ),
                           ),
@@ -709,7 +709,7 @@ class _HotelRoomDetailsScreenState extends State<HotelRoomDetailsScreen> {
                                 MaterialTapTargetSize.shrinkWrap,
                             visualDensity: VisualDensity.compact,
                             side: const BorderSide(
-                              color: purpleGradientColor,
+                              color: primaryColor,
                               width: 1,
                             ),
                           ),

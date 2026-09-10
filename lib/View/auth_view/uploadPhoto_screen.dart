@@ -13,7 +13,7 @@ class UploadPhotoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -24,7 +24,7 @@ class UploadPhotoScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: purpleGradientColor),
+              child: Icon(Icons.arrow_back_ios, color: primaryColor),
             ),
             SizedBox(height: 50),
             Center(
@@ -66,7 +66,7 @@ class UploadPhotoScreen extends StatelessWidget {
                 );
               },
               gradient: const LinearGradient(
-                colors: [pinkColor, purpleGradientColor],
+                colors: [primaryColor, secondaryColor],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

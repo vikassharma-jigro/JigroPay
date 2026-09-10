@@ -6,6 +6,8 @@ import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 import 'dth_customer_screen.dart';
 
 class DthServiceScreen extends StatefulWidget {
@@ -25,14 +27,19 @@ class _DthServiceScreenState extends State<DthServiceScreen> {
     "Tata Play",
   ];
   int? selectIndex;
+  final RechargeController rechargeController = Get.put(RechargeController());
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      rechargeController.fetchOperatorsByType(context: context, type: "dth");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -41,14 +48,14 @@ class _DthServiceScreenState extends State<DthServiceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "DTH",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -90,25 +97,47 @@ class _DthServiceScreenState extends State<DthServiceScreen> {
               ),
 
               SizedBox(height: 15),
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: 10,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  bool isSelected = selectIndex == index;
+              Obx(() {
+                if (rechargeController.isLoading.value) {
+                  return Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator()));
+                }
+                
+                var operators = rechargeController.dynamicOperatorsList;
+                if (operators.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("No DTH operators found.", style: TextStyle(color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular)),
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: operators.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var operator = operators[index];
+                    String name = operator['name']?.toString() ?? operator['operator_name']?.toString() ?? operator['company']?.toString() ?? options[index % options.length];
+                    String? iconUrl = operator['image']?.toString() ?? operator['icon']?.toString() ?? operator['logo']?.toString();
+                    bool isSelected = selectIndex == index;
+                  
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectIndex = index; // selected index update करो
+                          selectIndex = index; // selected index update
                         });
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DthCustomerScreen(),
+                            builder: (context) => DthCustomerScreen(
+                              operatorDetails: operator["operator_code"],
+                              operatorName: name,
+                            ),
                           ),
                         );
                       },
@@ -123,53 +152,43 @@ class _DthServiceScreenState extends State<DthServiceScreen> {
                             color: isSelected ? blue1Color : greyColor,
                           ),
                         ),
-
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(AppImages.sunImage),
-                                    SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        text(
-                                          "Airtel DTH",
-                                          textColor: blackColor,
-                                          fontSize: 16,
-                                          fontFamily:
-                                              FontFamily.plusJakartaSansMedium,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-
-                                        text(
-                                          "Digital TV Service",
-                                          textColor: greyColor,
-                                          fontSize: 12,
-                                          fontFamily:
-                                              FontFamily.plusJakartaSansRegular,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                if (iconUrl != null && iconUrl.isNotEmpty)
+                                  Image.network(
+                                    iconUrl,
+                                    height: 30,
+                                    width: 30,
+                                    errorBuilder: (context, error, stackTrace) => SvgPicture.asset(AppImages.sunImage, height: 30, width: 30),
+                                  )
+                                else
+                                  SvgPicture.asset(AppImages.sunImage, height: 30, width: 30),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  child: text(
+                                    name,
+                                    textColor: blackColor,
+                                    fontSize: 16,
+                                    fontFamily: FontFamily.plusJakartaSansMedium,
+                                    fontWeight: FontWeight.w500,
+                                    maxLine: 2,
+                                  ),
                                 ),
-
                                 Icon(Icons.arrow_forward_ios, color: greyColor),
                               ],
                             ),
+
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-              ),
+              );
+            }),
             ],
           ),
         ),

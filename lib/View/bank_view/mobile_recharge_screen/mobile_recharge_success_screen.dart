@@ -25,7 +25,7 @@ class _MobileRechargeSuccessScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -34,7 +34,7 @@ class _MobileRechargeSuccessScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
           ],
@@ -53,7 +53,7 @@ class _MobileRechargeSuccessScreenState
                 SizedBox(height: 20),
                 SvgPicture.asset(
                   AppImages.successImage,
-                  color: purpleGradientColor,
+                  color: primaryColor,
                 ),
                 SizedBox(height: 20),
                 text(
@@ -176,7 +176,7 @@ class _MobileRechargeSuccessScreenState
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.call, color: purpleGradientColor),
+                        Icon(Icons.call, color: primaryColor),
                         text(
                           "Call",
                           textAlign: TextAlign.center,
@@ -190,7 +190,7 @@ class _MobileRechargeSuccessScreenState
                     ),
                     Row(
                       children: [
-                        Icon(Icons.message, color: purpleGradientColor),
+                        Icon(Icons.message, color: primaryColor),
                         text(
                           "Message",
                           textAlign: TextAlign.center,
@@ -213,7 +213,7 @@ class _MobileRechargeSuccessScreenState
                     text: "Back To Home",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

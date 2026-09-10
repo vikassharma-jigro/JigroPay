@@ -27,7 +27,7 @@ class _MutualRegistrationScreenState extends State<MutualRegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -37,14 +37,14 @@ class _MutualRegistrationScreenState extends State<MutualRegistrationScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 widget.serviceNo ?? "",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 16,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -102,7 +102,7 @@ class _MutualRegistrationScreenState extends State<MutualRegistrationScreen> {
                   text: "Continue",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -198,7 +198,7 @@ class _MutualRegistrationScreenState extends State<MutualRegistrationScreen> {
                 text: "Got it",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

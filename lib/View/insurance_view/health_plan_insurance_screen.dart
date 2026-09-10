@@ -36,7 +36,7 @@ class _HealthPlanInsuranceScreenState extends State<HealthPlanInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -46,19 +46,19 @@ class _HealthPlanInsuranceScreenState extends State<HealthPlanInsuranceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage, color: white),
+                    SvgPicture.asset(AppImages.iImage, color: blackColor),
                     text(
                       "Jigropay",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -202,10 +202,7 @@ class _HealthPlanInsuranceScreenState extends State<HealthPlanInsuranceScreen> {
                             borderRadius: BorderRadius.circular(15),
                             gradient: isSelected
                                 ? const LinearGradient(
-                                    colors: [
-                                      pinkColor,
-                                      purpleGradientColor,
-                                    ], // light → dark purple
+                                    colors: [primaryColor, secondaryColor], // light → dark purple
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   )
@@ -339,10 +336,7 @@ class _HealthPlanInsuranceScreenState extends State<HealthPlanInsuranceScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             gradient: const LinearGradient(
-                              colors: [
-                                pinkColor,
-                                purpleGradientColor,
-                              ], // light → dark purple
+                              colors: [primaryColor, secondaryColor], // light → dark purple
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
@@ -411,7 +405,7 @@ class _HealthPlanInsuranceScreenState extends State<HealthPlanInsuranceScreen> {
                   text: "Proceed",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

@@ -52,7 +52,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -63,7 +63,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_back_ios, color: purpleGradientColor),
+                child: Icon(Icons.arrow_back_ios, color: primaryColor),
               ),
               const SizedBox(height: 30),
               _pickedImage == null
@@ -75,7 +75,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                         child: Container(
                           padding: EdgeInsetsGeometry.all(20),
                           decoration: BoxDecoration(
-                            border: Border.all(color: purpleGradientColor),
+                            border: Border.all(color: primaryColor),
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: ClipRRect(
@@ -104,7 +104,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "1",
@@ -132,7 +132,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "2",
@@ -161,7 +161,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "3",
@@ -190,7 +190,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "4",
@@ -218,7 +218,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "5",
@@ -248,7 +248,7 @@ class _ScanPhotoScreenState extends State<ScanPhotoScreen>
                   text: "Next",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

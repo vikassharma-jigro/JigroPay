@@ -27,7 +27,7 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -37,19 +37,19 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage, color: white),
+                    SvgPicture.asset(AppImages.iImage, color: blackColor),
                     text(
                       "Jigropay",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -202,7 +202,7 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     side: const BorderSide(
-                      color: purpleGradientColor,
+                      color: primaryColor,
                       width: 1,
                     ),
                   ),
@@ -224,7 +224,7 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
                           recognizer: TapGestureRecognizer()..onTap = () {},
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
-                            color: purpleGradientColor,
+                            color: primaryColor,
                             fontSize: 12,
                             fontFamily: FontFamily.plusJakartaSansRegular,
                           ),
@@ -244,7 +244,7 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
                           recognizer: TapGestureRecognizer()..onTap = () {},
                           style: const TextStyle(
                             decoration: TextDecoration.underline,
-                            color: purpleGradientColor,
+                            color: primaryColor,
                             fontSize: 12,
                             fontFamily: FontFamily.plusJakartaSansRegular,
                           ),
@@ -262,7 +262,7 @@ class _HealthInsuranceScreenState extends State<HealthInsuranceScreen> {
                   text: "View Plans",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

@@ -39,7 +39,7 @@ class _TravellerListScreenState extends State<TravellerListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -49,12 +49,12 @@ class _TravellerListScreenState extends State<TravellerListScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "List of Travellers",
-                textColor: white,
+                textColor: blackColor,
                 isCentered: true,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -156,7 +156,7 @@ class _TravellerListScreenState extends State<TravellerListScreen> {
                   text: "Next",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

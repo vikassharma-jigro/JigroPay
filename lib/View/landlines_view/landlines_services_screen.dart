@@ -52,7 +52,7 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -62,13 +62,13 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               "Landline",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -99,16 +99,16 @@ class _LandlinesServicesScreenState extends State<LandlinesServicesScreen> {
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 

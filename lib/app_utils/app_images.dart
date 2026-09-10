@@ -1,5 +1,12 @@
 class AppImages {
+  static String onboarding1 = "assets/images/onboard1.png";
+  static String onboarding2 = "assets/images/onboard2.png";
+  static String onboarding3 = "assets/images/onboard3.png";
   static String splashIcon = "assets/images/splash.png";
+  static String sppIcon = "assets/images/spp.png";
+  static String munciIcon = "assets/images/munci.png";
+  static String panIcon = "assets/images/pan.png";
+  static String splashBackIcon = "assets/images/spleashBack.png";
   static String businessIcon = "assets/images/business.png";
   static String userIcon = "assets/images/userIcon.svg";
   static String emailIcon = "assets/images/email.png";
@@ -126,4 +133,19 @@ class AppImages {
   static String upiImage = "assets/images/upi.svg";
   static String foodImage = "assets/images/food.svg";
   static String netBankingImage = "assets/images/netBanking.svg";
+
+
+  static String fastTagImage = "assets/images/fast.png";
+  static String dthRImage = "assets/images/dthR.png";
+  static String bannerOfferImage = "assets/images/bannerOffer.png";
+  static String electricity1Image = "assets/images/electricity1.png";
+  static String water1Image = "assets/images/water1.png";
+  static String boradImage = "assets/images/borad.png";
+  static String lpgGasImage = "assets/images/lpgGas.png";
+  static String crCardImage = "assets/images/crCard.png";
+  static String loanReImage = "assets/images/loanRe.png";
+  static String insuImage = "assets/images/insu.png";
+  static String lMobileImage = "assets/images/lMobile.png";
+  static String jigroImage = "assets/images/jigro.png";
+  static String cableTvImage = "assets/images/cableTv.png";
 }

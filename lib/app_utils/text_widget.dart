@@ -60,7 +60,7 @@ class CommonButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
     this.borderRadius = const BorderRadius.all(Radius.circular(8.0)),
     this.gradient = const LinearGradient(
-      colors: [Color(0xFFFF5B9B), Color(0xFF7834EB)], // pink to purple
+      colors: [primaryColor, secondaryColor],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ),
@@ -80,7 +80,10 @@ class CommonButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: borderRadius as BorderRadius?,
-          onTap: onPressed,
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+            onPressed();
+          },
           child: Padding(
             padding: padding,
             child: Center(

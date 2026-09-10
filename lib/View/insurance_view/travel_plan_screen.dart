@@ -71,7 +71,7 @@ class _TravelPlanScreenState extends State<TravelPlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -80,14 +80,14 @@ class _TravelPlanScreenState extends State<TravelPlanScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Select Plan",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -198,7 +198,7 @@ class _TravelPlanScreenState extends State<TravelPlanScreen> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: purpleGradientColor,
+                          color: primaryColor,
                         ),
                         child: text(
                           "Compare",

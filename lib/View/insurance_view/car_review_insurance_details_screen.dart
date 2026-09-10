@@ -3,6 +3,7 @@ import 'package:jigrotech/View/bank_view/pin_screen.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 import '../../../main.dart';
 import 'package:flutter/gestures.dart';
 
@@ -24,7 +25,7 @@ class _CarReviewInsuranceDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -34,7 +35,7 @@ class _CarReviewInsuranceDetailsScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: Center(
@@ -42,7 +43,7 @@ class _CarReviewInsuranceDetailsScreenState
                   "Review Other Details",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor: white,
+                  textColor: blackColor,
                   fontSize: 18,
                   fontFamily: FontFamily.plusJakartaSansBold,
                   fontWeight: FontWeight.w600,
@@ -77,7 +78,7 @@ class _CarReviewInsuranceDetailsScreenState
                   //checkColor: Colors.white,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   visualDensity: VisualDensity.compact,
-                  side: const BorderSide(color: purpleGradientColor, width: 1),
+                  side: const BorderSide(color: primaryColor, width: 1),
                 ),
 
                 SizedBox(width: 10),
@@ -97,7 +98,7 @@ class _CarReviewInsuranceDetailsScreenState
                         recognizer: TapGestureRecognizer()..onTap = () {},
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
-                          color: purpleGradientColor,
+                          color: primaryColor,
                           fontSize: 12,
                           fontFamily: FontFamily.plusJakartaSansRegular,
                         ),
@@ -117,7 +118,7 @@ class _CarReviewInsuranceDetailsScreenState
                         recognizer: TapGestureRecognizer()..onTap = () {},
                         style: const TextStyle(
                           decoration: TextDecoration.underline,
-                          color: purpleGradientColor,
+                          color: primaryColor,
                           fontSize: 12,
                           fontFamily: FontFamily.plusJakartaSansRegular,
                         ),
@@ -161,7 +162,7 @@ class _CarReviewInsuranceDetailsScreenState
                 text: "Proceed to Pay",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -172,9 +173,15 @@ class _CarReviewInsuranceDetailsScreenState
                 //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                 //borderRadius: BorderRadius.circular(40.0),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => UpiPinScreen()),
+                  RazorpayHelper(context: context, type: "insurance").startPaymentWithOrderFlow(
+                    context: context,
+                    opcode: "CAR_INSURANCE",
+                    number: "CAR_INSURANCE",
+                    amount: 100.0,
+                    type: "insurance",
+                    description: "Car Insurance Payment",
+                    serviceName: "Car Insurance",
+                    providerName: "Insurance Provider",
                   );
                 },
               ),

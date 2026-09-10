@@ -20,7 +20,7 @@ class _ViewReceiptScreenState extends State<ViewReceiptScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -29,7 +29,7 @@ class _ViewReceiptScreenState extends State<ViewReceiptScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
           ],
@@ -250,7 +250,7 @@ class _ViewReceiptScreenState extends State<ViewReceiptScreen> {
                             text: "Payment Receive   463.13",
                             textColor: white,
                             gradient: const LinearGradient(
-                              colors: [pinkColor, purpleGradientColor],
+                              colors: [primaryColor, secondaryColor],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
@@ -285,7 +285,7 @@ class _ViewReceiptScreenState extends State<ViewReceiptScreen> {
                     text: "Download",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

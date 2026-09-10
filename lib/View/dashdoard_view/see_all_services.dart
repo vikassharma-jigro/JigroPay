@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/View/cable_view/cable_service_screen.dart';
 import 'package:jigrotech/View/dth_view/dth_service_screen.dart';
 import 'package:jigrotech/View/housing_view/housing_service_screen.dart';
+import '../insurance_view/insurance_provider_screen.dart';
+import '../broadband_view/broadband_service_screen.dart';
 import 'package:jigrotech/View/more_services_view/education_screen.dart';
 import 'package:jigrotech/View/municipal_view/municipal_screen.dart';
 import 'package:jigrotech/View/ncmc_view/ncmc_service_screen.dart';
@@ -19,9 +21,7 @@ import '../credit_card_view/credit_card_services_screen.dart';
 import '../electricity_bill/electricity_bill_service_screen.dart';
 import '../fast_tag_view/fast_tag_screen.dart';
 import '../gas_view/gas_services_screen.dart';
-import '../gas_view/piped_gas_services_screen.dart';
-import '../landlines_view/landlines_services_screen.dart';
-import '../more_services_view/donation_screen.dart';
+import '../kyc_verfication_view/kyc_verfication_screen.dart';
 import '../mutual_fund_view/mutual_funds_service_screen.dart';
 import '../nps_view/nps_services_screen.dart';
 import '../water_view/water_service_screen.dart';
@@ -41,14 +41,14 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back_ios, color: white),
+          child: Icon(Icons.arrow_back_ios, color: blackColor),
         ),
       ),
       body: Container(
@@ -577,13 +577,13 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      PipedGasServicesScreen(),
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         PipedGasServicesScreen(),
+                              //   ),
+                              // );
                             },
                             child: Column(
                               children: [
@@ -680,7 +680,7 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      LandlinesServicesScreen(),
+                                      BroadbandServiceScreen(),
                                 ),
                               );
                             },
@@ -706,35 +706,6 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                           ),
                           Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      LandlinesServicesScreen(),
-                                ),
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SvgPicture.asset(
-                                  AppImages.phoneImage,
-                                  height: 50,
-                                ),
-                                SizedBox(height: 5),
-                                text(
-                                  "Landline",
-                                  //isCentered: true,
-                                  textColor: blackColor,
-                                  fontSize: 11,
-                                  fontFamily: FontFamily.plusJakartaSansRegular,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ],
-                            ),
-                          ),
                           Spacer(),
                           Spacer(),
                         ],
@@ -831,7 +802,13 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                           SizedBox(width: 5),
                           GestureDetector(
                             onTap: () {
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => DthServiceScreen(),));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      InsuranceProviderScreen(),
+                                ),
+                              );
                             },
                             child: Column(
                               children: [
@@ -1117,37 +1094,6 @@ class _SeeAllServicesScreenState extends State<SeeAllServicesScreen> {
                             ),
                           ),
                           Spacer(),
-                          SizedBox(width: 20),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DonationScreen(),
-                                ),
-                              );
-                            },
-                            child: Column(
-                              children: [
-                                SvgPicture.asset(
-                                  AppImages.donationImage,
-                                  height: 50,
-                                ),
-                                SizedBox(height: 5),
-                                Center(
-                                  child: text(
-                                    "Donation",
-                                    isCentered: true,
-                                    textColor: blackColor,
-                                    fontSize: 11,
-                                    fontFamily:
-                                        FontFamily.plusJakartaSansRegular,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                           Spacer(),
                           Spacer(),
 

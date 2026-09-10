@@ -26,7 +26,7 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -36,12 +36,12 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Review and Buy",
-                textColor: white,
+                textColor: blackColor,
                 isCentered: true,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -249,7 +249,7 @@ class _TravelBuyScreenState extends State<TravelBuyScreen> {
                   text: "BUY ₹552",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

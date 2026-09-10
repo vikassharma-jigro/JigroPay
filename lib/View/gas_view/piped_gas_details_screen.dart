@@ -3,19 +3,32 @@ import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 
 class PipedGasDetailsScreen extends StatefulWidget {
   final String? pipedServiceName;
-  const PipedGasDetailsScreen({super.key, this.pipedServiceName});
+  final String? opcode;
+  const PipedGasDetailsScreen({super.key, this.pipedServiceName, this.opcode});
 
   @override
   State<PipedGasDetailsScreen> createState() => _PipedGasDetailsScreenState();
 }
 
+
+
 class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
   TextEditingController caCardNumberController = TextEditingController();
+  final RechargeController rechargeController = Get.put(RechargeController());
+  String? _caError;
+
+  String? _validateCaNo(String val) {
+    if (val.trim().isEmpty) return 'CA Number is required';
+    if (val.trim().length < 5) return 'Minimum 5 characters required';
+    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim())) return 'Only letters, digits, / or - allowed';
+    return null;
+  }
 
   dynamic date;
   bool isChecked = false;
@@ -26,7 +39,7 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -36,13 +49,13 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               widget.pipedServiceName ?? "",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -80,14 +93,29 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
               const SizedBox(height: 10),
               CustomRoundTextField(
                 controller: caCardNumberController,
-
-                keyboardType: TextInputType.phone,
-                hintText: "Enter your CA Number ",
-                maxLines: 2,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.characters,
+                hintText: "Enter your CA Number",
+                maxLines: 1,
                 fillColor: Colors.transparent,
-                //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20)],
+                onChanged: (val) {
+                  setState(() {
+                    _caError = _validateCaNo(val);
+                  });
+                },
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(20),
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9/\-]')),
+                ],
               ),
+              if (_caError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0, left: 5.0),
+                  child: Text(
+                    _caError!,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
 
               const SizedBox(height: 50),
               SizedBox(
@@ -97,7 +125,7 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
                   text: "Continue",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -107,7 +135,23 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
 
                   //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                   //borderRadius: BorderRadius.circular(40.0),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final error = _validateCaNo(caCardNumberController.text);
+                    setState(() { _caError = error; });
+                    if (error != null) return;
+
+                    if (widget.opcode != null) {
+                      var response = await rechargeController.fetchUtilityBill(
+                        context: context, 
+                        consumerId: caCardNumberController.text.trim(), 
+                        opcode: widget.opcode!
+                      );
+                      
+                      if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+                        // show success dialog or navigation
+                      }
+                    }
+                  },
                 ),
               ),
               SizedBox(height: 20),

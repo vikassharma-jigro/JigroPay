@@ -7,6 +7,7 @@ import '../../../app_utils/app_images.dart';
 import '../../../app_utils/custom_textFiled.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 import '../../../main.dart';
 
 class BusTicketPayScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _BusTicketPayScreenState extends State<BusTicketPayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -32,14 +33,14 @@ class _BusTicketPayScreenState extends State<BusTicketPayScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Payment",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -58,7 +59,7 @@ class _BusTicketPayScreenState extends State<BusTicketPayScreen> {
             text: "Proceed To Pay",
             textColor: white,
             gradient: const LinearGradient(
-              colors: [pinkColor, purpleGradientColor],
+              colors: [primaryColor, secondaryColor],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -68,7 +69,18 @@ class _BusTicketPayScreenState extends State<BusTicketPayScreen> {
 
             //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
             //borderRadius: BorderRadius.circular(40.0),
-            onPressed: () {},
+            onPressed: () {
+              RazorpayHelper(context: context, type: "bus").startPaymentWithOrderFlow(
+                context: context,
+                opcode: "BUS",
+                number: "BUS_BOOKING",
+                amount: 800.0,
+                type: "bus",
+                description: "Bus Ticket Payment",
+                serviceName: "Bus Ticket",
+                providerName: "Bus Booking",
+              );
+            },
           ),
         ),
       ),

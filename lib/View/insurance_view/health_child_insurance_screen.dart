@@ -26,7 +26,7 @@ class _HealthChildInsuranceScreenState
     final purple = const Color(0xFF6E2AE9);
     final borderColor = const Color(0xFFCED4DA);
 
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -36,14 +36,14 @@ class _HealthChildInsuranceScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Relationship",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -194,7 +194,7 @@ class _HealthChildInsuranceScreenState
                 text: "Proceed",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -236,11 +236,11 @@ class _HealthChildInsuranceScreenState
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: purpleGradientColor),
+          borderSide: const BorderSide(color: primaryColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: purpleGradientColor),
+          borderSide: const BorderSide(color: primaryColor),
         ),
       ),
     );
@@ -263,7 +263,7 @@ class _HealthChildInsuranceScreenState
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: purpleGradientColor, width: 1.5),
+                border: Border.all(color: primaryColor, width: 1.5),
                 color: selected == "Son"
                     ? purpleGradientColor.withOpacity(0.1)
                     : Colors.white,
@@ -291,7 +291,7 @@ class _HealthChildInsuranceScreenState
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: purpleGradientColor, width: 1.5),
+                border: Border.all(color: primaryColor, width: 1.5),
                 color: selected == "Daughter"
                     ? purpleGradientColor.withOpacity(0.1)
                     : Colors.white,

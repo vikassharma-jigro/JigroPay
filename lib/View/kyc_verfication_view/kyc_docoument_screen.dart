@@ -77,7 +77,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -86,7 +86,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
             Expanded(
@@ -94,7 +94,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
                 "KYC Verification",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -162,7 +162,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: purpleGradientColor,
+                          color: primaryColor,
                         ),
                         child: Icon(Icons.camera_alt_outlined, color: white),
                       ),
@@ -208,7 +208,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
-                          color: purpleGradientColor,
+                          color: primaryColor,
                         ),
                         child: Icon(Icons.camera_alt_outlined, color: white),
                       ),
@@ -225,7 +225,7 @@ class _KycDocumentScreenState extends State<KycDocumentScreen>
                   text: "Continue",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

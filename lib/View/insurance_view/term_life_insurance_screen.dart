@@ -32,7 +32,7 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -42,7 +42,7 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: Center(
@@ -50,7 +50,7 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
                   "Term Life Insurance",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor: white,
+                  textColor: blackColor,
                   fontSize: 18,
                   fontFamily: FontFamily.plusJakartaSansBold,
                   fontWeight: FontWeight.w600,
@@ -86,7 +86,7 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
                   //checkColor: Colors.white,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   visualDensity: VisualDensity.compact,
-                  side: const BorderSide(color: purpleGradientColor, width: 1),
+                  side: const BorderSide(color: primaryColor, width: 1),
                 ),
 
                 SizedBox(width: 10),
@@ -110,7 +110,7 @@ class _TermLifeInsuranceScreenState extends State<TermLifeInsuranceScreen> {
                 text: "CHECK NOW",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

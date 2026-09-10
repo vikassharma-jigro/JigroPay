@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jigrotech/View/dashdoard_view/bottom_navigation_bar_screen.dart';
 import 'package:jigrotech/app_utils/app_colors.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../app_utils/app_images.dart';
@@ -78,20 +79,39 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back_ios, color: pinkColor),
-              ),
+    return PopScope(
+      canPop: Navigator.canPop(context),
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            (route) => false,
+          );
+        }
+      },
+      child: Scaffold(backgroundColor: white,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                InkWell(
+                  onTap: () {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => DashboardScreen()),
+                        (route) => false,
+                      );
+                    }
+                  },
+                  child: const Icon(Icons.arrow_back_ios, color: pinkColor),
+                ),
               SizedBox(height: 25),
               Center(child: Image.asset(AppImages.splashIcon, height: 100)),
               const SizedBox(height: 45),
@@ -172,7 +192,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                 child: CommonButton(
                   text: "Submit",
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -199,7 +219,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                 child: Container(
                   height: 3,
                   width: 150,
-                  color: purpleGradientColor,
+                  color: primaryColor,
                 ),
               ),
               const SizedBox(height: 20),
@@ -226,7 +246,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                                 },
                               style: const TextStyle(
                                 decoration: TextDecoration.underline,
-                                color: purpleGradientColor,
+                                color: primaryColor,
                                 fontSize: 12,
                                 fontFamily: FontFamily.plusJakartaSansRegular,
                               ),
@@ -252,6 +272,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

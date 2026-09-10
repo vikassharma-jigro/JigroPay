@@ -28,13 +28,13 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       body: Scaffold(
         backgroundColor: white,
         appBar: AppBar(
           backgroundColor: white,
           iconTheme: const IconThemeData(
-            color: purpleGradientColor, // <-- Drawer icon color
+            color: primaryColor, // <-- Drawer icon color
           ),
         ),
         drawer: _buildDrawer(),

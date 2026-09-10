@@ -1,11 +1,16 @@
 import 'dart:ui';
 
 const Color white = Color(0xffFFFFFF);
+const Color primaryColor = Color(0xff8c2ac4);
+const Color secondaryColor = Color(0xffe81ecd);
+
+
 const Color blueColor = Color(0xff1b467d);
 const Color pinkColor = Color(0xffc882fd);
 const Color purpleGradientColor = Color(0xff7834eb);
 const Color blackColor = Color(0xff212121);
 const Color greyColor = Color(0xff6e6e6e);
+const Color textColor = Color(0xff4d4d4d);
 const Color redColor = Color(0xff6f0000);
 const Color red1Color = Color(0xffdc2626);
 const Color darkPinkColor = Color(0xff945fd0);

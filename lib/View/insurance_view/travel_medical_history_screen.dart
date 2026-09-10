@@ -30,7 +30,7 @@ class _TravelMedicalHistoryScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -40,12 +40,12 @@ class _TravelMedicalHistoryScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Group Silver Cover",
-                textColor: white,
+                textColor: blackColor,
                 isCentered: true,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
@@ -115,7 +115,7 @@ class _TravelMedicalHistoryScreenState
                   text: "CONTINUE",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

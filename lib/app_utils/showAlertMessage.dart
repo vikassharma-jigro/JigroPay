@@ -17,7 +17,7 @@ class ShowAlertDialog {
           title: const Text(
             AppStrings.appTitle,
             style: TextStyle(
-              color: purpleGradientColor,
+              color: primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -34,12 +34,12 @@ class ShowAlertDialog {
                 //padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(5),
-                  color: purpleGradientColor,
+                  color: primaryColor,
                 ),
                 child: const Align(
                   alignment: Alignment.center,

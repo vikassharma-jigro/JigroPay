@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jigrotech/View/cable_view/cable_amount_screen.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 
 class CablePayScreen extends StatefulWidget {
   final String? cableServiceName;
-  const CablePayScreen({super.key, this.cableServiceName});
+  final String? opcode;
+  const CablePayScreen({super.key, this.cableServiceName, this.opcode});
 
   @override
   State<CablePayScreen> createState() => _CablePayScreenState();
 }
 
+
+
 class _CablePayScreenState extends State<CablePayScreen> {
   TextEditingController customerIdController = TextEditingController();
+  final RechargeController rechargeController = Get.put(RechargeController());
+  String? _customerError;
+
+  String? _validateCustomerId(String val) {
+    if (val.trim().isEmpty) return 'Customer ID is required';
+    if (val.trim().length < 5) return 'Minimum 5 characters required';
+    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim())) return 'Only letters, digits, / or - allowed';
+    return null;
+  }
   @override
   void initState() {
     super.initState();
@@ -22,7 +36,7 @@ class _CablePayScreenState extends State<CablePayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -31,14 +45,14 @@ class _CablePayScreenState extends State<CablePayScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 widget.cableServiceName ?? "",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -72,7 +86,7 @@ class _CablePayScreenState extends State<CablePayScreen> {
                 text: "Continue",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -82,13 +96,42 @@ class _CablePayScreenState extends State<CablePayScreen> {
 
                 //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                 //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CableAmountScreen(),
-                    ),
-                  );
+                onPressed: () async {
+                  final error = _validateCustomerId(customerIdController.text);
+                  setState(() { _customerError = error; });
+                  if (error != null) return;
+
+                  if (widget.opcode != null) {
+                    var response = await rechargeController.fetchUtilityBill(
+                      context: context, 
+                      consumerId: customerIdController.text.trim(), 
+                      opcode: widget.opcode!
+                    );
+
+                    if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CableAmountScreen(
+                            cableServiceName: widget.cableServiceName,
+                            opcode: widget.opcode,
+                            consumerNumber: customerIdController.text.trim(),
+                          ),
+                        ),
+                      );
+                    }
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CableAmountScreen(
+                          cableServiceName: widget.cableServiceName,
+                          opcode: widget.opcode,
+                          consumerNumber: customerIdController.text.trim(),
+                        ),
+                      ),
+                    );
+                  }
                 },
               ),
             ),
@@ -121,39 +164,46 @@ class _CablePayScreenState extends State<CablePayScreen> {
               SizedBox(height: 10),
               TextField(
                 controller: customerIdController,
-                onChanged: (i) {},
-
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.characters,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(20),
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9/\-]')),
+                ],
+                onChanged: (val) {
+                  setState(() {
+                    _customerError = _validateCustomerId(val);
+                  });
+                },
                 onSubmitted: (v) {},
-
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: BorderSide(color: _customerError != null ? Colors.red : primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
-
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: BorderSide(color: _customerError != null ? Colors.red : primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: BorderSide(color: _customerError != null ? Colors.red : primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
-
-                  // Other decoration properties...
+                  errorText: _customerError,
                   filled: true,
                   fillColor: white,
-                  hintText: "Customer Id",
+                  hintText: "Enter Customer Id",
+                  counterText: '${customerIdController.text.length}/20',
                   hintStyle: const TextStyle(
                     fontSize: 16.0,
-                    color: blackColor,
+                    color: greyColor,
                     fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 5,
                     left: 10,
                     bottom: 5,
-                    right: 0,
+                    right: 10,
                   ),
                 ),
               ),

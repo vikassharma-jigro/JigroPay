@@ -20,7 +20,7 @@ class _BankListScreenState extends State<BankListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -60,7 +60,7 @@ class _BankListScreenState extends State<BankListScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
             Expanded(
@@ -68,13 +68,13 @@ class _BankListScreenState extends State<BankListScreen> {
                 "Self Transfer",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(Icons.more_vert, color: white),
+            Icon(Icons.more_vert, color: blackColor),
           ],
         ),
       ),

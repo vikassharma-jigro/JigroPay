@@ -14,7 +14,7 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
                 );
               },
               gradient: const LinearGradient(
-                colors: [pinkColor, purpleGradientColor],
+                colors: [primaryColor, secondaryColor],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

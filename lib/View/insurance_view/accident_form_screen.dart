@@ -32,7 +32,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -42,7 +42,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: Center(
@@ -50,7 +50,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
                   "Accident Insurance",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor: white,
+                  textColor: blackColor,
                   fontSize: 18,
                   fontFamily: FontFamily.plusJakartaSansBold,
                   fontWeight: FontWeight.w600,
@@ -75,7 +75,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: text(
                       "A",
@@ -376,7 +376,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     side: const BorderSide(
-                      color: purpleGradientColor,
+                      color: primaryColor,
                       width: 1,
                     ),
                   ),
@@ -442,7 +442,7 @@ class _AccidentFormScreenState extends State<AccidentFormScreen> {
                       text: "PAY",
                       textColor: white,
                       gradient: const LinearGradient(
-                        colors: [pinkColor, purpleGradientColor],
+                        colors: [primaryColor, secondaryColor],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),

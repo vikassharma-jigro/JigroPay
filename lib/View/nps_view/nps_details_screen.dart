@@ -29,7 +29,7 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -39,13 +39,13 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               widget.npsServiceName ?? "",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -183,7 +183,7 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     side: const BorderSide(
-                      color: purpleGradientColor,
+                      color: primaryColor,
                       width: 1,
                     ),
                   ),
@@ -223,7 +223,7 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
                   text: "Continue",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -333,7 +333,7 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
                 text: "Close",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

@@ -39,7 +39,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -49,7 +49,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: Center(
@@ -57,7 +57,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
                   "Term Life Insurance",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor: white,
+                  textColor: blackColor,
                   fontSize: 18,
                   fontFamily: FontFamily.plusJakartaSansBold,
                   fontWeight: FontWeight.w600,
@@ -83,7 +83,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -110,7 +110,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
                 text: "Continue",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -631,7 +631,7 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
                     text: "Got it",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

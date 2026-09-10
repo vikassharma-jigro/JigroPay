@@ -8,6 +8,8 @@ import 'package:jigrotech/app_utils/text_widget.dart';
 
 import '../../main.dart';
 
+import 'package:jigrotech/View/dashdoard_view/bottom_navigation_bar_screen.dart';
+
 class VerifiedChampionScreen extends StatelessWidget {
   final String? email;
   final String? mobile;
@@ -21,42 +23,67 @@ class VerifiedChampionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return PopScope(
+      canPop: Navigator.canPop(context),
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            (route) => false,
+          );
+        }
+      },
+      child: Scaffold(
+        backgroundColor: white,
+        appBar: AppBar(
+          backgroundColor: white,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () {
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => DashboardScreen()),
+                  (route) => false,
+                );
+              }
+            },
+            child: const Icon(Icons.arrow_back_ios, color: primaryColor),
+          ),
+        ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_back_ios, color: purpleGradientColor),
-              ),
-              SizedBox(height: 120),
+              const SizedBox(height: 40),
               Center(
                 child: isMobile == true
-                    ? Image.asset(AppImages.mobileVerifiedIcon, height: 300)
+                    ? Image.asset(AppImages.mobileVerifiedIcon, height: 260)
                     : Image.asset(
                         AppImages.emailCampaionIcon,
                         fit: BoxFit.cover,
-                        height: 300,
+                        height: 260,
                       ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 25),
               Center(
                 child: text(
                   "You’re verified!",
                   textColor: blackColor,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.w600,
                   fontFamily: FontFamily.plusJakartaSansBold,
                 ),
               ),
+              const SizedBox(height: 8),
               Center(
                 child: text(
-                  "Now you can fund your account so you’re ready to invest in crypto",
+                  "Now you can fund your account so you’re ready to invest and pay.",
                   textColor: greyColor,
                   fontSize: 14,
                   textAlign: TextAlign.center,
@@ -65,27 +92,20 @@ class VerifiedChampionScreen extends StatelessWidget {
                   fontFamily: FontFamily.plusJakartaSansRegular,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 30),
               CommonButton(
-                text: "Continue",
+                text: "Continue to Dashboard",
                 onPressed: () {
-                  isMobile == true
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UploadPhotoScreen(),
-                          ),
-                        )
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                OtpScreen(mobileNumber: mobile),
-                          ),
-                        );
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DashboardScreen(),
+                    ),
+                    (route) => false,
+                  );
                 },
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -96,6 +116,7 @@ class VerifiedChampionScreen extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }

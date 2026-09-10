@@ -3,7 +3,7 @@ class AuthModel {
 
   bool? success;
   String? message;
-  String? accessToken;
+  String? token;
   String? tokenType;
   int? expiresIn;
   User? user;
@@ -12,7 +12,7 @@ class AuthModel {
     this.status,
     this.success,
     this.message,
-    this.accessToken,
+    this.token,
     this.tokenType,
     this.expiresIn,
     this.user,
@@ -22,7 +22,7 @@ class AuthModel {
     status = json['status'];
     success = json['success'];
     message = json['message'];
-    accessToken = json['access_token'];
+    token = json['access_token'] ?? json['token'];
     tokenType = json['token_type'];
     expiresIn = json['expires_in'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
@@ -33,7 +33,7 @@ class AuthModel {
     data['status'] = this.status;
     data['success'] = this.success;
     data['message'] = this.message;
-    data['access_token'] = this.accessToken;
+    data['access_token'] = this.token;
     data['token_type'] = this.tokenType;
     data['expires_in'] = this.expiresIn;
     if (this.user != null) {

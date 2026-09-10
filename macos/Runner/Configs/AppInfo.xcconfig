@@ -8,7 +8,7 @@
 PRODUCT_NAME = jigrotech
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.jigrotech
+PRODUCT_BUNDLE_IDENTIFIER = com.jigropay.jigro
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

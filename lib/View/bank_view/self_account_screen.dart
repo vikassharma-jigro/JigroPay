@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/contact.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:flutter_contacts/flutter_contacts.dart' hide PermissionStatus;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 import '../../app_utils/app_colors.dart';
@@ -46,11 +46,9 @@ class _SelfAccountScreenState extends State<SelfAccountScreen> {
   List<Map<String, dynamic>> filteredData = [];
 
   Future<void> getContacts() async {
-    // Permission maango
-    if (await FlutterContacts.requestPermission()) {
-      // Contacts fetch karo (with phones)
-      List<Contact> fetchedContacts = await FlutterContacts.getContacts(
-        withProperties: true,
+    if (await Permission.contacts.request().isGranted) {
+      List<Contact> fetchedContacts = await FlutterContacts.getAll(
+        properties: {ContactProperty.phone, ContactProperty.photoThumbnail},
       );
 
       setState(() {
@@ -86,7 +84,7 @@ class _SelfAccountScreenState extends State<SelfAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -95,7 +93,7 @@ class _SelfAccountScreenState extends State<SelfAccountScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
             Expanded(
@@ -103,13 +101,13 @@ class _SelfAccountScreenState extends State<SelfAccountScreen> {
                 "Send Money to Any Bank A/c",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(Icons.more_vert, color: white),
+            Icon(Icons.more_vert, color: blackColor),
           ],
         ),
       ),
@@ -486,14 +484,14 @@ class _SelfAccountScreenState extends State<SelfAccountScreen> {
                         itemBuilder: (context, index) {
                           final contact = contacts[index];
                           return ListTile(
-                            leading: (contact.photo != null)
+                            leading: (contact.photo?.thumbnail != null)
                                 ? CircleAvatar(
                                     backgroundImage: MemoryImage(
-                                      contact.photo!,
+                                      contact.photo!.thumbnail!,
                                     ),
                                   )
                                 : const CircleAvatar(child: Icon(Icons.person)),
-                            title: Text(contact.displayName),
+                            title: Text(contact.displayName ?? ''),
                             subtitle: Text(
                               contact.phones.isNotEmpty
                                   ? contact.phones.first.number

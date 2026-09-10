@@ -36,7 +36,7 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -46,19 +46,19 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage, color: white),
+                    SvgPicture.asset(AppImages.iImage, color: blackColor),
                     text(
                       "Jigropay",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -149,7 +149,7 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: purpleGradientColor,
+                      color: primaryColor,
                     ),
                     child: Icon(Icons.phone, color: white),
                   ),
@@ -228,7 +228,7 @@ class _BikeInsuranceScreenState extends State<BikeInsuranceScreen> {
                   text: "View Free Quotes",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

@@ -16,11 +16,11 @@ class PaymentSettingScreen extends StatefulWidget {
 class _PaymentSettingScreenState extends State<PaymentSettingScreen> {
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         title: text(
           "UPI & Payment Settings",
-          textColor: white,
+          textColor: blackColor,
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
@@ -307,7 +307,7 @@ class _PaymentSettingScreenState extends State<PaymentSettingScreen> {
                   fontWeight: FontWeight.w500,
                 ),
           Spacer(),
-          Icon(Icons.arrow_forward_ios, size: 20, color: purpleGradientColor),
+          Icon(Icons.arrow_forward_ios, size: 20, color: primaryColor),
         ],
       ),
     );

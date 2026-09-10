@@ -27,7 +27,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -37,7 +37,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +48,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
                       "Cover of ₹1 Crore",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -188,7 +188,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
                           padding: EdgeInsets.all(1),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: purpleGradientColor,
+                            color: primaryColor,
                             border: Border.all(color: pinkColor),
                           ),
                           child: Icon(Icons.check, color: white, size: 15),
@@ -244,7 +244,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
                 children: [
                   Icon(
                     Icons.supervised_user_circle_outlined,
-                    color: purpleGradientColor,
+                    color: primaryColor,
                     size: 20,
                   ),
                   SizedBox(width: 10),
@@ -449,7 +449,7 @@ class _BikeViewQuotesScreenState extends State<BikeViewQuotesScreen> {
                   text: "Proceed",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

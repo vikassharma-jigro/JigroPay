@@ -5,6 +5,8 @@ import '../../app_utils/app_colors.dart';
 import '../../app_utils/font_family.dart';
 import 'history_screen.dart';
 import 'home_screen.dart';
+import 'help_support_screen.dart';
+import '../profile_view/profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   String? id;
@@ -41,10 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               controller: _pageController,
               children: const <Widget>[
                 HomeScreen(),
-                HomeScreen(),
-                QrCodeScreen(),
-                HomeScreen(),
+                HelpSupportScreen(),
+                //QrCodeScreen(),
                 HistoryScreen(),
+                ProfileScreen(),
               ],
             ),
           ],
@@ -156,92 +158,76 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return shouldPop!;
   }
 
-  _buildBottomNavigation(isMember) {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.bottomCenter,
-      children: [
-        // Bottom Navigation Bar
-        BottomNavigationBar(
-          backgroundColor: white,
+  Widget _buildBottomNavigation(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 12),
+      padding: EdgeInsets.all(10),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            secondaryColor,
+            primaryColor,
+
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           type: BottomNavigationBarType.fixed,
           currentIndex: _selectedIndex,
-          selectedItemColor: pinkColor,
-          unselectedItemColor: greyColor,
-          selectedFontSize: 20,
-          unselectedFontSize: 20,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          unselectedLabelStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            color: purpleGradientColor,
+
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
           ),
-          selectedLabelStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            color: pinkColor,
-            overflow: TextOverflow.visible,
+          unselectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w500,
           ),
-          onTap: (index) {
-            _onTappedBar(index);
-          },
+
+          onTap: _onTappedBar,
+
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home",
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.help_outline),
-              label: 'Help',
+              label: "Help",
             ),
-            BottomNavigationBarItem(
-              icon: SizedBox.shrink(), // Center image ke jagah blank rakh do
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag_outlined),
-              label: 'Order',
-            ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.history),
-              label: 'History',
+              label: "History",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Profile",
             ),
           ],
         ),
-
-        // 🔥 Center Circular Image Button
-        Positioned(
-          bottom: 25, // bar ke upar thoda sa
-          left: 0,
-          right: 0,
-          child: GestureDetector(
-            onTap: () {
-              _onTappedBar(2); // center index par switch karega
-            },
-            child: Container(
-              height: 65,
-              width: 65,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: white, width: 4),
-                gradient: const LinearGradient(
-                  colors: [purpleGradientColor, pinkColor],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 6,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: ClipOval(
-                child: Icon(Icons.qr_code, size: 30, color: white),
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 

@@ -28,10 +28,9 @@ class _HousingServiceScreenState extends State<HousingServiceScreen> {
   ];
   List<String> filteredOptions = [];
   void _filterList(String query) {
-    String query = searchController.text.toLowerCase();
     setState(() {
       filteredOptions = options
-          .where((item) => item.toLowerCase().contains(query))
+          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
   }
@@ -50,7 +49,7 @@ class _HousingServiceScreenState extends State<HousingServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -60,13 +59,13 @@ class _HousingServiceScreenState extends State<HousingServiceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               "Housing Society",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -97,16 +96,16 @@ class _HousingServiceScreenState extends State<HousingServiceScreen> {
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 

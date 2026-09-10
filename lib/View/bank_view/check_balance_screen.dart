@@ -22,14 +22,14 @@ class _CheckBalanceScreenState extends State<CheckBalanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       bottomNavigationBar: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         height: 55,
         child: CommonButton(
           text: "Benefits, cashback",
           gradient: const LinearGradient(
-            colors: [pinkColor, purpleGradientColor],
+            colors: [primaryColor, secondaryColor],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -50,7 +50,7 @@ class _CheckBalanceScreenState extends State<CheckBalanceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
             Expanded(
@@ -58,13 +58,13 @@ class _CheckBalanceScreenState extends State<CheckBalanceScreen> {
                 "Add Bank Account",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(Icons.more_vert, color: white),
+            Icon(Icons.more_vert, color: blackColor),
           ],
         ),
       ),

@@ -27,7 +27,7 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return GradientAppScaffold(
+//     return Scaffold(backgroundColor: white,
 //       appBar: AppBar(
 //         automaticallyImplyLeading: false,
 //         title:   Row(
@@ -36,7 +36,7 @@
 //               onTap: (){
 //                 Navigator.pop(context);
 //               },
-//               child:  Icon(Icons.arrow_back_ios,color: white,),
+//               child:  Icon(Icons.arrow_back_ios,color: blackColor,),
 //             ),
 //             // SizedBox(width: 10,),
 //           ],
@@ -255,7 +255,7 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
                     },
                     child: const Icon(
                       Icons.check_circle,
-                      color: purpleGradientColor,
+                      color: primaryColor,
                       size: 34,
                     ),
                   );
@@ -271,7 +271,7 @@ class _UpiPinScreenState extends State<UpiPinScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(

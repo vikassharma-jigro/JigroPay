@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:flutter_contacts/flutter_contacts.dart' hide PermissionStatus;
+import 'package:permission_handler/permission_handler.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/font_family.dart';
 import '../../app_utils/text_widget.dart';
@@ -25,11 +26,9 @@ class _MoneyTransferScreenState extends State<MoneyTransferScreen> {
   }
 
   Future<void> getContacts() async {
-    // Permission maango
-    if (await FlutterContacts.requestPermission()) {
-      // Contacts fetch karo (with phones)
-      List<Contact> fetchedContacts = await FlutterContacts.getContacts(
-        withProperties: true,
+    if (await Permission.contacts.request().isGranted) {
+      List<Contact> fetchedContacts = await FlutterContacts.getAll(
+        properties: {ContactProperty.phone, ContactProperty.photoThumbnail},
       );
 
       setState(() {
@@ -48,7 +47,7 @@ class _MoneyTransferScreenState extends State<MoneyTransferScreen> {
     } else {
       results = contacts
           .where(
-            (c) => c.displayName.toLowerCase().contains(query.toLowerCase()),
+            (c) => (c.displayName ?? '').toLowerCase().contains(query.toLowerCase()),
           )
           .toList();
     }
@@ -60,7 +59,7 @@ class _MoneyTransferScreenState extends State<MoneyTransferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -69,14 +68,14 @@ class _MoneyTransferScreenState extends State<MoneyTransferScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Mobile Recharge",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -161,22 +160,22 @@ class _MoneyTransferScreenState extends State<MoneyTransferScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CompanyRechargeScreen(
-                                  mobileRechargeNumber: contact.displayName,
-                                  photo: contact.photo.toString(),
-                                  number: contact.phones.first.number,
+                                  mobileRechargeNumber: contact.displayName ?? '',
+                                  photo: contact.photo?.thumbnail.toString() ?? '',
+                                  number: contact.phones.isNotEmpty ? contact.phones.first.number : '',
                                 ),
                               ),
                             );
                           },
                           child: ListTile(
-                            leading: (contact.photo != null)
+                            leading: (contact.photo?.thumbnail != null)
                                 ? CircleAvatar(
                                     backgroundImage: MemoryImage(
-                                      contact.photo!,
+                                      contact.photo!.thumbnail!,
                                     ),
                                   )
                                 : const CircleAvatar(child: Icon(Icons.person)),
-                            title: Text(contact.displayName),
+                            title: Text(contact.displayName ?? ''),
                             subtitle: Text(
                               contact.phones.isNotEmpty
                                   ? contact.phones.first.number

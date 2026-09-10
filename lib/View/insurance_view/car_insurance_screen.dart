@@ -37,7 +37,7 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -47,19 +47,19 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(AppImages.iImage, color: white),
+                    SvgPicture.asset(AppImages.iImage, color: blackColor),
                     text(
                       "Jigropay",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -186,7 +186,7 @@ class _CarInsuranceScreenState extends State<CarInsuranceScreen> {
                   text: "Get quotes for free",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

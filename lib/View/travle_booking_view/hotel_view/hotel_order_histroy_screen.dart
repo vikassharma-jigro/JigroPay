@@ -4,6 +4,7 @@ import 'package:jigrotech/app_utils/app_images.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 import '../../../main.dart';
 
 class HotelOrderHistoryScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _HotelOrderHistoryScreenState extends State<HotelOrderHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -34,14 +35,14 @@ class _HotelOrderHistoryScreenState extends State<HotelOrderHistoryScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Payment",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -60,7 +61,7 @@ class _HotelOrderHistoryScreenState extends State<HotelOrderHistoryScreen> {
             text: "Proceed To Pay ₹3,398",
             textColor: white,
             gradient: const LinearGradient(
-              colors: [pinkColor, purpleGradientColor],
+              colors: [primaryColor, secondaryColor],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -70,7 +71,18 @@ class _HotelOrderHistoryScreenState extends State<HotelOrderHistoryScreen> {
 
             //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
             //borderRadius: BorderRadius.circular(40.0),
-            onPressed: () {},
+            onPressed: () {
+              RazorpayHelper(context: context, type: "hotel").startPaymentWithOrderFlow(
+                context: context,
+                opcode: "HOTEL",
+                number: "HOTEL_BOOKING",
+                amount: 3398.0,
+                type: "hotel",
+                description: "Hotel Booking Payment",
+                serviceName: "Hotel Booking",
+                providerName: "Hotel Reservation",
+              );
+            },
           ),
         ),
       ),

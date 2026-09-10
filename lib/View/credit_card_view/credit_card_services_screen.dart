@@ -5,7 +5,8 @@ import 'package:jigrotech/app_utils/app_images.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 import 'credit_card_details_screen.dart';
 
 class CreditCardServicesScreen extends StatefulWidget {
@@ -30,20 +31,14 @@ class _CreditCardServicesScreenState extends State<CreditCardServicesScreen> {
     "DCB Bank Credit Card",
     "Dhanlaxmi Bank Limited",
   ];
-  List<String> filteredOptions = [];
-  void _filterList(String query) {
-    String query = searchController.text.toLowerCase();
-    setState(() {
-      filteredOptions = options
-          .where((item) => item.toLowerCase().contains(query))
-          .toList();
-    });
-  }
+  final RechargeController rechargeController = Get.put(RechargeController());
 
   @override
   void initState() {
-    filteredOptions = options; // initially show all
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      rechargeController.fetchOperatorsByType(context: context, type: "credit_card");
+    });
   }
 
   @override
@@ -54,7 +49,7 @@ class _CreditCardServicesScreenState extends State<CreditCardServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -64,18 +59,20 @@ class _CreditCardServicesScreenState extends State<CreditCardServicesScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
-            text(
-              "Credit Card Payment",
-              textAlign: TextAlign.center,
-              isCentered: true,
-              textColor: white,
-              fontSize: 18,
-              fontFamily: FontFamily.plusJakartaSansBold,
-              fontWeight: FontWeight.w600,
+            Expanded(
+              child: text(
+                "Credit Card Payment",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            Icon(Icons.help),
+            //Icon(Icons.help),
 
             // SizedBox(width: 10,),
           ],
@@ -91,26 +88,23 @@ class _CreditCardServicesScreenState extends State<CreditCardServicesScreen> {
               TextField(
                 controller: searchController,
                 onChanged: (i) {
-                  _filterList(i);
+                  setState(() {});
                 },
-
-                // filterSearch,
-                // });
                 onSubmitted: (v) {
-                  _filterList(v);
+                  setState(() {});
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
@@ -156,63 +150,102 @@ class _CreditCardServicesScreenState extends State<CreditCardServicesScreen> {
                 fontWeight: FontWeight.w600,
               ),
               SizedBox(height: 15),
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: filteredOptions.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreditCardDetailsScreen(
-                              creditBankServiceName: filteredOptions[index],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // border: Border.all(color:greyColor)
-                        ),
+              Obx(() {
+                if (rechargeController.isLoading.value) {
+                  return Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator()));
+                }
+                
+                var allOperators = rechargeController.dynamicOperatorsList;
+                List<dynamic> filtered = allOperators.toList();
+                String query = searchController.text.trim().toLowerCase();
+                
+                if (query.isNotEmpty) {
+                  filtered = allOperators.where((op) {
+                    String n = op['name']?.toString() ?? op['operator_name']?.toString() ?? op['biller_name']?.toString() ?? op['company']?.toString() ?? "";
+                    return n.toLowerCase().contains(query);
+                  }).toList();
+                }
 
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(AppImages.creditCardImage),
-                                SizedBox(width: 20),
-                                Expanded(
-                                  child: text(
-                                    filteredOptions[index],
-                                    maxLine: 2,
-                                    textColor: blackColor,
-                                    fontSize: 13,
-                                    fontFamily:
-                                        FontFamily.plusJakartaSansMedium,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                if (filtered.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("No credit card providers found.", style: TextStyle(color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular)),
                     ),
                   );
-                },
-              ),
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: filtered.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var operator = filtered[index];
+                    String name = operator['name']?.toString() ?? operator['operator_name']?.toString() ?? operator['biller_name']?.toString() ?? operator['company']?.toString() ?? options[index % options.length];
+                    String? iconUrl = operator['image']?.toString() ?? operator['icon_url']?.toString() ?? operator['logo']?.toString();
+                    
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreditCardDetailsScreen(
+                                creditBankServiceName: name,
+                                opcode: operator['inspay_code']?.toString() ?? operator['opcode']?.toString(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            // border: Border.all(color:greyColor)
+                          ),
+
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  if (iconUrl != null && iconUrl.isNotEmpty)
+                                    Image.network(
+                                      iconUrl,
+                                      height: 30,
+                                      width: 30,
+                                      errorBuilder: (context, error, stackTrace) => SvgPicture.asset(AppImages.creditCardImage, height: 30, width: 30),
+                                    )
+                                  else
+                                    SvgPicture.asset(AppImages.creditCardImage, height: 30, width: 30),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                    child: text(
+                                      name,
+                                      maxLine: 2,
+                                      textColor: blackColor,
+                                      fontSize: 13,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }),
             ],
           ),
         ),

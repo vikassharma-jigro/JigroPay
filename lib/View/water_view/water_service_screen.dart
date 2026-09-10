@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jigrotech/View/municipal_view/municipal_tax_no_screen.dart';
 import 'package:jigrotech/View/water_view/water_rrNumber_screen.dart';
-import 'package:jigrotech/app_utils/app_images.dart';
-
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
 
 class WaterServiceScreen extends StatefulWidget {
   const WaterServiceScreen({super.key});
@@ -16,26 +13,23 @@ class WaterServiceScreen extends StatefulWidget {
   State<WaterServiceScreen> createState() => _WaterServiceScreenState();
 }
 
+
+
 class _WaterServiceScreenState extends State<WaterServiceScreen> {
   TextEditingController searchController = TextEditingController();
-  List<String> options = [
-    "AP PHED Itanagar and Naharlagun",
-    "Bangalore Water Supply and Sewerage Board",
-    "Chandrapur Municipal Corporation",
-    "Bhubaneswar Municipal Corporation",
-    "Delhi Jal Board",
-    "Goa Water Board",
-    "Gujarat Water Supply Board",
-    "Haryana Water Board",
-  ];
+  final RechargeController rechargeController = Get.put(RechargeController());
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      rechargeController.fetchOperatorsByType(context: context, type: "water_bill");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -45,18 +39,20 @@ class _WaterServiceScreenState extends State<WaterServiceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
-            text(
-              "Water",
-              textAlign: TextAlign.center,
-              isCentered: true,
-              textColor: white,
-              fontSize: 18,
-              fontFamily: FontFamily.plusJakartaSansBold,
-              fontWeight: FontWeight.w600,
+            Expanded(
+              child: text(
+                "Water",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            Icon(Icons.help),
+
 
             // SizedBox(width: 10,),
           ],
@@ -71,23 +67,25 @@ class _WaterServiceScreenState extends State<WaterServiceScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged: (i) {},
+                onChanged: (i) {
+                  setState(() {}); // Trigger rebuild to filter
+                },
 
                 // filterSearch,
                 // });
                 onSubmitted: (v) {},
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
@@ -96,9 +94,7 @@ class _WaterServiceScreenState extends State<WaterServiceScreen> {
 
                   // search Icon ------------------
                   prefixIcon: GestureDetector(
-                    onTap: () {
-                      // filterSearch(searchController.text);
-                    },
+                    onTap: () {},
                     child: Padding(
                       padding: const EdgeInsets.only(
                         right: 8.0,
@@ -133,70 +129,102 @@ class _WaterServiceScreenState extends State<WaterServiceScreen> {
                 fontWeight: FontWeight.w600,
               ),
               SizedBox(height: 15),
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: options.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                WaterRrnumberScreen(serviceNo: options[index]),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          // border: Border.all(color:greyColor)
-                        ),
+              Obx(() {
+                if (rechargeController.isLoading.value) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
+                List<dynamic> operators = rechargeController.dynamicOperatorsList;
+                if (searchController.text.isNotEmpty) {
+                  operators = operators.where((element) {
+                    String name = element['name']?.toString() ?? element['operator_name']?.toString() ?? element['biller_name']?.toString() ?? element['company'] ?? "";
+                    return name.toLowerCase().contains(searchController.text.toLowerCase());
+                  }).toList();
+                }
+
+                if (operators.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text("No water providers found.", style: TextStyle(color: greyColor, fontFamily: FontFamily.plusJakartaSansRegular)),
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: operators.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    var operator = operators[index];
+                    String name = operator['name']?.toString() ?? operator['operator_name']?.toString() ?? operator['biller_name']?.toString() ?? operator['company'] ?? "";
+                    String? iconUrl = operator['image']?.toString() ?? operator['icon']?.toString() ?? operator['logo']?.toString();
+
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  WaterRrnumberScreen(
+                                    serviceNo: name,
+                                    opcode: operator['operator_code']?.toString() ?? operator['opcode']?.toString(),
+                                  ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            // border: Border.all(color:greyColor)
+                          ),
+
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                   children: [
-                                    SvgPicture.asset(AppImages.waterImage),
-                                    SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        text(
-                                          options[index],
-                                          textColor: blackColor,
-                                          fontSize: 13,
-                                          fontFamily:
-                                              FontFamily.plusJakartaSansMedium,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ],
+                                    if (iconUrl != null && iconUrl.isNotEmpty)
+                                      Image.network(
+                                        iconUrl,
+                                        width: 30,
+                                        height: 30,
+                                        errorBuilder: (context, error, stackTrace) => Icon(Icons.water_drop, color: Colors.blue),
+                                      )
+                                    else
+                                      Icon(Icons.water_drop, color: Colors.blue),
+                                    SizedBox(width: 10),
+
+                                    Expanded(
+                                      child: text(
+                                        name,
+                                        maxLine: 2,
+                                        textColor: blackColor,
+                                        fontSize: 14,
+                                        fontFamily: FontFamily.plusJakartaSansMedium,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ],
-                                ),
                               ],
                             ),
+                            SizedBox(height: 5),
+                            Divider(color: greyColor.withOpacity(.3)),
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-              ),
+              );
+})
             ],
           ),
         ),

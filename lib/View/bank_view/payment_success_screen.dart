@@ -22,7 +22,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -31,7 +31,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
           ],
@@ -85,7 +85,7 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen> {
                     text: "Done",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

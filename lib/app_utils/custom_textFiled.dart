@@ -92,20 +92,20 @@ class CustomRoundTextField extends StatelessWidget {
           border: InputBorder.none,
 
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: purpleGradientColor),
-            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(color: greyColor),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: purpleGradientColor),
-            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(color: greyColor),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: purpleGradientColor),
-            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(color: greyColor),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           disabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: purpleGradientColor),
-            borderRadius: BorderRadius.circular(6.0),
+            borderSide: const BorderSide(color: greyColor),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           suffixIconConstraints: const BoxConstraints(
             minHeight: 20,

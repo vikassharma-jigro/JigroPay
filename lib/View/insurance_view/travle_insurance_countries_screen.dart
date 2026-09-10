@@ -55,7 +55,7 @@ class _TravelInsuranceCountriesScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -65,7 +65,7 @@ class _TravelInsuranceCountriesScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
           ],
@@ -111,16 +111,16 @@ class _TravelInsuranceCountriesScreenState
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
@@ -226,7 +226,7 @@ class _TravelInsuranceCountriesScreenState
                   text: "Next",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

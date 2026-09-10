@@ -1,26 +1,36 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jigrotech/app_utils/app_images.dart';
-
+import 'package:get/get.dart';
+import '../../../getx_controller/recharge_controller.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
 import '../../app_utils/custom_textFiled.dart';
 
 class MunicipalTaxNoScreen extends StatefulWidget {
   final String? serviceNo;
+  final String? opcode;
 
-  const MunicipalTaxNoScreen({super.key, this.serviceNo});
+  const MunicipalTaxNoScreen({super.key, this.serviceNo, this.opcode});
 
   @override
   State<MunicipalTaxNoScreen> createState() => _MunicipalTaxNoScreenState();
 }
 
+
+
 class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
   TextEditingController tenementNoController = TextEditingController();
+  final RechargeController rechargeController = Get.put(RechargeController());
+  String? _tenementError;
+
+  String? _validateTenementNo(String val) {
+    if (val.trim().isEmpty) return 'Tenement No is required';
+    if (val.trim().length < 5) return 'Minimum 5 characters required';
+    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim())) return 'Only letters, digits, / or - allowed';
+    return null;
+  }
   List<String> options = [
     "Agartala Municipal Corporation",
     "Ahmedabad Municipal Corporation",
@@ -38,7 +48,7 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -48,18 +58,21 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
-            text(
-              widget.serviceNo ?? "",
-              textAlign: TextAlign.center,
-              isCentered: true,
-              textColor: white,
-              fontSize: 18,
-              fontFamily: FontFamily.plusJakartaSansBold,
-              fontWeight: FontWeight.w600,
+            Expanded(
+              child: text(
+                widget.serviceNo ?? "",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                maxLine: 2,
+                textColor: blackColor,
+                fontSize: 14,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            Icon(Icons.help),
+            //Icon(Icons.help),
 
             // SizedBox(width: 10,),
           ],
@@ -72,36 +85,53 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: 20,),
               CustomRoundTextField(
                 controller: tenementNoController,
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.characters,
                 hintText: "Tenement No",
-                maxLines: 2,
+                maxLines: 1,
                 fillColor: Colors.transparent,
-                //padding: const EdgeInsets.symmetric(vertical: 2),
-                inputFormatters: [LengthLimitingTextInputFormatter(20)],
-              ),
-
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.copy),
-                      SizedBox(width: 10),
-                      text(
-                        "View Sample Bill",
-                        textColor: blackColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                      ),
-                    ],
-                  ),
-                  Icon(Icons.arrow_forward_ios),
+                onChanged: (val) {
+                  setState(() {
+                    _tenementError = _validateTenementNo(val);
+                  });
+                },
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(20),
+                  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9/\-]')),
                 ],
               ),
+              if (_tenementError != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0, left: 5.0),
+                  child: Text(
+                    _tenementError!,
+                    style: TextStyle(color: Colors.red, fontSize: 12),
+                  ),
+                ),
+
+              SizedBox(height: 20),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Icon(Icons.copy),
+              //         SizedBox(width: 10),
+              //         text(
+              //           "View Sample Bill",
+              //           textColor: blackColor,
+              //           fontWeight: FontWeight.w400,
+              //           fontSize: 16,
+              //           fontFamily: FontFamily.plusJakartaSansRegular,
+              //         ),
+              //       ],
+              //     ),
+              //     Icon(Icons.arrow_forward_ios),
+              //   ],
+              // ),
 
               const SizedBox(height: 150),
               SizedBox(
@@ -111,7 +141,7 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
                   text: "Continue",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -121,8 +151,24 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
 
                   //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                   //borderRadius: BorderRadius.circular(40.0),
-                  onPressed: () {
-                    showDialogBox(context);
+                  onPressed: () async {
+                    final error = _validateTenementNo(tenementNoController.text);
+                    setState(() { _tenementError = error; });
+                    if (error != null) return;
+
+                    if (widget.opcode != null) {
+                      var response = await rechargeController.fetchUtilityBill(
+                        context: context, 
+                        consumerId: tenementNoController.text.trim(), 
+                        opcode: widget.opcode!
+                      );
+                      
+                      if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+                        showDialogBox(context);
+                      }
+                    } else {
+                      showDialogBox(context);
+                    }
                   },
                 ),
               ),
@@ -207,7 +253,7 @@ class _MunicipalTaxNoScreenState extends State<MunicipalTaxNoScreen> {
                 text: "Got it",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),

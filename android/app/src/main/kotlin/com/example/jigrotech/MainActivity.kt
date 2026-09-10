@@ -1,4 +1,4 @@
-package com.example.jigrotech
+package com.jigropay.jigro
 
 import io.flutter.embedding.android.FlutterActivity
 

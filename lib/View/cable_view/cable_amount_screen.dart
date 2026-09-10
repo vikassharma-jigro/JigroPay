@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../main.dart';
+import '../../../app_utils/razorpay_helper.dart';
 
 class CableAmountScreen extends StatefulWidget {
   final String? cableServiceName;
-  const CableAmountScreen({super.key, this.cableServiceName});
+  final String? opcode;
+  final String? consumerNumber;
+  const CableAmountScreen({
+    super.key,
+    this.cableServiceName,
+    this.opcode,
+    this.consumerNumber,
+  });
 
   @override
   State<CableAmountScreen> createState() => _CableAmountScreenState();
@@ -21,7 +28,7 @@ class _CableAmountScreenState extends State<CableAmountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -30,14 +37,14 @@ class _CableAmountScreenState extends State<CableAmountScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 widget.cableServiceName ?? "",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -71,17 +78,32 @@ class _CableAmountScreenState extends State<CableAmountScreen> {
                 text: "Pay Bill",
                 textColor: white,
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 fontWeight: FontWeight.w600,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontSize: 16.0,
-
-                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {},
+                onPressed: () {
+                  final amountText = customerAmountController.text.trim();
+                  final double amount = double.tryParse(amountText) ?? 0.0;
+                  if (amount <= 0) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please enter a valid amount')),
+                    );
+                    return;
+                  }
+                  RazorpayHelper(context: context).startPaymentWithOrderFlow(
+                    context: context,
+                    opcode: widget.opcode ?? 'CABLE',
+                    number: widget.consumerNumber ?? '',
+                    amount: amount,
+                    description: 'Cable TV Payment',
+                    serviceName: widget.cableServiceName ?? 'Cable TV',
+                    providerName: widget.cableServiceName ?? 'Cable Provider',
+                  );
+                },
               ),
             ),
           ],
@@ -119,16 +141,16 @@ class _CableAmountScreenState extends State<CableAmountScreen> {
 
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
@@ -164,7 +186,7 @@ class _CableAmountScreenState extends State<CableAmountScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: purpleGradientColor),
+                          border: Border.all(color: primaryColor),
                         ),
                         child: Center(
                           child: text(

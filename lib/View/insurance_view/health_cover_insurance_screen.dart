@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 import '../../../main.dart';
 import 'package:intl/intl.dart';
 
@@ -31,7 +32,7 @@ class _HealthCoverInsuranceScreenState
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -41,7 +42,7 @@ class _HealthCoverInsuranceScreenState
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +53,7 @@ class _HealthCoverInsuranceScreenState
                       "Cover of ₹1 Crore",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -192,7 +193,7 @@ class _HealthCoverInsuranceScreenState
                           padding: EdgeInsets.all(1),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: purpleGradientColor,
+                            color: primaryColor,
                             border: Border.all(color: pinkColor),
                           ),
                           child: Icon(Icons.check, color: white, size: 15),
@@ -248,7 +249,7 @@ class _HealthCoverInsuranceScreenState
                 children: [
                   Icon(
                     Icons.supervised_user_circle_outlined,
-                    color: purpleGradientColor,
+                    color: primaryColor,
                     size: 20,
                   ),
                   SizedBox(width: 10),
@@ -508,7 +509,7 @@ class _HealthCoverInsuranceScreenState
                   text: "Proceed",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -519,7 +520,16 @@ class _HealthCoverInsuranceScreenState
                   //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                   //borderRadius: BorderRadius.circular(40.0),
                   onPressed: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => BikeReviewDetailsScreen(),));
+                    RazorpayHelper(context: context, type: "insurance").startPaymentWithOrderFlow(
+                      context: context,
+                      opcode: "HEALTH_INSURANCE",
+                      number: "HEALTH_INSURANCE",
+                      amount: 100.0,
+                      type: "insurance",
+                      description: "Health Insurance Payment",
+                      serviceName: "Health Insurance",
+                      providerName: "Insurance Provider",
+                    );
                   },
                 ),
               ),

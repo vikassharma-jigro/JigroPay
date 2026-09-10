@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93696615933",
+    "project_id": "jigropay-c34c3",
+    "storage_bucket": "jigropay-c34c3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93696615933:android:ebc121293f235bcf6fa594",
+        "android_client_info": {
+          "package_name": "com.jigropay.jigro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsstjSqRnASKEEjMPkU1uJtAcKlv98_gM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

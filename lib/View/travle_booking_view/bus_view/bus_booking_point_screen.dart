@@ -36,7 +36,7 @@ class _BusBookingPointScreenState extends State<BusBookingPointScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -46,13 +46,13 @@ class _BusBookingPointScreenState extends State<BusBookingPointScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               "Jigropay",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -93,7 +93,7 @@ class _BusBookingPointScreenState extends State<BusBookingPointScreen> {
                       TextSpan(
                         text: 'Jigropay ',
                         style: TextStyle(
-                          color: purpleGradientColor,
+                          color: primaryColor,
                           fontSize: 18,
                           fontFamily: FontFamily.plusJakartaSansBold,
                           fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class _BusBookingPointScreenState extends State<BusBookingPointScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.star, color: purpleGradientColor),
+                    Icon(Icons.star, color: primaryColor),
                     text(
                       "Save upto ₹300* on Bus Bookings",
                       isCentered: true,
@@ -254,7 +254,7 @@ class _BusBookingPointScreenState extends State<BusBookingPointScreen> {
                           },
                           text: "Search Buses",
                           gradient: const LinearGradient(
-                            colors: [pinkColor, purpleGradientColor],
+                            colors: [primaryColor, secondaryColor],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),

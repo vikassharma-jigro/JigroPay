@@ -29,14 +29,24 @@ class _MutualFundsServiceScreenState extends State<MutualFundsServiceScreen> {
     "Bank of India Mutual Fund",
     "Baroda BNP Paribas Mutual Fund",
   ];
+  List<String> filteredOptions = [];
+  void _filterList(String query) {
+    setState(() {
+      filteredOptions = options
+          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   void initState() {
+    filteredOptions = options;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -46,13 +56,13 @@ class _MutualFundsServiceScreenState extends State<MutualFundsServiceScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             text(
               "Mutual Fund",
               textAlign: TextAlign.center,
               isCentered: true,
-              textColor: white,
+              textColor: blackColor,
               fontSize: 18,
               fontFamily: FontFamily.plusJakartaSansBold,
               fontWeight: FontWeight.w600,
@@ -72,23 +82,24 @@ class _MutualFundsServiceScreenState extends State<MutualFundsServiceScreen> {
             children: [
               TextField(
                 controller: searchController,
-                onChanged: (i) {},
-
-                // filterSearch,
-                // });
-                onSubmitted: (v) {},
+                onChanged: (i) {
+                  _filterList(i);
+                },
+                onSubmitted: (v) {
+                  _filterList(v);
+                },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: purpleGradientColor),
+                    borderSide: const BorderSide(color: primaryColor),
                     borderRadius: BorderRadius.circular(15),
                   ),
 
@@ -138,7 +149,7 @@ class _MutualFundsServiceScreenState extends State<MutualFundsServiceScreen> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
-                itemCount: options.length,
+                itemCount: filteredOptions.length,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Padding(
@@ -149,7 +160,7 @@ class _MutualFundsServiceScreenState extends State<MutualFundsServiceScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => MutualRegistrationScreen(
-                              serviceNo: options[index],
+                              serviceNo: filteredOptions[index],
                             ),
                           ),
                         );

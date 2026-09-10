@@ -19,6 +19,28 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+}
+
+subprojects {
+    val configureNamespace = {
+        val android = extensions.findByName("android") as? com.android.build.gradle.BaseExtension
+        if (android != null && android.namespace == null) {
+            android.namespace = project.group.toString().ifEmpty { "com.example.${project.name.replace("-", "_")}" }
+        }
+    }
+    if (state.executed) {
+        configureNamespace()
+    } else {
+        afterEvaluate { configureNamespace() }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }

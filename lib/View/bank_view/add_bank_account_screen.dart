@@ -25,7 +25,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
@@ -34,7 +34,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
           child: CommonButton(
             text: "Next",
             gradient: const LinearGradient(
-              colors: [pinkColor, purpleGradientColor],
+              colors: [primaryColor, secondaryColor],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -58,7 +58,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
             Expanded(
@@ -66,13 +66,13 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen> {
                 "Add Bank Account",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(Icons.more_vert, color: white),
+            Icon(Icons.more_vert, color: blackColor),
           ],
         ),
       ),

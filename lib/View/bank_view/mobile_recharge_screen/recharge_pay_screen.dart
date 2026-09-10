@@ -5,6 +5,7 @@ import 'package:jigrotech/main.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 
 class RechargePayScreen extends StatefulWidget {
   const RechargePayScreen({super.key});
@@ -16,7 +17,7 @@ class RechargePayScreen extends StatefulWidget {
 class _RechargePayScreenState extends State<RechargePayScreen> {
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -25,14 +26,14 @@ class _RechargePayScreenState extends State<RechargePayScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Expanded(
               child: text(
                 "Pay",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -408,7 +409,7 @@ class _RechargePayScreenState extends State<RechargePayScreen> {
               child: CommonButton(
                 text: "Proceed to pay ",
                 gradient: const LinearGradient(
-                  colors: [pinkColor, purpleGradientColor],
+                  colors: [primaryColor, secondaryColor],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -419,12 +420,14 @@ class _RechargePayScreenState extends State<RechargePayScreen> {
                 //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                 borderRadius: BorderRadius.circular(15.0),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          UpiPinScreen(isMobileRecharge: true),
-                    ),
+                  RazorpayHelper(context: context).startPaymentWithOrderFlow(
+                    context: context,
+                    opcode: "A",
+                    number: "9876543210",
+                    amount: 100.0,
+                    description: "Mobile Recharge Payment",
+                    serviceName: "Mobile Recharge",
+                    providerName: "Mobile Provider",
                   );
                 },
               ),

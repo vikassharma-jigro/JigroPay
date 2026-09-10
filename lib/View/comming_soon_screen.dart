@@ -27,7 +27,7 @@ class _CommingSoonScreenState extends State<CommingSoonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -37,7 +37,7 @@ class _CommingSoonScreenState extends State<CommingSoonScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
 
             // SizedBox(width: 10,),

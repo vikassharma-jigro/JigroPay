@@ -29,7 +29,7 @@ class _TravellerDetailsState extends State<TravellerDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -39,7 +39,7 @@ class _TravellerDetailsState extends State<TravellerDetails> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
           ],
         ),
@@ -146,7 +146,7 @@ class _TravellerDetailsState extends State<TravellerDetails> {
                   text: "ADD",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),

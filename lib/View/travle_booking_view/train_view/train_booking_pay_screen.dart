@@ -5,6 +5,7 @@ import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/custom_textFiled.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
+import '../../../app_utils/razorpay_helper.dart';
 import '../../../main.dart';
 
 class TrainBookingPayScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -38,7 +39,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             Column(
               children: [
@@ -48,17 +49,17 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                       "JAI",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
                     ),
-                    Icon(Icons.arrow_forward, color: white),
+                    Icon(Icons.arrow_forward, color: blackColor),
                     text(
                       "DEL",
                       textAlign: TextAlign.center,
                       isCentered: true,
-                      textColor: white,
+                      textColor: blackColor,
                       fontSize: 18,
                       fontFamily: FontFamily.plusJakartaSansBold,
                       fontWeight: FontWeight.w600,
@@ -69,7 +70,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                   "13 Oct • 1 Traveller • Economy",
                   textAlign: TextAlign.center,
                   isCentered: true,
-                  textColor: white,
+                  textColor: blackColor,
                   fontSize: 14,
                   fontFamily: FontFamily.plusJakartaSansRegular,
                   fontWeight: FontWeight.w400,
@@ -81,13 +82,13 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: white),
+                border: Border.all(color: blackColor),
               ),
               child: text(
                 "About",
                 textAlign: TextAlign.center,
                 isCentered: true,
-                textColor: white,
+                textColor: blackColor,
                 fontSize: 18,
                 fontFamily: FontFamily.plusJakartaSansBold,
                 fontWeight: FontWeight.w600,
@@ -192,7 +193,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             gradient: LinearGradient(
-                              colors: [pinkColor, purpleGradientColor],
+                              colors: [primaryColor, secondaryColor],
                             ),
                           ),
                           child: Row(
@@ -392,7 +393,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                                 MaterialTapTargetSize.shrinkWrap,
                             visualDensity: VisualDensity.compact,
                             side: const BorderSide(
-                              color: purpleGradientColor,
+                              color: primaryColor,
                               width: 1,
                             ),
                           ),
@@ -429,7 +430,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                                 MaterialTapTargetSize.shrinkWrap,
                             visualDensity: VisualDensity.compact,
                             side: const BorderSide(
-                              color: purpleGradientColor,
+                              color: primaryColor,
                               width: 1,
                             ),
                           ),
@@ -508,7 +509,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                   text: "Proceed to Pay",
                   textColor: white,
                   gradient: const LinearGradient(
-                    colors: [pinkColor, purpleGradientColor],
+                    colors: [primaryColor, secondaryColor],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -519,11 +520,26 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                   //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                   //borderRadius: BorderRadius.circular(40.0),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TrainBookHistoryScreen(),
-                      ),
+                    RazorpayHelper(
+                      context: context,
+                      type: "train",
+                      onSuccess: (resp) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TrainBookHistoryScreen(),
+                          ),
+                        );
+                      },
+                    ).startPaymentWithOrderFlow(
+                      context: context,
+                      opcode: "TRAIN",
+                      number: mobileNumberController.text.trim().isNotEmpty ? mobileNumberController.text.trim() : "TRAIN_BOOKING",
+                      amount: 855.0,
+                      type: "train",
+                      description: "Train Ticket Booking",
+                      serviceName: "Train Ticket",
+                      providerName: "IRCTC Train Booking",
                     );
                   },
                 ),
@@ -774,7 +790,7 @@ class _TrainBookingPayScreenState extends State<TrainBookingPayScreen> {
                         text: "Save Passenger",
                         textColor: white,
                         gradient: const LinearGradient(
-                          colors: [pinkColor, purpleGradientColor],
+                          colors: [primaryColor, secondaryColor],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),

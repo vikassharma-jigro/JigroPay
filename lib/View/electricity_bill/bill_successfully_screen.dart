@@ -24,7 +24,7 @@ class _BillSuccessfullyScreenState extends State<BillSuccessfullyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientAppScaffold(
+    return Scaffold(backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -33,7 +33,7 @@ class _BillSuccessfullyScreenState extends State<BillSuccessfullyScreen> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios, color: white),
+              child: Icon(Icons.arrow_back_ios, color: blackColor),
             ),
             // SizedBox(width: 10,),
           ],
@@ -184,7 +184,7 @@ class _BillSuccessfullyScreenState extends State<BillSuccessfullyScreen> {
                     text: "Back to home ",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -213,7 +213,7 @@ class _BillSuccessfullyScreenState extends State<BillSuccessfullyScreen> {
                     text: "VIEW RECEIPT",
                     textColor: white,
                     gradient: const LinearGradient(
-                      colors: [pinkColor, purpleGradientColor],
+                      colors: [primaryColor, secondaryColor],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
