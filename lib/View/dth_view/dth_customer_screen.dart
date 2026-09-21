@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
@@ -28,9 +29,9 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
   TextEditingController customerController = TextEditingController();
   TextEditingController searchController = TextEditingController();
   RxString searchQuery = "".obs;
-  
+
   final RechargeController rechargeController = Get.put(RechargeController());
-  
+
   Timer? _debounce;
   final RxInt selectedPlanIndex = (-1).obs;
 
@@ -55,9 +56,9 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
 
   bool _validateCustomerId(String id, String? operatorName) {
     if (operatorName == null) return id.length >= 6;
-    
+
     String op = operatorName.toLowerCase();
-    
+
     if (op.contains('tata')) {
       return id.length == 10 || id.length == 11;
     } else if (op.contains('airtel')) {
@@ -69,7 +70,7 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
     } else if (op.contains('sun')) {
       return id.length == 11 || id.length == 12;
     }
-    
+
     return id.length >= 6;
   }
 
@@ -84,12 +85,13 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
 
   _fetchDthInfo() {
     String orderId = "TXN${DateTime.now().millisecondsSinceEpoch}";
-    
+
     rechargeController.fetchDthPlans(
       context: context,
       dthNumber: customerController.text,
       opcode: widget.operatorDetails.toString(),
-      orderId: orderId);
+      orderId: orderId,
+    );
   }
 
   void _showPlanDetailsSheet(Map<String, dynamic> plan) {
@@ -99,8 +101,17 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        String amount = plan['amount']?.toString() ?? plan['rs']?.toString() ?? plan['monthlyRecharge']?.toString() ?? '0';
-        String name = plan['planName']?.toString() ?? plan['desc']?.toString() ?? plan['customerName']?.toString() ?? plan['name']?.toString() ?? 'Plan';
+        String amount =
+            plan['amount']?.toString() ??
+            plan['rs']?.toString() ??
+            plan['monthlyRecharge']?.toString() ??
+            '0';
+        String name =
+            plan['planName']?.toString() ??
+            plan['desc']?.toString() ??
+            plan['customerName']?.toString() ??
+            plan['name']?.toString() ??
+            'Plan';
         String duration = plan['month']?.toString() ?? 'N/A';
 
         return Container(
@@ -165,7 +176,8 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: white,
+    return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -212,6 +224,10 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextFormField(
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(12),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Enter Customer Id",
@@ -232,7 +248,7 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                     ),
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.number,
                     controller: customerController,
                     style: const TextStyle(
                       color: blackColor,
@@ -245,40 +261,54 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
               ),
 
               SizedBox(height: 15),
-              Obx(() => Visibility(
-                visible: rechargeController.plansList.isNotEmpty,
-                child: Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: greyColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextFormField(
-                    controller: searchController,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search plans...",
-                      prefixIcon: Icon(Icons.search, color: greyColor,size: 20,),
-                      contentPadding: EdgeInsets.zero,
+              Obx(
+                () => Visibility(
+                  visible: rechargeController.plansList.isNotEmpty,
+                  child: Container(
+                    height: 50,
+                    margin: const EdgeInsets.only(bottom: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: greyColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextFormField(
+                      controller: searchController,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search plans...",
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: greyColor,
+                          size: 20,
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                      ),
                     ),
                   ),
                 ),
-              )),
+              ),
               Obx(() {
                 if (rechargeController.isLoading.value) {
-                  return const Center(child: Padding(padding: EdgeInsets.all(20), child: CircularProgressIndicator()));
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
-                
+
                 if (rechargeController.plansList.isNotEmpty) {
                   List<Map<String, dynamic>> flattenedPlans = [];
-                  
+
                   for (var languageItem in rechargeController.plansList) {
-                    if (languageItem is Map && languageItem['Details'] != null && languageItem['Details'] is List) {
+                    if (languageItem is Map &&
+                        languageItem['Details'] != null &&
+                        languageItem['Details'] is List) {
                       for (var detail in languageItem['Details']) {
                         String planName = detail['PlanName']?.toString() ?? '';
-                        if (detail['PricingList'] != null && detail['PricingList'] is List) {
+                        if (detail['PricingList'] != null &&
+                            detail['PricingList'] is List) {
                           for (var pricing in detail['PricingList']) {
                             flattenedPlans.add({
                               'planName': planName,
@@ -292,14 +322,24 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                   }
 
                   if (searchQuery.value.isNotEmpty) {
-                    flattenedPlans = flattenedPlans.where((plan) => 
-                      plan['planName'].toString().toLowerCase().contains(searchQuery.value.toLowerCase()) ||
-                      plan['amount'].toString().toLowerCase().contains(searchQuery.value.toLowerCase())
-                    ).toList();
+                    flattenedPlans = flattenedPlans
+                        .where(
+                          (plan) =>
+                              plan['planName']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains(searchQuery.value.toLowerCase()) ||
+                              plan['amount'].toString().toLowerCase().contains(
+                                searchQuery.value.toLowerCase(),
+                              ),
+                        )
+                        .toList();
                   }
 
                   Widget contentWidget;
-                  if (flattenedPlans.isEmpty && rechargeController.plansList.isNotEmpty && searchQuery.value.isEmpty) {
+                  if (flattenedPlans.isEmpty &&
+                      rechargeController.plansList.isNotEmpty &&
+                      searchQuery.value.isEmpty) {
                     contentWidget = ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -308,114 +348,190 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
                         var plan = rechargeController.plansList[index];
                         return InkWell(
                           onTap: () {
-                            if (plan['amount'] != null || plan['rs'] != null || plan['monthlyRecharge'] != null) {
+                            if (plan['amount'] != null ||
+                                plan['rs'] != null ||
+                                plan['monthlyRecharge'] != null) {
                               selectedPlanIndex.value = index;
-                              _showPlanDetailsSheet(Map<String, dynamic>.from(plan as Map));
+                              _showPlanDetailsSheet(
+                                Map<String, dynamic>.from(plan as Map),
+                              );
                             }
                           },
-                          child: Obx(() => Container(
-                            margin: const EdgeInsets.only(bottom: 10),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: selectedPlanIndex.value == index ? secondaryColor : greyColor),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.white,
+                          child: Obx(
+                            () => Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: selectedPlanIndex.value == index
+                                      ? secondaryColor
+                                      : greyColor,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (plan['customerName'] != null ||
+                                      plan['name'] != null ||
+                                      plan['CustomerName'] != null)
+                                    text(
+                                      "Name: ${plan['customerName'] ?? plan['name'] ?? plan['CustomerName']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansBold,
+                                    ),
+                                  if (plan['balance'] != null ||
+                                      plan['Balance'] != null)
+                                    text(
+                                      "Balance: ₹${plan['balance'] ?? plan['Balance']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['monthlyRecharge'] != null ||
+                                      plan['MonthlyRecharge'] != null)
+                                    text(
+                                      "Monthly Recharge: ₹${plan['monthlyRecharge'] ?? plan['MonthlyRecharge']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['nextRechargeDate'] != null ||
+                                      plan['NextRechargeDate'] != null)
+                                    text(
+                                      "Next Recharge Date: ${plan['nextRechargeDate'] ?? plan['NextRechargeDate']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['status'] != null ||
+                                      plan['Status'] != null)
+                                    text(
+                                      "Status: ${plan['status'] ?? plan['Status']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['planName'] != null)
+                                    text(
+                                      "Plan: ${plan['planName']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['desc'] != null)
+                                    text(
+                                      "${plan['desc']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansMedium,
+                                    ),
+                                  if (plan['amount'] != null ||
+                                      plan['rs'] != null)
+                                    text(
+                                      "Amount: ₹${plan['amount'] ?? plan['rs']}",
+                                      textColor: blackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily:
+                                          FontFamily.plusJakartaSansBold,
+                                    ),
+                                ],
+                              ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (plan['customerName'] != null || plan['name'] != null || plan['CustomerName'] != null)
-                                  text("Name: ${plan['customerName'] ?? plan['name'] ?? plan['CustomerName']}", textColor: blackColor, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: FontFamily.plusJakartaSansBold),
-                                if (plan['balance'] != null || plan['Balance'] != null)
-                                  text("Balance: ₹${plan['balance'] ?? plan['Balance']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['monthlyRecharge'] != null || plan['MonthlyRecharge'] != null)
-                                  text("Monthly Recharge: ₹${plan['monthlyRecharge'] ?? plan['MonthlyRecharge']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['nextRechargeDate'] != null || plan['NextRechargeDate'] != null)
-                                  text("Next Recharge Date: ${plan['nextRechargeDate'] ?? plan['NextRechargeDate']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['status'] != null || plan['Status'] != null)
-                                  text("Status: ${plan['status'] ?? plan['Status']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['planName'] != null)
-                                  text("Plan: ${plan['planName']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['desc'] != null)
-                                  text("${plan['desc']}", textColor: blackColor, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                                if (plan['amount'] != null || plan['rs'] != null)
-                                  text("Amount: ₹${plan['amount'] ?? plan['rs']}", textColor: blackColor, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: FontFamily.plusJakartaSansBold),
-                              ],
-                            ),
-                          )),
+                          ),
                         );
-                      }
+                      },
                     );
-                  } else if (flattenedPlans.isEmpty && searchQuery.value.isNotEmpty) {
+                  } else if (flattenedPlans.isEmpty &&
+                      searchQuery.value.isNotEmpty) {
                     contentWidget = const Padding(
                       padding: EdgeInsets.all(20),
                       child: Center(child: Text("No plans found")),
                     );
                   } else {
                     contentWidget = GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.98,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: flattenedPlans.length,
-                    itemBuilder: (context, index) {
-                      var item = flattenedPlans[index];
-                      return InkWell(
-                        onTap: () {
-                          selectedPlanIndex.value = index;
-                          _showPlanDetailsSheet(item);
-                        },
-                        child: Obx(() => Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: selectedPlanIndex.value == index ? secondaryColor : primaryColor),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.98,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              text(
-                                item['planName'], 
-                                textColor: blackColor, 
-                                fontSize: 14, 
-                                fontWeight: FontWeight.w600, 
-                                fontFamily: FontFamily.plusJakartaSansBold,
-                                maxLine: 3
+                      itemCount: flattenedPlans.length,
+                      itemBuilder: (context, index) {
+                        var item = flattenedPlans[index];
+                        return InkWell(
+                          onTap: () {
+                            selectedPlanIndex.value = index;
+                            _showPlanDetailsSheet(item);
+                          },
+                          child: Obx(
+                            () => Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: selectedPlanIndex.value == index
+                                      ? secondaryColor
+                                      : primaryColor,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
                               ),
-                              SizedBox(height: 8),
-                              text(
-                                "Duration: ${item['month']}", 
-                                textColor: greyColor, 
-                                fontSize: 12, 
-                                fontFamily: FontFamily.plusJakartaSansMedium
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  text(
+                                    item['planName'],
+                                    textColor: blackColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: FontFamily.plusJakartaSansBold,
+                                    maxLine: 3,
+                                  ),
+                                  SizedBox(height: 8),
+                                  text(
+                                    "Duration: ${item['month']}",
+                                    textColor: greyColor,
+                                    fontSize: 12,
+                                    fontFamily:
+                                        FontFamily.plusJakartaSansMedium,
+                                  ),
+                                  SizedBox(height: 8),
+                                  text(
+                                    "₹${item['amount']}",
+                                    textColor: primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: FontFamily.plusJakartaSansBold,
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 8),
-                              text(
-                                "₹${item['amount']}", 
-                                textColor: primaryColor, 
-                                fontSize: 16, 
-                                fontWeight: FontWeight.w600, 
-                                fontFamily: FontFamily.plusJakartaSansBold
-                              ),
-                            ],
+                            ),
                           ),
-                        )),
-                      );
-                    }
-                  );
+                        );
+                      },
+                    );
                   }
 
                   return contentWidget;
                 }
                 return const SizedBox.shrink();
               }),
-              
+
               // SizedBox(height: 15),
               // Container(
               //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -459,28 +575,28 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
               // ),
               //
               // const SizedBox(height: 50),
-              // SizedBox(
-              //   width: MediaQuery.sizeOf(context).width,
-              //   height: 55,
-              //   child: CommonButton(
-              //     text: "Continue",
-              //     textColor: white,
-              //     gradient: const LinearGradient(
-              //       colors: [primaryColor, secondaryColor],
-              //       begin: Alignment.topLeft,
-              //       end: Alignment.bottomRight,
-              //     ),
-              //     fontWeight: FontWeight.w600,
-              //     fontFamily: FontFamily.plusJakartaSansBold,
-              //     fontSize: 16.0,
-              //
-              //     //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              //     //borderRadius: BorderRadius.circular(40.0),
-              //     onPressed: () {
-              //       showDialogBox(context);
-              //     },
-              //   ),
-              // ),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                height: 55,
+                child: CommonButton(
+                  text: "Continue",
+                  textColor: white,
+                  gradient: const LinearGradient(
+                    colors: [primaryColor, secondaryColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  fontWeight: FontWeight.w600,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 16.0,
+
+                  //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                  //borderRadius: BorderRadius.circular(40.0),
+                  onPressed: () {
+                    showDialogBox(context);
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -489,114 +605,64 @@ class _DthCustomerScreenState extends State<DthCustomerScreen> {
   }
 
   void showDialogBox(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            text(
-              "View Sample Bill",
-              textColor: blackColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              fontFamily: FontFamily.plusJakartaSansBold,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.close),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: DottedBorder(
-                borderType: BorderType.RRect,
-                radius: Radius.circular(12),
-                color: greyColor, // ✅ defined here, not inside Container
-                strokeWidth: 2,
-                dashPattern: [6, 3],
-                child: Container(
-                  height: 170,
-                  width: 300,
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SvgPicture.asset(AppImages.sunImage),
-                            text(
-                              "AIRTEL",
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansBold,
-                              fontSize: 14,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        text(
-                          "AIRTEL DTH",
-                          textColor: blackColor,
-                          fontFamily: FontFamily.plusJakartaSansBold,
-                          fontSize: 14,
-                        ),
-                        text(
-                          "DTH RECHARGE",
-                          textColor: greyColor,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                          fontSize: 14,
-                        ),
-                        SizedBox(height: 10),
-                        Divider(thickness: .5, color: greyColor, height: 10),
-                        SizedBox(height: 10),
-                        text(
-                          "Customer Id: 1598745630*",
-                          textColor: blackColor,
-                          fontSize: 14,
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          fontFamily: FontFamily.plusJakartaSansMedium,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ],
-                    ),
+    showCustomAppDialog(
+      context,
+      type: CustomDialogType.info,
+      title: "View Sample Bill",
+      primaryButtonText: "Got it",
+      customContent: DottedBorder(
+        borderType: BorderType.RRect,
+        radius: const Radius.circular(12),
+        color: greyColor,
+        strokeWidth: 2,
+        dashPattern: const [6, 3],
+        child: Container(
+          height: 160,
+          width: 280,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SvgPicture.asset(AppImages.sunImage),
+                  text(
+                    "AIRTEL",
+                    textColor: blackColor,
+                    fontFamily: FontFamily.plusJakartaSansBold,
+                    fontSize: 14,
                   ),
-                ),
+                ],
               ),
-            ),
-            const SizedBox(height: 50),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: 55,
-              child: CommonButton(
-                text: "Got it",
-                textColor: white,
-                gradient: const LinearGradient(
-                  colors: [primaryColor, secondaryColor],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                fontWeight: FontWeight.w600,
+              const SizedBox(height: 6),
+              text(
+                "AIRTEL DTH",
+                textColor: blackColor,
                 fontFamily: FontFamily.plusJakartaSansBold,
-                fontSize: 16.0,
-
-                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                fontSize: 14,
               ),
-            ),
-          ],
+              text(
+                "DTH RECHARGE",
+                textColor: greyColor,
+                fontFamily: FontFamily.plusJakartaSansRegular,
+                fontSize: 14,
+              ),
+              const SizedBox(height: 6),
+              const Divider(thickness: .5, color: greyColor, height: 10),
+              const SizedBox(height: 6),
+              text(
+                "Customer Id: 1598745630*",
+                textColor: blackColor,
+                fontSize: 14,
+                textAlign: TextAlign.center,
+                isCentered: true,
+                fontFamily: FontFamily.plusJakartaSansMedium,
+                fontWeight: FontWeight.w500,
+              ),
+            ],
+          ),
         ),
       ),
     );

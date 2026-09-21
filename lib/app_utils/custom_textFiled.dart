@@ -126,7 +126,7 @@ class CustomRoundTextField extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
           errorMaxLines: 4,
-          contentPadding: const EdgeInsets.only(left: 2, top: 3.0, bottom: 15),
+          contentPadding: const EdgeInsets.only(left: 6, top: 3.0, bottom: 15),
           filled: true,
           fillColor: fillColor,
         ),

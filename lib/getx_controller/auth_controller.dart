@@ -43,17 +43,12 @@ class AuthController extends GetxController {
         url = "$transactionHistoryUrl?${queryParams.join('&')}";
       }
 
-      print("🚀 Calling Transaction History API: $url (type: '$type', search: '$search')");
-      var response = await ApiBaseHelper().getApiCall(
-        false,
-        url,
-        context,
-      );
-      print("📩 Transaction History Response: $response");
+      var response = await ApiBaseHelper().getApiCall(false, url, context);
       if (response != null) {
         if (response['data'] != null && response['data'] is List) {
           transactionHistoryList.value = response['data'];
-        } else if (response['transactions'] != null && response['transactions'] is List) {
+        } else if (response['transactions'] != null &&
+            response['transactions'] is List) {
           transactionHistoryList.value = response['transactions'];
         } else if (response['history'] != null && response['history'] is List) {
           transactionHistoryList.value = response['history'];
@@ -66,7 +61,7 @@ class AuthController extends GetxController {
         transactionHistoryList.clear();
       }
     } catch (e) {
-      print("❌ Error in getTransactionHistoryApi: $e");
+      // Exception handled
     } finally {
       isTransactionLoading(false);
     }
@@ -75,17 +70,17 @@ class AuthController extends GetxController {
   Future<void> getProfileApi({required BuildContext context}) async {
     try {
       isProfileLoading(true);
-      print("🚀 Calling Profile API: $profileUrl");
       var response = await ApiBaseHelper().getApiCall(
         false,
         profileUrl,
         context,
       );
-      print("📩 Profile API Response: $response");
       if (response != null) {
-        if (response['data'] != null && response['data'] is Map<String, dynamic>) {
+        if (response['data'] != null &&
+            response['data'] is Map<String, dynamic>) {
           profileData.value = response['data'];
-        } else if (response['user'] != null && response['user'] is Map<String, dynamic>) {
+        } else if (response['user'] != null &&
+            response['user'] is Map<String, dynamic>) {
           profileData.value = response['user'];
         } else if (response is Map<String, dynamic>) {
           profileData.value = response;
@@ -94,7 +89,7 @@ class AuthController extends GetxController {
         localProfileImagePath.value = null;
       }
     } catch (e) {
-      print("❌ Error in getProfileApi: $e");
+      // Exception handled
     } finally {
       isProfileLoading(false);
     }
@@ -103,13 +98,11 @@ class AuthController extends GetxController {
   Future<void> getBannersApi({required BuildContext context}) async {
     try {
       isBannerLoading(true);
-      print("🚀 Calling Banners API: $bannersUrl");
       var response = await ApiBaseHelper().getApiCall(
         false,
         bannersUrl,
         context,
       );
-      print("📩 Banners API Response: $response");
       if (response != null) {
         if (response['data'] != null && response['data'] is List) {
           bannerList.value = response['data'];
@@ -120,7 +113,7 @@ class AuthController extends GetxController {
         }
       }
     } catch (e) {
-      print("❌ Error in getBannersApi: $e");
+      // Exception handled
     } finally {
       isBannerLoading(false);
     }
@@ -144,9 +137,9 @@ class AuthController extends GetxController {
 
       if (response != null &&
           (response['status'] == true ||
-           response['success'] == true ||
-           response['status'] == 1 ||
-           response['statusCode'] == 200) &&
+              response['success'] == true ||
+              response['status'] == 1 ||
+              response['statusCode'] == 200) &&
           response['status'] != false &&
           response['success'] != false) {
         Fluttertoast.showToast(
@@ -157,14 +150,15 @@ class AuthController extends GetxController {
         );
         onSuccess();
       } else if (response != null) {
-        String msg = response['message']?.toString() ??
+        String msg =
+            response['message']?.toString() ??
             response['error']?.toString() ??
             "Failed to send OTP";
         if (msg.toLowerCase().contains("not found") ||
             msg.toLowerCase().contains("not exist") ||
             msg.toLowerCase().contains("not registered") ||
             msg.toLowerCase().contains("unregistered")) {
-         // msg = "User not found. Please register.";
+          // msg = "User not found. Please register.";
         }
         Fluttertoast.showToast(
           msg: msg,
@@ -174,7 +168,7 @@ class AuthController extends GetxController {
         );
       }
     } catch (e) {
-      print("Error in sendOtpApi: $e");
+      // Exception handled
     } finally {
       if (showLoading) isLoading(false);
     }
@@ -189,15 +183,17 @@ class AuthController extends GetxController {
   }) async {
     try {
       isLoading(true);
-      Map<String, dynamic> body = {"phone": mobileNumber, "otp": otp,"fcm_token":fcmToken};
+      Map<String, dynamic> body = {
+        "phone": mobileNumber,
+        "otp": otp,
+        "fcm_token": fcmToken,
+      };
       var response = await ApiBaseHelper().postApiCall(
         false,
         verifyOtpUrl,
         context,
         body,
       );
-
-      print("📩 Verify OTP Response: $response");
 
       String? token;
       if (response != null && response is Map) {
@@ -220,7 +216,8 @@ class AuthController extends GetxController {
       var status = response is Map ? response['status'] : null;
       var success = response is Map ? response['success'] : null;
 
-      bool isStatusFailure = status == false ||
+      bool isStatusFailure =
+          status == false ||
           status == "false" ||
           status == "False" ||
           status == 0 ||
@@ -235,7 +232,8 @@ class AuthController extends GetxController {
           success == 0 ||
           success == "0";
 
-      bool isSuccess = response != null &&
+      bool isSuccess =
+          response != null &&
           !isStatusFailure &&
           token != null &&
           token.isNotEmpty;
@@ -256,7 +254,8 @@ class AuthController extends GetxController {
         await sp?.putString(SpUtil.ACCESS_TOKEN, "");
 
         if (response != null && response is Map) {
-          String rawMsg = response['message']?.toString() ??
+          String rawMsg =
+              response['message']?.toString() ??
               response['error']?.toString() ??
               "Invalid OTP. Please try again.";
 
@@ -267,7 +266,8 @@ class AuthController extends GetxController {
               String jsonSub = rawMsg.substring(firstBrace, lastBrace + 1);
               var decoded = jsonDecode(jsonSub);
               if (decoded is Map) {
-                rawMsg = decoded['message']?.toString() ??
+                rawMsg =
+                    decoded['message']?.toString() ??
                     decoded['error']?.toString() ??
                     decoded['msg']?.toString() ??
                     rawMsg;
@@ -275,7 +275,8 @@ class AuthController extends GetxController {
             } catch (_) {}
           }
           rawMsg = rawMsg.trim();
-          if (rawMsg.toLowerCase() == "invalid" || rawMsg.toLowerCase().contains("invalid otp")) {
+          if (rawMsg.toLowerCase() == "invalid" ||
+              rawMsg.toLowerCase().contains("invalid otp")) {
             rawMsg = "Invalid OTP. Please try again.";
           }
           Fluttertoast.showToast(
@@ -287,7 +288,7 @@ class AuthController extends GetxController {
         }
       }
     } catch (e) {
-      print("Error in verifyOtpApi: $e");
+      // Exception handled
     } finally {
       isLoading(false);
     }
@@ -315,8 +316,6 @@ class AuthController extends GetxController {
         body,
       );
 
-      print("Register User Response: $response");
-
       String? token;
       if (response != null && response is Map) {
         if (response['token'] != null &&
@@ -338,7 +337,8 @@ class AuthController extends GetxController {
       var status = response is Map ? response['status'] : null;
       var success = response is Map ? response['success'] : null;
 
-      bool isStatusFailure = status == false ||
+      bool isStatusFailure =
+          status == false ||
           status == "false" ||
           status == "False" ||
           status == 0 ||
@@ -353,13 +353,14 @@ class AuthController extends GetxController {
           success == 0 ||
           success == "0";
 
-      bool isSuccess = response != null &&
+      bool isSuccess =
+          response != null &&
           !isStatusFailure &&
           (token != null && token.isNotEmpty ||
-           status == true ||
-           status == "true" ||
-           success == true ||
-           success == "true");
+              status == true ||
+              status == "true" ||
+              success == true ||
+              success == "true");
 
       if (isSuccess) {
         if (token != null && token.isNotEmpty) {
@@ -376,7 +377,8 @@ class AuthController extends GetxController {
         onSuccess();
         return response;
       } else if (response != null) {
-        String errorMsg = response['message']?.toString() ??
+        String errorMsg =
+            response['message']?.toString() ??
             response['error']?.toString() ??
             "Registration failed";
         if (errorMsg.startsWith('{') && errorMsg.endsWith('}')) {
@@ -397,7 +399,6 @@ class AuthController extends GetxController {
       }
       return null;
     } catch (e) {
-      print("Error in registerUserApi: $e");
       return null;
     } finally {
       isLoading(false);
@@ -413,17 +414,7 @@ class AuthController extends GetxController {
   }) async {
     try {
       isLoading(true);
-      Map<String, String> fields = {
-        "name": name,
-        "email": email,
-      };
-
-      print("==========================================================");
-      print("🚀 [UPDATE PROFILE MULTIPART REQUEST]");
-      print("   URL: ${BASE_URL + updateProfileUrl}");
-      print("   FIELDS: $fields");
-      print("   PROFILE IMAGE PATH: $profileImage");
-      print("==========================================================");
+      Map<String, String> fields = {"name": name, "email": email};
 
       var response = await ApiBaseHelper().postMultipartApiCall(
         false,
@@ -434,25 +425,23 @@ class AuthController extends GetxController {
         filePath: profileImage,
       );
 
-      print("==========================================================");
-      print("📩 [UPDATE PROFILE RESPONSE]: $response");
-      print("==========================================================");
-
       if (response != null &&
           (response['status'] == true ||
-           response['success'] == true ||
-           response['status'] == 1 ||
-           response['statusCode'] == 200 ||
-           response['user'] != null ||
-           response['message'] != null)) {
-
+              response['success'] == true ||
+              response['status'] == 1 ||
+              response['statusCode'] == 200 ||
+              response['user'] != null ||
+              response['message'] != null)) {
         // Immediately show the new local image in the header
-        if (profileImage != null && profileImage.isNotEmpty) {
+        if (profileImage != null &&
+            profileImage.isNotEmpty &&
+            !profileImage.startsWith('http')) {
           localProfileImagePath.value = profileImage;
         }
 
         Fluttertoast.showToast(
-          msg: response['message']?.toString() ?? "Profile Updated Successfully",
+          msg:
+              response['message']?.toString() ?? "Profile Updated Successfully",
           gravity: ToastGravity.CENTER,
           backgroundColor: primaryColor,
           textColor: Colors.white,
@@ -461,7 +450,8 @@ class AuthController extends GetxController {
         onSuccess();
         return response;
       } else {
-        String errorMsg = response?['message']?.toString() ??
+        String errorMsg =
+            response?['message']?.toString() ??
             response?['error']?.toString() ??
             "Failed to update profile";
         Fluttertoast.showToast(
@@ -473,7 +463,6 @@ class AuthController extends GetxController {
         return null;
       }
     } catch (e) {
-      print("Error in updateProfileApi: $e");
       Fluttertoast.showToast(
         msg: "Something went wrong: $e",
         gravity: ToastGravity.CENTER,
@@ -492,16 +481,13 @@ class AuthController extends GetxController {
   }) async {
     try {
       isLoading(true);
-      print("🚀 [CMS API REQUEST]: ${BASE_URL + cmsUrl + key}");
       var response = await ApiBaseHelper().getApiCall(
         false,
         "$cmsUrl$key",
         context,
       );
-      print("📩 [CMS API RESPONSE]: $response");
       return response;
     } catch (e) {
-      print("Error in getCmsContentApi: $e");
       return null;
     } finally {
       isLoading(false);
@@ -511,14 +497,12 @@ class AuthController extends GetxController {
   Future<void> logoutApi({required BuildContext context}) async {
     try {
       isLoading(true);
-      print("🚀 Calling Logout API: $logoutUrl");
       var response = await ApiBaseHelper().postApiCall(
         true,
         logoutUrl,
         context,
         {},
       );
-      print("📩 Logout API Response: $response");
       if (response != null && response['message'] != null) {
         Fluttertoast.showToast(
           msg: response['message'].toString(),
@@ -528,7 +512,7 @@ class AuthController extends GetxController {
         );
       }
     } catch (e) {
-      print("❌ Error in logoutApi: $e");
+      // Exception handled
     } finally {
       await sp?.clear();
       isLoading(false);
@@ -550,12 +534,6 @@ class AuthController extends GetxController {
         "description": description,
       };
 
-      print("==========================================================");
-      print("🚀 [SUBMIT ENQUIRY REQUEST]");
-      print("   URL: ${BASE_URL + helpEnquiriesUrl}");
-      print("   BODY: $body");
-      print("==========================================================");
-
       var response = await ApiBaseHelper().postApiCall(
         true,
         helpEnquiriesUrl,
@@ -563,13 +541,8 @@ class AuthController extends GetxController {
         body,
       );
 
-      print("==========================================================");
-      print("📩 [SUBMIT ENQUIRY RESPONSE]: $response");
-      print("==========================================================");
-
       return response;
     } catch (e) {
-      print("❌ Error in submitEnquiryApi: $e");
       String cleanErr = e.toString().replaceAll(RegExp(r'^Exception:\s*'), '');
       if (cleanErr.isNotEmpty) {
         Fluttertoast.showToast(
@@ -590,22 +563,12 @@ class AuthController extends GetxController {
   var companyEmail = "".obs;
   var companyContact = "".obs;
 
-  Future<List<Map<String, String>>> getFaqsApi({required BuildContext context}) async {
+  Future<List<Map<String, String>>> getFaqsApi({
+    required BuildContext context,
+  }) async {
     try {
       isFaqLoading(true);
-      print("==========================================================");
-      print("🚀 [GET FAQS REQUEST]: ${BASE_URL + faqsUrl}");
-      print("==========================================================");
-
-      var response = await ApiBaseHelper().getApiCall(
-        true,
-        faqsUrl,
-        context,
-      );
-
-      print("==========================================================");
-      print("📩 [GET FAQS RESPONSE]: $response");
-      print("==========================================================");
+      var response = await ApiBaseHelper().getApiCall(true, faqsUrl, context);
 
       faqList.clear();
       List rawList = [];
@@ -629,15 +592,19 @@ class AuthController extends GetxController {
 
       for (var item in rawList) {
         if (item is Map) {
-          if (item['is_active'] == 0 || item['is_active'] == '0' || item['is_active'] == false) {
+          if (item['is_active'] == 0 ||
+              item['is_active'] == '0' ||
+              item['is_active'] == false) {
             continue;
           }
 
-          String question = item['question']?.toString() ??
+          String question =
+              item['question']?.toString() ??
               item['title']?.toString() ??
               item['faq_question']?.toString() ??
               "";
-          String answer = item['answer']?.toString() ??
+          String answer =
+              item['answer']?.toString() ??
               item['description']?.toString() ??
               item['content']?.toString() ??
               item['faq_answer']?.toString() ??
@@ -654,7 +621,9 @@ class AuthController extends GetxController {
           if (question.isNotEmpty) {
             faqList.add({
               "question": question,
-              "answer": answer.isNotEmpty ? answer : "No answer details available.",
+              "answer": answer.isNotEmpty
+                  ? answer
+                  : "No answer details available.",
             });
           }
         }
@@ -662,7 +631,6 @@ class AuthController extends GetxController {
 
       return faqList;
     } catch (e) {
-      print("❌ Error in getFaqsApi: $e");
       return faqList;
     } finally {
       isFaqLoading(false);

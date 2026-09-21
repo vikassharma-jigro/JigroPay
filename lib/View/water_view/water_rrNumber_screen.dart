@@ -2,11 +2,13 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../app_utils/custom_textFiled.dart';
 import 'package:get/get.dart';
 import '../../../getx_controller/recharge_controller.dart';
+
 class WaterRrnumberScreen extends StatefulWidget {
   final String? serviceNo;
   final String? opcode;
@@ -17,8 +19,6 @@ class WaterRrnumberScreen extends StatefulWidget {
   State<WaterRrnumberScreen> createState() => _WaterRrnumberScreenState();
 }
 
-
-
 class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
   TextEditingController rrNoController = TextEditingController();
   final RechargeController rechargeController = Get.put(RechargeController());
@@ -27,9 +27,11 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
   String? _validateRrNo(String val) {
     if (val.trim().isEmpty) return 'RR Number is required';
     if (val.trim().length < 5) return 'Minimum 5 characters required';
-    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim())) return 'Only letters, digits, / or - allowed';
+    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim()))
+      return 'Only letters, digits, / or - allowed';
     return null;
   }
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +39,8 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: white,
+    return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -126,8 +129,7 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
               //     Icon(Icons.arrow_forward_ios),
               //   ],
               // ),
-
-              const SizedBox(height: 150),
+              const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
@@ -147,17 +149,21 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
                   //borderRadius: BorderRadius.circular(40.0),
                   onPressed: () async {
                     final error = _validateRrNo(rrNoController.text);
-                    setState(() { _rrError = error; });
+                    setState(() {
+                      _rrError = error;
+                    });
                     if (error != null) return;
 
                     if (widget.opcode != null) {
                       var response = await rechargeController.fetchUtilityBill(
-                        context: context, 
-                        consumerId: rrNoController.text.trim(), 
-                        opcode: widget.opcode!
+                        context: context,
+                        consumerId: rrNoController.text.trim(),
+                        opcode: widget.opcode!,
                       );
 
-                      if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+                      if (response != null &&
+                          (response['status'] == true ||
+                              response['status'] == 'Success')) {
                         showDialogBox(context);
                       }
                     } else {
@@ -182,87 +188,31 @@ class _WaterRrnumberScreenState extends State<WaterRrnumberScreen> {
   }
 
   void showDialogBox(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            text(
-              "View Sample Bill",
-              textColor: blackColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              fontFamily: FontFamily.plusJakartaSansBold,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.close),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: DottedBorder(
-                borderType: BorderType.RRect,
-                radius: Radius.circular(12),
-                color: greyColor, // ✅ defined here, not inside Container
-                strokeWidth: 2,
-                dashPattern: [6, 3],
-                child: Container(
-                  height: 140,
-                  width: 300,
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 30),
-                        text(
-                          "Tenement No - J8K067HB09678HB",
-                          textColor: blackColor,
-                          fontSize: 18,
-                          textAlign: TextAlign.center,
-                          isCentered: true,
-                          fontFamily: FontFamily.plusJakartaSansBold,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 50),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: 55,
-              child: CommonButton(
-                text: "Got it",
-                textColor: white,
-                gradient: const LinearGradient(
-                  colors: [primaryColor, secondaryColor],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                fontWeight: FontWeight.w600,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontSize: 16.0,
-
-                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
+    showCustomAppDialog(
+      context,
+      type: CustomDialogType.info,
+      title: "View Sample Bill",
+      primaryButtonText: "Got it",
+      customContent: DottedBorder(
+        borderType: BorderType.RRect,
+        radius: const Radius.circular(12),
+        color: greyColor,
+        strokeWidth: 2,
+        dashPattern: const [6, 3],
+        child: Container(
+          height: 120,
+          width: 280,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8.0),
+          child: text(
+            "Tenement No - J8K067HB09678HB",
+            textColor: blackColor,
+            fontSize: 16,
+            textAlign: TextAlign.center,
+            isCentered: true,
+            fontFamily: FontFamily.plusJakartaSansBold,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

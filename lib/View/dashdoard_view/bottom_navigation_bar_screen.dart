@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jigrotech/View/auth_view/qr_code_screen.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import '../../app_utils/app_colors.dart';
-import '../../app_utils/font_family.dart';
+import '../../app_utils/custom_dialog_widget.dart';
 import 'history_screen.dart';
 import 'home_screen.dart';
 import 'help_support_screen.dart';
@@ -77,85 +77,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<bool> _onWillPop() async {
-    final shouldPop = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          insetPadding: const EdgeInsets.all(10),
-          title: const Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Do you want to quit app?',
-              style: TextStyle(
-                color: blueColor,
-                fontSize: 18,
-                fontFamily: FontFamily.plusJakartaSansRegular,
-              ),
-            ),
-          ),
-          actionsAlignment: MainAxisAlignment.spaceBetween,
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.sizeOf(context).width / 3,
-                    padding: const EdgeInsets.only(left: 22, right: 22),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(color: blueColor),
-                    ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Yes',
-                        style: TextStyle(
-                          color: blueColor,
-                          fontSize: 18,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, false);
-                  },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.sizeOf(context).width / 3,
-                    padding: const EdgeInsets.only(left: 22, right: 22),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: blueColor,
-                      border: Border.all(color: blueColor),
-                    ),
-                    child: const Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'No',
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 18,
-                          fontFamily: FontFamily.plusJakartaSansRegular,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        );
+    final result = await showCustomConfirmDialog(
+      context,
+      title: 'Exit App',
+      message: 'Do you want to quit JigroPay?',
+      primaryButtonText: 'Yes',
+      secondaryButtonText: 'No',
+      onConfirm: () {
+        SystemNavigator.pop();
       },
     );
-    return shouldPop!;
+    return result ?? false;
   }
 
   Widget _buildBottomNavigation(BuildContext context) {
@@ -164,11 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       padding: EdgeInsets.all(10),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            secondaryColor,
-            primaryColor,
-
-          ],
+          colors: [secondaryColor, primaryColor],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -198,31 +126,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
           selectedFontSize: 12,
           unselectedFontSize: 12,
 
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-          ),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
 
           onTap: _onTappedBar,
 
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(IconsaxPlusLinear.home),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.help_outline),
+              icon: Icon(IconsaxPlusLinear.info_circle),
               label: "Help",
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.history),
+              icon: Icon(IconsaxPlusLinear.clock_1),
               label: "History",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(IconsaxPlusLinear.user),
               label: "Profile",
             ),
           ],

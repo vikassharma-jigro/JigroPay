@@ -39,7 +39,8 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: white,
+    return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -352,306 +353,331 @@ class _LifeCongratulationsScreenState extends State<LifeCongratulationsScreen> {
             );
           }
 
-          return AlertDialog(
+          return Dialog(
             backgroundColor: white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(20),
             ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: Container(
-                    //height: 170,
-                    width: 300,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: text(
-                              "You are just one step away",
-                              textColor: blackColor,
-                              fontSize: 18,
-                              isCentered: true,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: FontFamily.plusJakartaSansBold,
-                            ),
-                          ),
-                          text(
-                            " Provide details to calculate the exact price.",
-                            textColor: greyColor,
-                            fontSize: 13,
-                            isCentered: true,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: FontFamily.plusJakartaSansRegular,
-                          ),
-
-                          SizedBox(height: 10),
-                          text(
-                            "Gender",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: Container(
+                        //height: 170,
+                        width: 300,
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setStateDialog(() {
-                                      isSelectedGender = true;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: isSelectedGender == true
-                                          ? lightorangeColor
-                                          : white,
-                                      border: Border.all(color: pinkColor),
-                                    ),
-                                    child: text(
-                                      "Male",
-                                      textAlign: TextAlign.center,
-                                      isCentered: true,
-                                      textColor: blackColor,
-                                      fontSize: 16,
-                                      fontFamily:
-                                          FontFamily.plusJakartaSansRegular,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                              Center(
+                                child: text(
+                                  "You are just one step away",
+                                  textColor: blackColor,
+                                  fontSize: 18,
+                                  isCentered: true,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: FontFamily.plusJakartaSansBold,
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              text(
+                                " Provide details to calculate the exact price.",
+                                textColor: greyColor,
+                                fontSize: 13,
+                                isCentered: true,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: FontFamily.plusJakartaSansRegular,
+                              ),
 
-                              Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setStateDialog(() {
-                                      isSelectedGender = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: isSelectedGender == true
-                                          ? white
-                                          : lightorangeColor,
-                                      border: Border.all(color: pinkColor),
-                                    ),
-                                    child: text(
-                                      "Female",
-                                      textAlign: TextAlign.center,
-                                      isCentered: true,
-                                      textColor: blackColor,
-                                      fontSize: 16,
-                                      fontFamily:
-                                          FontFamily.plusJakartaSansRegular,
-                                      fontWeight: FontWeight.w600,
+                              SizedBox(height: 10),
+                              text(
+                                "Gender",
+                                textColor: blackColor,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontSize: 14,
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setStateDialog(() {
+                                          isSelectedGender = true;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          color: isSelectedGender == true
+                                              ? lightorangeColor
+                                              : white,
+                                          border: Border.all(color: pinkColor),
+                                        ),
+                                        child: text(
+                                          "Male",
+                                          textAlign: TextAlign.center,
+                                          isCentered: true,
+                                          textColor: blackColor,
+                                          fontSize: 16,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          text(
-                            "Occupation",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: buildOccupationButton("Student"),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                flex: 2,
-                                child: buildOccupationButton("Employee"),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          // 🔹 Second Row
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: buildOccupationButton("Business"),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                flex: 2,
-                                child: buildOccupationButton("Other"),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 10),
+                                  SizedBox(width: 10),
 
-                          SizedBox(height: 10),
-                          text(
-                            "Education",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Expanded(child: buildEducationButton("Graduate")),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: buildEducationButton("Post Graduate"),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-
-                          // 🔹 Third Row
-                          Row(
-                            children: [
-                              Expanded(child: buildEducationButton("Diploma")),
-                              const SizedBox(width: 10),
-                              Expanded(child: buildEducationButton("Other")),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          text(
-                            "Have you consumed tobacco in the last 30 days?",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setStateDialog(() {
-                                      isSelected = true;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: isSelected == true
-                                          ? lightorangeColor
-                                          : white,
-                                      border: Border.all(color: pinkColor),
-                                    ),
-                                    child: text(
-                                      "Yes",
-                                      textAlign: TextAlign.center,
-                                      isCentered: true,
-                                      textColor: blackColor,
-                                      fontSize: 16,
-                                      fontFamily:
-                                          FontFamily.plusJakartaSansRegular,
-                                      fontWeight: FontWeight.w600,
+                                  Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setStateDialog(() {
+                                          isSelectedGender = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          color: isSelectedGender == true
+                                              ? white
+                                              : lightorangeColor,
+                                          border: Border.all(color: pinkColor),
+                                        ),
+                                        child: text(
+                                          "Female",
+                                          textAlign: TextAlign.center,
+                                          isCentered: true,
+                                          textColor: blackColor,
+                                          fontSize: 16,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(height: 10),
+                              text(
+                                "Occupation",
+                                textColor: blackColor,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontSize: 14,
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: buildOccupationButton("Student"),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 2,
+                                    child: buildOccupationButton("Employee"),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              // 🔹 Second Row
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: buildOccupationButton("Business"),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    flex: 2,
+                                    child: buildOccupationButton("Other"),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
 
-                              Expanded(
-                                flex: 2,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setStateDialog(() {
-                                      isSelected = false;
-                                    });
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: isSelected == true
-                                          ? white
-                                          : lightorangeColor,
-                                      border: Border.all(color: pinkColor),
-                                    ),
-                                    child: text(
-                                      "No",
-                                      textAlign: TextAlign.center,
-                                      isCentered: true,
-                                      textColor: blackColor,
-                                      fontSize: 16,
-                                      fontFamily:
-                                          FontFamily.plusJakartaSansRegular,
-                                      fontWeight: FontWeight.w600,
+                              SizedBox(height: 10),
+                              text(
+                                "Education",
+                                textColor: blackColor,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontSize: 14,
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: buildEducationButton("Graduate"),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: buildEducationButton(
+                                      "Post Graduate",
                                     ),
                                   ),
-                                ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+
+                              // 🔹 Third Row
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: buildEducationButton("Diploma"),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: buildEducationButton("Other"),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              text(
+                                "Have you consumed tobacco in the last 30 days?",
+                                textColor: blackColor,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                                fontSize: 14,
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setStateDialog(() {
+                                          isSelected = true;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          color: isSelected == true
+                                              ? lightorangeColor
+                                              : white,
+                                          border: Border.all(color: pinkColor),
+                                        ),
+                                        child: text(
+                                          "Yes",
+                                          textAlign: TextAlign.center,
+                                          isCentered: true,
+                                          textColor: blackColor,
+                                          fontSize: 16,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+
+                                  Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setStateDialog(() {
+                                          isSelected = false;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            10,
+                                          ),
+                                          color: isSelected == true
+                                              ? white
+                                              : lightorangeColor,
+                                          border: Border.all(color: pinkColor),
+                                        ),
+                                        child: text(
+                                          "No",
+                                          textAlign: TextAlign.center,
+                                          isCentered: true,
+                                          textColor: blackColor,
+                                          fontSize: 16,
+                                          fontFamily:
+                                              FontFamily.plusJakartaSansRegular,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 50),
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: 55,
-                  child: CommonButton(
-                    text: "Got it",
-                    textColor: white,
-                    gradient: const LinearGradient(
-                      colors: [primaryColor, secondaryColor],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                    fontSize: 16.0,
-
-                    //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                    //borderRadius: BorderRadius.circular(40.0),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LifeQuotationsScreen(),
+                    const SizedBox(height: 50),
+                    SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 55,
+                      child: CommonButton(
+                        text: "Got it",
+                        textColor: white,
+                        gradient: const LinearGradient(
+                          colors: [primaryColor, secondaryColor],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      );
-                    },
-                  ),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: FontFamily.plusJakartaSansBold,
+                        fontSize: 16.0,
+
+                        //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                        //borderRadius: BorderRadius.circular(40.0),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LifeQuotationsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },

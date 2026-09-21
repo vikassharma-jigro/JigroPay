@@ -1,14 +1,15 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jigrotech/View/auth_view/signup_screen.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
+import 'package:smart_auth/smart_auth.dart';
 import '../../app_utils/app_colors.dart';
 import '../../app_utils/custom_textFiled.dart';
 import '../../app_utils/font_family.dart';
-import '../../app_utils/showAlertMessage.dart';
 import '../../app_utils/text_widget.dart';
-import '../../main.dart';
 import '../../app_utils/cms_helper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
@@ -24,14 +25,60 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController phoneController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final FocusNode _phoneFocusNode = FocusNode();
   final AuthController authController = Get.put(AuthController());
   bool isChecked = false;
   bool? isLoading;
+  bool _isRequestingPhoneNumber = false;
+  bool _hasDismissedHint = false;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    _phoneFocusNode.dispose();
+    super.dispose();
+  }
+
+  Future<void> _requestPhoneNumberHint({bool force = false}) async {
+    if (kIsWeb || !Platform.isAndroid) return;
+    if (_isRequestingPhoneNumber) return;
+    if (!force && phoneController.text.trim().isNotEmpty) return;
+    if (!force && _hasDismissedHint && phoneController.text.trim().isEmpty) return;
+
+    _isRequestingPhoneNumber = true;
+    try {
+      FocusScope.of(context).unfocus();
+      final res = await SmartAuth.instance.requestPhoneNumberHint();
+      if (res.hasData && res.data != null && res.data!.isNotEmpty) {
+        final String raw = res.data!;
+        String digits = raw.replaceAll(RegExp(r'\D'), '');
+        if (digits.length > 10) {
+          digits = digits.substring(digits.length - 10);
+        }
+        setState(() {
+          phoneController.text = digits;
+          phoneController.selection = TextSelection.fromPosition(
+            TextPosition(offset: phoneController.text.length),
+          );
+        });
+        _hasDismissedHint = false;
+      } else if (res.isCanceled) {
+        _hasDismissedHint = true;
+        if (mounted) {
+          _phoneFocusNode.requestFocus();
+        }
+      }
+    } catch (e) {
+      debugPrint("SmartAuth requestPhoneNumberHint error: $e");
+    } finally {
+      _isRequestingPhoneNumber = false;
+    }
   }
 
   @override
@@ -41,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: white,
         automaticallyImplyLeading: false,
-        title:  Center(child: Image.asset(AppImages.jigroImage,height: 40,)),
+        title: Center(child: Image.asset(AppImages.jigroImage, height: 40)),
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -50,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(child: Image.asset(AppImages.lMobileImage,)),
+                Center(child: Image.asset(AppImages.lMobileImage)),
                 const SizedBox(height: 10),
                 Center(
                   child: Row(
@@ -63,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: FontFamily.plusJakartaSansMedium,
                         fontWeight: FontWeight.w500,
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(width: 5),
                       text(
                         "mobile",
                         textColor: secondaryColor,
@@ -71,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontFamily: FontFamily.plusJakartaSansMedium,
                         fontWeight: FontWeight.w500,
                       ),
-
                     ],
                   ),
                 ),
@@ -97,10 +143,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 15),
                 CustomRoundTextField(
                   controller: phoneController,
+                  focusNode: _phoneFocusNode,
                   keyboardType: TextInputType.number,
                   hintText: "Enter 10-digit mobile number",
                   maxLines: 2,
                   fillColor: Colors.transparent,
+                  onTap: () {
+                    _requestPhoneNumberHint();
+                  },
+                  onChanged: (val) {
+                    if (val.isEmpty) {
+                      _hasDismissedHint = false;
+                    }
+                  },
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.sim_card_outlined,
+                      color: primaryColor,
+                      size: 22,
+                    ),
+                    tooltip: "Select SIM number",
+                    onPressed: () {
+                      _requestPhoneNumberHint(force: true);
+                    },
+                  ),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(10),
@@ -112,7 +178,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 48,
                   child: Obx(() {
                     return authController.isLoading.value
-                        ? const Center(child: CircularProgressIndicator(color: primaryColor))
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
                         : CommonButton(
                             text: "Continue",
                             textColor: white,
@@ -137,7 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               } else if (!regExp.hasMatch(phone)) {
                                 Fluttertoast.showToast(
-                                  msg: "Please enter a valid 10-digit mobile number",
+                                  msg:
+                                      "Please enter a valid 10-digit mobile number",
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
                                 );

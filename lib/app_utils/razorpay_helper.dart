@@ -63,7 +63,6 @@ class RazorpayHelper {
         ? (amount.toInt() == amount ? amount.toInt().toString() : amount.toString())
         : "10";
 
-    print("🚀 [1. CREATE ORDER API] amount=$reqAmount, type=$type, fetch_id=$fetchId, pan=$pan, card=$card");
     var orderResponse = await rechargeController.createRechargeOrder(
       context: context,
       opcode: opcode,
@@ -100,8 +99,6 @@ class RazorpayHelper {
           orderResponse['data']?['razorpay_key']?.toString() ??
           orderResponse['data']?['key_id']?.toString();
 
-      print("🚀 [2. LAUNCHING RAZORPAY PAYMENT GATEWAY with order_id='$orderId', key='${apiKey ?? razorpayKeyConstant}']");
-
       openPayment(
         amount: amount,
         description: description,
@@ -119,7 +116,6 @@ class RazorpayHelper {
           textColor: Colors.white,
         );
       }
-      print("❌ [CREATE ORDER API FAILED: $apiMessage]");
     }
   }
 
@@ -164,7 +160,6 @@ class RazorpayHelper {
   }
 
   void _handleSuccess(PaymentSuccessResponse response) async {
-    print("🚀 [3. VERIFY PAYMENT API]");
     final RechargeController rechargeController = Get.put(RechargeController());
     String paymentId = response.paymentId ?? "";
     String orderId = response.orderId ?? "";
@@ -207,8 +202,10 @@ class RazorpayHelper {
     if (onFailure != null) {
       onFailure!(response);
     } else {
+      String cleanMsg = cleanApiMessage(response.message);
+      if (cleanMsg.isEmpty) cleanMsg = "Payment was cancelled or failed.";
       Fluttertoast.showToast(
-        msg: "Payment Failed: ${response.message}",
+        msg: "Payment Failed: $cleanMsg",
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

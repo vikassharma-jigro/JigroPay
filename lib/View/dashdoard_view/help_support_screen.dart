@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import '../../app_utils/app_colors.dart';
@@ -122,7 +124,9 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       _subjectController.clear();
       _messageController.clear();
 
-      String successMsg = response['message']?.toString() ?? "Support ticket submitted successfully!";
+      String successMsg =
+          response['message']?.toString() ??
+          "Support ticket submitted successfully!";
       Fluttertoast.showToast(
         msg: successMsg,
         gravity: ToastGravity.CENTER,
@@ -183,7 +187,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         const SizedBox(height: 6),
                         text(
                           "Get quick assistance 24/7 for all your recharges, bill payments, and queries.",
-                          textColor: white.withOpacity(0.9),
+                          textColor: white.withValues(alpha: .9),
                           fontSize: 13,
                           fontFamily: FontFamily.plusJakartaSansRegular,
                         ),
@@ -195,11 +199,15 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     width: 55,
                     height: 55,
                     decoration: BoxDecoration(
-                      color: white.withOpacity(0.2),
+                      color: white.withValues(alpha: .2),
                       shape: BoxShape.circle,
                     ),
                     child: const Center(
-                      child: Icon(Icons.headset_mic, color: white, size: 30),
+                      child: Icon(
+                        IconsaxPlusBold.headphone,
+                        color: white,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],
@@ -219,7 +227,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
 
             // Contact Option Cards Rows
             Obx(() {
-              String contactNumber = authController.companyContact.value.isNotEmpty
+              String contactNumber =
+                  authController.companyContact.value.isNotEmpty
                   ? authController.companyContact.value
                   : "9216075701";
               String emailAddress = authController.companyEmail.value.isNotEmpty
@@ -232,7 +241,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     children: [
                       Expanded(
                         child: _buildContactCard(
-                          icon: Icons.phone_in_talk,
+                          icon: IconsaxPlusLinear.call,
                           iconColor: Colors.green,
                           title: "Call Us",
                           subtitle: contactNumber,
@@ -242,7 +251,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _buildContactCard(
-                          icon: Icons.email_outlined,
+                          icon: IconsaxPlusLinear.sms,
                           iconColor: Colors.blue,
                           title: "Email Us",
                           subtitle: emailAddress,
@@ -318,7 +327,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       child: DropdownButton<String>(
                         value: _selectedCategory,
                         isExpanded: true,
-                        icon: const Icon(Icons.arrow_drop_down, color: greyColor),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: greyColor,
+                        ),
                         items: _categories.map((String cat) {
                           return DropdownMenuItem<String>(
                             value: cat,
@@ -352,6 +364,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     controller: _subjectController,
                     hintText: "Enter subject or Transaction ID",
                     maxLines: 1,
+                    inputFormatters: [LengthLimitingTextInputFormatter(50)],
                     fillColor: Colors.transparent,
                   ),
                   const SizedBox(height: 10),
@@ -367,6 +380,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                     hintText: "Describe what happened in detail...",
                     minLines: 3,
                     maxLines: 5,
+                    inputFormatters: [LengthLimitingTextInputFormatter(200)],
                     fillColor: Colors.transparent,
                   ),
                   const SizedBox(height: 15),
@@ -415,7 +429,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                 );
               }
 
-              List<Map<String, String>> currentFaqs = authController.faqList.isNotEmpty
+              List<Map<String, String>> currentFaqs =
+                  authController.faqList.isNotEmpty
                   ? authController.faqList
                   : _faqs;
 
@@ -433,8 +448,13 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       border: Border.all(color: greyColor.withOpacity(0.2)),
                     ),
                     child: ExpansionTile(
-                      shape: const RoundedRectangleBorder(side: BorderSide.none),
-                      tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide.none,
+                      ),
+                      tilePadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 4,
+                      ),
                       iconColor: primaryColor,
                       collapsedIconColor: greyColor,
                       title: text(
@@ -446,7 +466,11 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                       ),
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 14),
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            bottom: 14,
+                          ),
                           child: text(
                             faq["answer"] ?? "",
                             textColor: greyColor,

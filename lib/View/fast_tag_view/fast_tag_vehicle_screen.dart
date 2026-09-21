@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jigrotech/View/fast_tag_view/fast_tag_topamount_screen.dart';
 import '../../../app_utils/app_colors.dart';
 import '../../../app_utils/font_family.dart';
@@ -11,12 +12,15 @@ class FastTagVehicleScreen extends StatefulWidget {
   final String? fastTagBankName;
   final String? fastTagBankOpcode;
 
-  const FastTagVehicleScreen({super.key, this.fastTagBankName, this.fastTagBankOpcode});
+  const FastTagVehicleScreen({
+    super.key,
+    this.fastTagBankName,
+    this.fastTagBankOpcode,
+  });
 
   @override
   State<FastTagVehicleScreen> createState() => _FastTagVehicleScreenState();
 }
-
 
 class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
   TextEditingController vehicleController = TextEditingController();
@@ -29,7 +33,8 @@ class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: white,
+    return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -75,17 +80,24 @@ class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
             fontSize: 18.0,
             onPressed: () async {
               if (vehicleController.text.trim().isEmpty) {
-                // Should show error toast ideally
+                Fluttertoast.showToast(
+                  msg: 'Please fill the filed',
+                  gravity: ToastGravity.TOP,
+                  backgroundColor: Colors.red,
+                  textColor: white,
+                );
                 return;
               }
               if (widget.fastTagBankOpcode != null) {
                 var response = await rechargeController.fetchFastagBill(
-                  context: context, 
-                  consumerId: vehicleController.text.trim(), 
-                  opcode: widget.fastTagBankOpcode!
+                  context: context,
+                  consumerId: vehicleController.text.trim(),
+                  opcode: widget.fastTagBankOpcode!,
                 );
-                
-                if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+
+                if (response != null &&
+                    (response['status'] == true ||
+                        response['status'] == 'Success')) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -152,7 +164,7 @@ class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
                   hintText: "RJ14AB1234",
                   hintStyle: const TextStyle(
                     fontSize: 16.0,
-                    color: blackColor,
+                    color: greyColor,
                     fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
                   contentPadding: const EdgeInsets.only(
@@ -163,6 +175,7 @@ class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
                   ),
                 ),
               ),
+
               // SizedBox(height: 10),
               // Center(
               //   child: text(
@@ -175,7 +188,6 @@ class _FastTagVehicleScreenState extends State<FastTagVehicleScreen> {
               //     fontWeight: FontWeight.w600,
               //   ),
               // ),
-
               SizedBox(height: 10),
               Card(
                 color: white,

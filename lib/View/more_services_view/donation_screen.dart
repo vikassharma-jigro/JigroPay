@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jigrotech/app_utils/app_images.dart';
 
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
@@ -351,183 +352,75 @@ class _DonationScreenState extends State<DonationScreen> {
     String? address,
     String? donor,
   ) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            text(
-              "View Sample Bill",
-              textColor: blackColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              fontFamily: FontFamily.plusJakartaSansBold,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.close),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                //height: 170,
-                width: 300,
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: blackColor,
-                            ),
-                            child: text(
-                              "aid",
-                              textColor: white,
-                              fontFamily: FontFamily.plusJakartaSansBold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          SizedBox(width: 15),
-                          text(
-                            "AID India",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansBold,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Divider(thickness: .5, color: greyColor),
-                      SizedBox(height: 10),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          text(
-                            "Name : ",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                          SizedBox(width: 15),
-                          text(
-                            name ?? "",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          text(
-                            "Phone : ",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                          SizedBox(width: 15),
-                          text(
-                            name ?? "",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          text(
-                            "Address : ",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: text(
-                              address ?? "",
-                              maxLine: 2,
-
-                              textColor: blackColor,
-                              fontFamily: FontFamily.plusJakartaSansMedium,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          text(
-                            "Donor Type : ",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                          SizedBox(width: 15),
-                          text(
-                            donor ?? "",
-                            textColor: blackColor,
-                            fontFamily: FontFamily.plusJakartaSansMedium,
-                            fontSize: 14,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+    showCustomAppDialog(
+      context,
+      type: CustomDialogType.info,
+      title: "View Sample Bill",
+      primaryButtonText: "Got it",
+      customContent: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: blackColor,
+                ),
+                child: text(
+                  "aid",
+                  textColor: white,
+                  fontFamily: FontFamily.plusJakartaSansBold,
+                  fontSize: 14,
                 ),
               ),
-            ),
-            const SizedBox(height: 50),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: 55,
-              child: CommonButton(
-                text: "Got it",
-                textColor: white,
-                gradient: const LinearGradient(
-                  colors: [primaryColor, secondaryColor],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                fontWeight: FontWeight.w600,
+              const SizedBox(width: 15),
+              text(
+                "AID India",
+                textColor: blackColor,
                 fontFamily: FontFamily.plusJakartaSansBold,
-                fontSize: 16.0,
-
-                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                fontSize: 14,
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Divider(thickness: .5, color: greyColor),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              text("Name : ", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+              const SizedBox(width: 15),
+              text(name ?? "", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+            ],
+          ),
+          Row(
+            children: [
+              text("Phone : ", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+              const SizedBox(width: 15),
+              text(phoneNumber ?? name ?? "", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              text("Address : ", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+              const SizedBox(width: 10),
+              Expanded(
+                child: text(address ?? "", maxLine: 2, textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              text("Donor Type : ", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+              const SizedBox(width: 15),
+              text(donor ?? "", textColor: blackColor, fontFamily: FontFamily.plusJakartaSansMedium, fontSize: 14),
+            ],
+          ),
+        ],
       ),
     );
   }

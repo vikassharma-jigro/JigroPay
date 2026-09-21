@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/category_utils.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../getx_controller/auth_controller.dart';
+import 'payment_details_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -30,7 +33,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.getTransactionHistoryApi(context: context, type: "", search: "");
+      authController.getTransactionHistoryApi(
+        context: context,
+        type: "",
+        search: "",
+      );
     });
   }
 
@@ -72,16 +79,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
       res = whole.substring(len - 3);
       whole = whole.substring(0, len - 3);
       while (whole.length > 2) {
-        res = whole.substring(whole.length - 2) + "," + res;
+        res = "${whole.substring(whole.length - 2)},$res";
         whole = whole.substring(0, whole.length - 2);
       }
       if (whole.isNotEmpty) {
-        res = whole + "," + res;
+        res = "$whole,$res";
       }
     } else {
       res = whole;
     }
-    return "₹" + res + "." + parts[1];
+    return "₹$res.${parts[1]}";
   }
 
   List<dynamic> _getFilteredTransactions(List<dynamic> list) {
@@ -90,7 +97,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     return list.where((item) {
       if (item is! Map) return true;
-      String allValues = item.values.map((e) => e?.toString() ?? '').join(' ').toLowerCase();
+      String allValues = item.values
+          .map((e) => e?.toString() ?? '')
+          .join(' ')
+          .toLowerCase();
       return allValues.contains(query);
     }).toList();
   }
@@ -117,7 +127,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           // Search Bar with Grey Border
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Container(
               decoration: BoxDecoration(
                 color: white,
@@ -140,7 +153,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   //suffixIcon: const Icon(Icons.tune, color: greyColor),
                   hintText: "Search by name and payment",
                   hintStyle: TextStyle(
-                    color: greyColor.withOpacity(0.8),
+                    color: greyColor.withValues(alpha: 0.8),
                     fontSize: 14,
                     fontFamily: FontFamily.plusJakartaSansRegular,
                   ),
@@ -149,10 +162,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
           ),
-          
+
           // Filter Chips
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: SizedBox(
               height: 40,
               child: ListView.builder(
@@ -178,17 +194,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
-                        color: isSelected ? primaryColor : const Color(0xfff5f5f5),
+                        color: isSelected
+                            ? primaryColor
+                            : const Color(0xfff5f5f5),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Center(
                         child: text(
                           label,
-                          textColor: isSelected ? white : blackColor.withOpacity(0.7),
+                          textColor: isSelected
+                              ? white
+                              : blackColor.withValues(alpha: 0.7),
                           fontSize: 13,
-                          fontFamily: isSelected ? FontFamily.plusJakartaSansBold : FontFamily.plusJakartaSansMedium,
+                          fontFamily: isSelected
+                              ? FontFamily.plusJakartaSansBold
+                              : FontFamily.plusJakartaSansMedium,
                         ),
                       ),
                     ),
@@ -228,10 +253,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
               return RefreshIndicator(
                 onRefresh: () async {
-                  await authController.getTransactionHistoryApi(context: context);
+                  await authController.getTransactionHistoryApi(
+                    context: context,
+                  );
                 },
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 10,
+                  ),
                   itemCount: filteredList.length,
                   itemBuilder: (context, index) {
                     var item = filteredList[index];
@@ -249,7 +279,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   String _formatDateTime(dynamic item) {
     if (item is! Map) return "";
 
-    dynamic rawDate = item['created_at'] ??
+    dynamic rawDate =
+        item['created_at'] ??
         item['date'] ??
         item['created_date'] ??
         item['datetime'] ??
@@ -304,33 +335,70 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget _buildTransactionItem(dynamic item) {
     if (item is! Map) return const SizedBox();
 
-    String consumerNo = item['consumer_number']?.toString() ??
+    String consumerNo =
+        item['consumer_number']?.toString() ??
         item['number']?.toString() ??
         item['mobile']?.toString() ??
         "";
 
-    String typeStr = (item['type'] ?? item['opcode'] ?? item['category'] ?? item['biller_id'] ?? '').toString();
+    String categoryName = CategoryUtils.extractCategoryName(item);
+    String categoryType = CategoryUtils.extractAndFormatCategoryType(item);
 
-    String title = item['category_name']?.toString() ??
-        item['biller_name']?.toString() ??
-        item['service_name']?.toString() ??
-        item['name']?.toString() ??
-        item['title']?.toString() ??
-        "";
+    dynamic cat = item['category'];
+    String rawTypeStr = '';
+    if (cat is Map && cat['type'] != null && cat['type'].toString().trim().isNotEmpty) {
+      rawTypeStr = cat['type'].toString().trim();
+    } else if (item['type'] != null && item['type'].toString().trim().isNotEmpty) {
+      rawTypeStr = item['type'].toString().trim();
+    } else if (item['category_type'] != null && item['category_type'].toString().trim().isNotEmpty) {
+      rawTypeStr = item['category_type'].toString().trim();
+    } else if (item['opcode'] != null && item['opcode'].toString().trim().isNotEmpty) {
+      rawTypeStr = item['opcode'].toString().trim();
+    } else if (cat is String) {
+      rawTypeStr = cat;
+    }
+
+    String title = categoryName.isNotEmpty
+        ? categoryName
+        : (item['category_name']?.toString() ??
+            item['biller_name']?.toString() ??
+            item['service_name']?.toString() ??
+            item['name']?.toString() ??
+            item['title']?.toString() ??
+            "");
 
     if (title.isEmpty) {
-      if (typeStr.toLowerCase().contains("recharge") || typeStr.toUpperCase() == "RC") {
-        title = consumerNo.isNotEmpty ? "Mobile Recharge ($consumerNo)" : "Mobile Recharge";
-      } else if (typeStr.toLowerCase().contains("cc_bill_pay") || typeStr.toLowerCase().contains("credit")) {
-        title = consumerNo.isNotEmpty ? "Credit Card Bill ($consumerNo)" : "Credit Card Bill";
-      } else if (typeStr.toLowerCase().contains("dth")) {
-        title = consumerNo.isNotEmpty ? "DTH Recharge ($consumerNo)" : "DTH Recharge";
-      } else if (typeStr.toLowerCase().contains("electr")) {
-        title = consumerNo.isNotEmpty ? "Electricity Bill ($consumerNo)" : "Electricity Bill";
-      } else if (typeStr.toLowerCase().contains("gas")) {
+      if (categoryType.isNotEmpty) {
+        title = consumerNo.isNotEmpty
+            ? "$categoryType ($consumerNo)"
+            : categoryType;
+      } else if (rawTypeStr.toLowerCase().contains("recharge") ||
+          rawTypeStr.toLowerCase().contains("mobile") ||
+          rawTypeStr.toLowerCase().contains("operator") ||
+          rawTypeStr.toUpperCase() == "RC") {
+        title = consumerNo.isNotEmpty
+            ? "Mobile Recharge ($consumerNo)"
+            : "Mobile Recharge";
+      } else if (rawTypeStr.toLowerCase().contains("cc_bill_pay") ||
+          rawTypeStr.toLowerCase().contains("credit")) {
+        title = consumerNo.isNotEmpty
+            ? "Credit Card Bill ($consumerNo)"
+            : "Credit Card Bill";
+      } else if (rawTypeStr.toLowerCase().contains("dth")) {
+        title = consumerNo.isNotEmpty
+            ? "DTH Recharge ($consumerNo)"
+            : "DTH Recharge";
+      } else if (rawTypeStr.toLowerCase().contains("electr")) {
+        title = consumerNo.isNotEmpty
+            ? "Electricity Bill ($consumerNo)"
+            : "Electricity Bill";
+      } else if (rawTypeStr.toLowerCase().contains("gas") ||
+          rawTypeStr.toLowerCase().contains("lpg")) {
         title = consumerNo.isNotEmpty ? "Gas Bill ($consumerNo)" : "Gas Bill";
-      } else if (typeStr.toLowerCase().contains("water")) {
-        title = consumerNo.isNotEmpty ? "Water Bill ($consumerNo)" : "Water Bill";
+      } else if (rawTypeStr.toLowerCase().contains("water")) {
+        title = consumerNo.isNotEmpty
+            ? "Water Bill ($consumerNo)"
+            : "Water Bill";
       } else if (consumerNo.isNotEmpty) {
         title = "Payment ($consumerNo)";
       } else {
@@ -342,111 +410,276 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     String subtitle = _formatDateTime(item);
 
-    dynamic rawAmount = item['amount'] ?? item['paid_amount'] ?? item['total_amount'] ?? 0;
-    String status = (item['status'] ?? item['payment_status'] ?? 'Success').toString();
-    String type = typeStr.toLowerCase();
+    dynamic rawAmount =
+        item['amount'] ?? item['paid_amount'] ?? item['total_amount'] ?? 0;
+    String status = (item['status'] ?? item['payment_status'] ?? 'Success')
+        .toString();
+    String type = rawTypeStr.isNotEmpty
+        ? rawTypeStr.toLowerCase()
+        : categoryType.toLowerCase();
 
     IconData iconData = Icons.receipt_long;
     Color iconColor = primaryColor;
 
-    if (type.contains("electr") || type.contains("light") || type.contains("power")) {
+    if (type.contains("electr") ||
+        type.contains("light") ||
+        type.contains("power")) {
       iconData = Icons.bolt;
       iconColor = Colors.orange;
-    } else if (type.contains("mob") || type.contains("recharge") || type.contains("phone")) {
+    } else if (type.contains("mob") ||
+        type.contains("recharge") ||
+        type.contains("phone") ||
+        type.contains("operator")) {
       iconData = Icons.phone_android;
       iconColor = primaryColor;
-    } else if (type.contains("dth") || type.contains("cable") || type.contains("tv")) {
+    } else if (type.contains("dth") ||
+        type.contains("cable") ||
+        type.contains("tv")) {
       iconData = Icons.tv;
       iconColor = primaryColor;
     } else if (type.contains("card") || type.contains("credit")) {
       iconData = Icons.credit_card;
       iconColor = Colors.purple;
-    } else if (type.contains("water") || type.contains("gas")) {
+    } else if (type.contains("water") ||
+        type.contains("gas") ||
+        type.contains("lpg")) {
       iconData = Icons.water_drop;
       iconColor = Colors.blue;
     }
 
-    bool isSuccessStatus = status.toLowerCase() == 'success' || status == '1' || status == 'true' || status.toLowerCase() == 'successful';
+    bool isSuccessStatus =
+        status.toLowerCase() == 'success' ||
+        status == '1' ||
+        status == 'true' ||
+        status.toLowerCase() == 'successful';
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Icon
-              Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: iconColor.withOpacity(0.3), width: 1),
-                ),
-                child: Center(
-                  child: Icon(iconData, color: iconColor, size: 24),
-                ),
-              ),
-              const SizedBox(width: 15),
-              // Text Details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    text(
-                      title,
-                      textColor: blackColor,
-                      fontSize: 15,
-                      fontFamily: FontFamily.plusJakartaSansMedium,
-                      maxLine: 1,
-                    ),
-                    if (subtitle.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      text(
-                        subtitle,
-                        textColor: greyColor,
-                        fontSize: 12,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              // Amount and Status
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  text(
-                    _formatAmount(rawAmount),
-                    textColor: isSuccessStatus ? const Color(0xff059669) : Colors.red,
-                    fontSize: 15,
-                    fontFamily: FontFamily.plusJakartaSansBold,
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+    String formattedStatus = status.isNotEmpty
+        ? '${status[0].toUpperCase()}${status.substring(1).toLowerCase()}'
+        : status;
+
+    return InkWell(
+      onTap: () {
+        Get.to(() => PaymentDetailsScreen(transactionData: item));
+      },
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Dynamic Icon with operator_code / static icon fallback
+                _buildTransactionIcon(item, iconData, iconColor),
+                const SizedBox(width: 15),
+                // Text Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       text(
-                        status,
-                        textColor: isSuccessStatus ? const Color(0xff059669) : Colors.red,
-                        fontSize: 12,
+                        title,
+                        textColor: blackColor,
+                        fontSize: 15,
                         fontFamily: FontFamily.plusJakartaSansMedium,
+                        maxLine: 1,
                       ),
-                      const SizedBox(width: 4),
-                      Icon(
-                        isSuccessStatus ? Icons.check_circle : Icons.error,
-                        size: 12,
-                        color: isSuccessStatus ? const Color(0xff059669) : Colors.red,
-                      ),
+                      if (subtitle.isNotEmpty) ...[
+                        const SizedBox(height: 4),
+                        text(
+                          subtitle,
+                          textColor: greyColor,
+                          fontSize: 12,
+                          fontFamily: FontFamily.plusJakartaSansRegular,
+                        ),
+                      ],
                     ],
                   ),
-                ],
-              ),
-            ],
+                ),
+                // Amount and Status
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    text(
+                      _formatAmount(rawAmount),
+                      textColor: isSuccessStatus
+                          ? const Color(0xff059669)
+                          : Colors.red,
+                      fontSize: 15,
+                      fontFamily: FontFamily.plusJakartaSansBold,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        text(
+                          formattedStatus,
+                          textColor: isSuccessStatus
+                              ? const Color(0xff059669)
+                              : Colors.red,
+                          fontSize: 12,
+                          fontFamily: FontFamily.plusJakartaSansMedium,
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          isSuccessStatus ? Icons.check_circle : Icons.error,
+                          size: 12,
+                          color: isSuccessStatus
+                              ? const Color(0xff059669)
+                              : Colors.red,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Divider(color: Colors.grey.shade200, thickness: 1, height: 10),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTransactionIcon(
+    dynamic item,
+    IconData fallbackIcon,
+    Color fallbackColor,
+  ) {
+    if (item is! Map) {
+      return _buildDefaultIconWidget(fallbackIcon, fallbackColor);
+    }
+
+    // Extract iconUrl (category model, item level, operator map, etc.)
+    String? iconUrl;
+    if (item['icon_url'] != null &&
+        item['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['icon_url'].toString().trim();
+    } else if (item['category'] is Map &&
+        item['category']['icon_url'] != null &&
+        item['category']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['category']['icon_url'].toString().trim();
+    } else if (item['category_model'] is Map &&
+        item['category_model']['icon_url'] != null &&
+        item['category_model']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['category_model']['icon_url'].toString().trim();
+    } else if (item['operator'] is Map &&
+        item['operator']['icon_url'] != null &&
+        item['operator']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['operator']['icon_url'].toString().trim();
+    } else if (item['category_icon'] != null &&
+        item['category_icon'].toString().trim().isNotEmpty) {
+      iconUrl = item['category_icon'].toString().trim();
+    } else if (item['image'] != null &&
+        item['image'].toString().trim().isNotEmpty) {
+      iconUrl = item['image'].toString().trim();
+    } else if (item['icon'] != null &&
+        item['icon'].toString().trim().isNotEmpty) {
+      iconUrl = item['icon'].toString().trim();
+    } else if (item['logo'] != null &&
+        item['logo'].toString().trim().isNotEmpty) {
+      iconUrl = item['logo'].toString().trim();
+    }
+
+    // Extract operatorCode
+    String? operatorCode;
+    if (item['operator_code'] != null &&
+        item['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['operator_code'].toString().trim();
+    } else if (item['opcode'] != null &&
+        item['opcode'].toString().trim().isNotEmpty) {
+      operatorCode = item['opcode'].toString().trim();
+    } else if (item['op_code'] != null &&
+        item['op_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['op_code'].toString().trim();
+    } else if (item['category'] is Map &&
+        item['category']['operator_code'] != null &&
+        item['category']['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['category']['operator_code'].toString().trim();
+    } else if (item['operator'] is Map &&
+        item['operator']['operator_code'] != null &&
+        item['operator']['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['operator']['operator_code'].toString().trim();
+    }
+
+    // Fallback widget if iconUrl is missing or fails to load
+    Widget fallbackWidget;
+    if (operatorCode != null && operatorCode.isNotEmpty) {
+      fallbackWidget = _buildOperatorCodeWidget(operatorCode, fallbackColor);
+    } else {
+      fallbackWidget = _buildDefaultIconWidget(fallbackIcon, fallbackColor);
+    }
+
+    if (iconUrl != null && iconUrl.isNotEmpty) {
+      bool isSvg = iconUrl.toLowerCase().endsWith('.svg');
+      return Container(
+        width: 45,
+        height: 45,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: white,
+          border: Border.all(
+            color: fallbackColor.withValues(alpha: 0.3),
+            width: 1,
           ),
         ),
-        Divider(color: Colors.grey.shade200, thickness: 1, height: 10),
-      ],
+        child: ClipOval(
+          child: isSvg
+              ? SvgPicture.network(
+                  iconUrl,
+                  width: 45,
+                  height: 45,
+                  fit: BoxFit.cover,
+                  placeholderBuilder: (context) => fallbackWidget,
+                )
+              : Image.network(
+                  iconUrl,
+                  width: 45,
+                  height: 45,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => fallbackWidget,
+                ),
+        ),
+      );
+    }
+
+    return fallbackWidget;
+  }
+
+  Widget _buildOperatorCodeWidget(String operatorCode, Color color) {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withValues(alpha: 0.1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: text(
+            operatorCode,
+            textColor: color,
+            fontSize: operatorCode.length > 5 ? 10 : 12,
+            fontFamily: FontFamily.plusJakartaSansBold,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+            maxLine: 1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDefaultIconWidget(IconData iconData, Color iconColor) {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: iconColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Center(child: Icon(iconData, color: iconColor, size: 24)),
     );
   }
 }

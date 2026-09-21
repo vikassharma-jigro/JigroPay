@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jigrotech/api_services/api_config.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import 'package:get/get.dart';
@@ -36,11 +38,12 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.mobileRechargeNumber != null && widget.mobileRechargeNumber!.isNotEmpty) {
+    if (widget.mobileRechargeNumber != null &&
+        widget.mobileRechargeNumber!.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         rechargeController.fetchOperatorAndPlans(
-          context: context, 
-          mobileNumber: widget.mobileRechargeNumber!
+          context: context,
+          mobileNumber: widget.mobileRechargeNumber!,
         );
       });
     }
@@ -50,29 +53,39 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
     if (plan == null) return "N/A";
 
     String rawData = plan['data']?.toString().trim() ?? '';
-    if (rawData.isNotEmpty && 
-        rawData.toUpperCase() != "N/A" && 
-        rawData.toUpperCase() != "NA" && 
-        rawData != "0" && 
+    if (rawData.isNotEmpty &&
+        rawData.toUpperCase() != "N/A" &&
+        rawData.toUpperCase() != "NA" &&
+        rawData != "0" &&
         rawData.toLowerCase() != "null") {
       return rawData;
     }
 
-    String desc = (plan['desc']?.toString() ?? plan['description']?.toString() ?? '').trim();
+    String desc =
+        (plan['desc']?.toString() ?? plan['description']?.toString() ?? '')
+            .trim();
     if (desc.isEmpty) return "N/A";
 
-    RegExp perDayRegex = RegExp(r'(\d+(?:\.\d+)?\s*(?:GB|MB))\s*/\s*(?:day|d)', caseSensitive: false);
+    RegExp perDayRegex = RegExp(
+      r'(\d+(?:\.\d+)?\s*(?:GB|MB))\s*/\s*(?:day|d)',
+      caseSensitive: false,
+    );
     var match = perDayRegex.firstMatch(desc);
     if (match != null) {
       return "${match.group(1)}/Day";
     }
 
-    RegExp totalDataRegex = RegExp(r'(\d+(?:\.\d+)?\s*(?:GB|MB))', caseSensitive: false);
+    RegExp totalDataRegex = RegExp(
+      r'(\d+(?:\.\d+)?\s*(?:GB|MB))',
+      caseSensitive: false,
+    );
     var match2 = totalDataRegex.firstMatch(desc);
     if (match2 != null) {
       String matchedStr = match2.group(0)!;
       int endIdx = desc.indexOf(matchedStr) + matchedStr.length;
-      String snippet = desc.substring(endIdx, (endIdx + 10).clamp(0, desc.length)).toLowerCase();
+      String snippet = desc
+          .substring(endIdx, (endIdx + 10).clamp(0, desc.length))
+          .toLowerCase();
       if (snippet.contains("day") || snippet.contains("/d")) {
         return "$matchedStr/Day";
       }
@@ -90,24 +103,30 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
     if (plan == null) return "N/A";
 
     String rawVal = plan['validity']?.toString().trim() ?? '';
-    if (rawVal.isNotEmpty && 
-        rawVal.toUpperCase() != "N/A" && 
-        rawVal.toUpperCase() != "NA" && 
-        rawVal != "0" && 
+    if (rawVal.isNotEmpty &&
+        rawVal.toUpperCase() != "N/A" &&
+        rawVal.toUpperCase() != "NA" &&
+        rawVal != "0" &&
         rawVal.toLowerCase() != "null") {
       return rawVal;
     }
 
-    String desc = (plan['desc']?.toString() ?? plan['description']?.toString() ?? '').trim();
+    String desc =
+        (plan['desc']?.toString() ?? plan['description']?.toString() ?? '')
+            .trim();
     if (desc.isEmpty) return "N/A";
 
-    RegExp valRegex = RegExp(r'(?:validity[:\s]*)?(\d+)\s*(days|day|month|months|year)', caseSensitive: false);
+    RegExp valRegex = RegExp(
+      r'(?:validity[:\s]*)?(\d+)\s*(days|day|month|months|year)',
+      caseSensitive: false,
+    );
     var match = valRegex.firstMatch(desc);
     if (match != null) {
       return "${match.group(1)} ${match.group(2)}";
     }
 
-    if (desc.toLowerCase().contains("existing plan") || desc.toLowerCase().contains("same as active")) {
+    if (desc.toLowerCase().contains("existing plan") ||
+        desc.toLowerCase().contains("same as active")) {
       return "Existing Plan";
     }
 
@@ -115,11 +134,18 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
   }
 
   void _showPlanDetailsBottomSheet(BuildContext context, dynamic plan) {
-    String amount = plan['rs']?.toString() ?? plan['amount']?.toString() ?? plan['price']?.toString() ?? "0";
+    String amount =
+        plan['rs']?.toString() ??
+        plan['amount']?.toString() ??
+        plan['price']?.toString() ??
+        "0";
     String validity = _extractValidity(plan);
-    String data = _extractData(plan); 
-    String desc = plan['desc']?.toString() ?? plan['description']?.toString() ?? "No additional details available.";
-    
+    String data = _extractData(plan);
+    String desc =
+        plan['desc']?.toString() ??
+        plan['description']?.toString() ??
+        "No additional details available.";
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -155,11 +181,11 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                       InkWell(
                         onTap: () => Navigator.pop(context),
                         child: Icon(Icons.close, color: Colors.black54),
-                      )
+                      ),
                     ],
                   ),
                 ),
-                
+
                 // Validity & Data
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -169,7 +195,11 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            text("Validity", textColor: Colors.grey, fontSize: 12),
+                            text(
+                              "Validity",
+                              textColor: Colors.grey,
+                              fontSize: 12,
+                            ),
                             SizedBox(height: 5),
                             text(
                               validity,
@@ -200,7 +230,7 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 ),
                 SizedBox(height: 20),
                 Divider(color: Colors.grey.shade200, thickness: 1),
-                
+
                 // Additional Benefits
                 Expanded(
                   child: SingleChildScrollView(
@@ -223,24 +253,41 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                           fontFamily: FontFamily.plusJakartaSansRegular,
                         ),
                         SizedBox(height: 20),
-                        
+
                         // Fake benefits just to match UI look if desc isn't structured well
                         if (desc.toLowerCase().contains("5g"))
                           ListTile(
                             contentPadding: EdgeInsets.zero,
                             leading: Container(
                               padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                              child: text("5G", textColor: Colors.white, fontSize: 12, fontFamily: FontFamily.plusJakartaSansBold),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                shape: BoxShape.circle,
+                              ),
+                              child: text(
+                                "5G",
+                                textColor: Colors.white,
+                                fontSize: 12,
+                                fontFamily: FontFamily.plusJakartaSansBold,
+                              ),
                             ),
-                            title: text("Unlimited 5G Data", textColor: Colors.black, fontSize: 14, fontFamily: FontFamily.plusJakartaSansMedium),
-                            subtitle: text("Unlimited 5G Data is over and above your plan limit.", textColor: Colors.grey[600], fontSize: 12),
+                            title: text(
+                              "Unlimited 5G Data",
+                              textColor: Colors.black,
+                              fontSize: 14,
+                              fontFamily: FontFamily.plusJakartaSansMedium,
+                            ),
+                            subtitle: text(
+                              "Unlimited 5G Data is over and above your plan limit.",
+                              textColor: Colors.grey[600],
+                              fontSize: 12,
+                            ),
                           ),
                       ],
                     ),
                   ),
                 ),
-                
+
                 // Proceed Button
                 Container(
                   padding: EdgeInsets.all(20),
@@ -250,9 +297,9 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.05),
                         blurRadius: 10,
-                        offset: Offset(0, -5)
-                      )
-                    ]
+                        offset: Offset(0, -5),
+                      ),
+                    ],
                   ),
                   child: Container(
                     width: double.infinity,
@@ -268,17 +315,20 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                     child: ElevatedButton(
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
-                        print("👉 Proceed button clicked!");
 
                         var opData = rechargeController.operatorData.value;
-                        dynamic nested = (opData is Map && opData.containsKey('data')) ? opData['data'] : opData;
+                        dynamic nested =
+                            (opData is Map && opData.containsKey('data'))
+                            ? opData['data']
+                            : opData;
                         if (nested is List && nested.isNotEmpty) {
                           nested = nested.first;
                         }
 
                         String opcode = "";
                         if (nested is Map) {
-                          opcode = nested['mapped_opcode']?.toString() ??
+                          opcode =
+                              nested['mapped_opcode']?.toString() ??
                               nested['company_code']?.toString() ??
                               nested['opcode']?.toString() ??
                               nested['operator_code']?.toString() ??
@@ -286,14 +336,16 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                               "";
                         }
                         if (opcode.isEmpty && opData is Map) {
-                          opcode = opData['mapped_opcode']?.toString() ??
+                          opcode =
+                              opData['mapped_opcode']?.toString() ??
                               opData['company_code']?.toString() ??
                               opData['opcode']?.toString() ??
                               opData['operator_code']?.toString() ??
                               "";
                         }
 
-                        String rawNumber = widget.number ?? widget.mobileRechargeNumber ?? "";
+                        String rawNumber =
+                            widget.number ?? widget.mobileRechargeNumber ?? "";
                         String number = rawNumber.replaceAll(RegExp(r'\D'), '');
                         if (number.length > 10) {
                           number = number.substring(number.length - 10);
@@ -302,29 +354,29 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                           number = rawNumber;
                         }
 
-                        print("👉 Calling createRechargeOrder with opcode='$opcode', number='$number', amount='$amount'");
+                        var orderResponse = await rechargeController
+                            .createRechargeOrder(
+                              context: context,
+                              opcode: opcode,
+                              number: number,
+                              amount: amount,
+                            );
 
-                        var orderResponse = await rechargeController.createRechargeOrder(
-                          context: context,
-                          opcode: opcode,
-                          number: number,
-                          amount: amount,
-                        );
-
-                        print("👉 Order creation API completed. Response: $orderResponse");
-
-                        bool isSuccess = orderResponse != null &&
+                        bool isSuccess =
+                            orderResponse != null &&
                             (orderResponse['status'] == true ||
-                             orderResponse['status'] == 'Success' ||
-                             orderResponse['status'] == 'success' ||
-                             orderResponse['success'] == true ||
-                             orderResponse['status'] == 1 ||
-                             orderResponse['status'] == '1' ||
-                             orderResponse['statusCode'] == 200 ||
-                             orderResponse['statusCode'] == '200' ||
-                             orderResponse['order_id'] != null ||
-                             orderResponse['data'] != null) &&
-                            (orderResponse['status'] != 'Failure' && orderResponse['status'] != false && orderResponse['status'] != 'false');
+                                orderResponse['status'] == 'Success' ||
+                                orderResponse['status'] == 'success' ||
+                                orderResponse['success'] == true ||
+                                orderResponse['status'] == 1 ||
+                                orderResponse['status'] == '1' ||
+                                orderResponse['statusCode'] == 200 ||
+                                orderResponse['statusCode'] == '200' ||
+                                orderResponse['order_id'] != null ||
+                                orderResponse['data'] != null) &&
+                            (orderResponse['status'] != 'Failure' &&
+                                orderResponse['status'] != false &&
+                                orderResponse['status'] != 'false');
 
                         if (isSuccess && orderResponse != null) {
                           if (Navigator.canPop(context)) {
@@ -337,30 +389,30 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                             razorpayAmount = 1000 * 100;
                           }
 
-                          String orderId = orderResponse['order_id']?.toString() ??
+                          String orderId =
+                              orderResponse['order_id']?.toString() ??
                               orderResponse['data']?['order_id']?.toString() ??
                               orderResponse['data']?['id']?.toString() ??
                               '';
 
                           Razorpay razorpay = Razorpay();
                           var options = {
-                            //'key': "rzp_live_TLKy91eX8x6Xum",
-                            'key': "rzp_test_TK6QbAu1THjboL",
+                            'key': razorpayKeyConstant,
                             'amount': razorpayAmount,
                             'name': 'Jigro Pay',
                             'description': 'Recharge Payment',
                             if (orderId.isNotEmpty) 'order_id': orderId,
-                            'retry': {
-                              'enabled': true,
-                            },
+                            'retry': {'enabled': true},
                             'send_sms_hash': true,
                             'prefill': {
-                              'contact': number.isNotEmpty ? number : '9694870658',
-                              'email': 'test@razorpay.com'
+                              'contact': number.isNotEmpty
+                                  ? number
+                                  : '9694870658',
+                              'email': 'test@razorpay.com',
                             },
                             'external': {
-                              'wallets': ['paytm']
-                            }
+                              'wallets': ['paytm'],
+                            },
                           };
                           razorpay.on(
                             Razorpay.EVENT_PAYMENT_ERROR,
@@ -371,7 +423,9 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                             handlePaymentSuccessResponse,
                           );
                           // Save amount so success screen can display it
-                          setState(() { _lastSelectedAmount = amount; });
+                          setState(() {
+                            _lastSelectedAmount = amount;
+                          });
                           razorpay.open(options);
                         } else {
                           String errorMsg = cleanApiMessage(orderResponse);
@@ -383,7 +437,6 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                               textColor: Colors.white,
                             );
                           }
-                          print("❌ [RECHARGE ORDER CREATION FAILED: $errorMsg]");
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -401,12 +454,12 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
         );
-      }
+      },
     );
   }
 
@@ -414,12 +467,16 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
     setState(() {
       selectedTabIndex = index;
     });
-    
+
     String selectedTab = currentTabs[index];
     if (selectedTab == "Special Offers") {
       var operatorData = rechargeController.operatorData;
-      String opcode = operatorData['mapped_opcode']?.toString() ?? operatorData['company_code']?.toString() ?? operatorData['opcode']?.toString() ?? "A";
-      
+      String opcode =
+          operatorData['mapped_opcode']?.toString() ??
+          operatorData['company_code']?.toString() ??
+          operatorData['opcode']?.toString() ??
+          "A";
+
       if (widget.mobileRechargeNumber != null) {
         rechargeController.fetchRoffer(
           context: context,
@@ -450,7 +507,7 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey.shade300)
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: Icon(Icons.arrow_back, color: Colors.black87, size: 20),
               ),
@@ -472,16 +529,21 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
           children: [
             // Operator Info
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 10.0,
+              ),
               child: Obx(() {
                 var opData = rechargeController.operatorData;
                 String company = opData['company']?.toString() ?? "Operator";
                 String circle = opData['circle']?.toString() ?? "Circle";
-                
-                String displayName = (widget.contactName != null && widget.contactName!.trim().isNotEmpty)
+
+                String displayName =
+                    (widget.contactName != null &&
+                        widget.contactName!.trim().isNotEmpty)
                     ? widget.contactName!.trim()
                     : "My Number";
-                
+
                 return Row(
                   children: [
                     Container(
@@ -489,9 +551,12 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
-                        border: Border.all(color: Colors.grey.shade300)
+                        border: Border.all(color: Colors.grey.shade300),
                       ),
-                      child: Icon(Icons.person, color: Color(0xFF0D47A1)), // Blue icon for Jio roughly
+                      child: Icon(
+                        Icons.person,
+                        color: Color(0xFF0D47A1),
+                      ), // Blue icon for Jio roughly
                     ),
                     SizedBox(width: 15),
                     Expanded(
@@ -536,7 +601,7 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 );
               }),
             ),
-            
+
             // Search Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -544,7 +609,7 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey.shade200)
+                  border: Border.all(color: Colors.grey.shade200),
                 ),
                 child: TextFormField(
                   controller: searchController,
@@ -557,7 +622,10 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                     border: InputBorder.none,
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
                     //suffixIcon: Icon(Icons.tune, color: Colors.grey),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 15,
+                    ),
                     hintText: "Search recharge plans",
                     hintStyle: TextStyle(
                       color: Colors.grey,
@@ -568,7 +636,7 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 ),
               ),
             ),
-            
+
             SizedBox(height: 15),
 
             // Tab Bar and Plans List
@@ -579,33 +647,49 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                   child: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+
               var categorizedPlans = rechargeController.categorizedPlans;
-              List<String> currentTabs = categorizedPlans.keys.map((k) => k.toString()).toList();
-              
+              List<String> currentTabs = categorizedPlans.keys
+                  .map((k) => k.toString())
+                  .toList();
+
               // Dynamically add Roffer tab if Airtel/Vodafone
               var opData = rechargeController.operatorData;
               String company = opData['company']?.toString() ?? "";
-              String opcode = opData['mapped_opcode']?.toString() ?? opData['company_code']?.toString() ?? opData['opcode']?.toString() ?? "";
+              String opcode =
+                  opData['mapped_opcode']?.toString() ??
+                  opData['company_code']?.toString() ??
+                  opData['opcode']?.toString() ??
+                  "";
               String compLower = company.toLowerCase();
-              bool isRofferAvailable = opcode == "A" || opcode == "V" || opcode == "VI" || compLower.contains("airtel") || compLower.contains("vodafone") || compLower.contains("vi");
-              
-              if (isRofferAvailable && !currentTabs.contains("Special Offers")) {
+              bool isRofferAvailable =
+                  opcode == "A" ||
+                  opcode == "V" ||
+                  opcode == "VI" ||
+                  compLower.contains("airtel") ||
+                  compLower.contains("vodafone") ||
+                  compLower.contains("vi");
+
+              if (isRofferAvailable &&
+                  !currentTabs.contains("Special Offers")) {
                 currentTabs.add("Special Offers");
               }
-              
+
               if (currentTabs.isEmpty) {
                 return Center(
                   child: Padding(
                     padding: const EdgeInsets.all(40.0),
                     child: Text(
-                      "No plans found.", 
-                      style: TextStyle(color: Colors.grey, fontFamily: FontFamily.plusJakartaSansRegular)
+                      "No plans found.",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontFamily: FontFamily.plusJakartaSansRegular,
+                      ),
                     ),
                   ),
                 );
               }
-              
+
               if (selectedTabIndex >= currentTabs.length) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   setState(() {
@@ -614,11 +698,11 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 });
                 return SizedBox.shrink();
               }
-              
+
               String selectedTab = currentTabs[selectedTabIndex];
               bool isRofferSelected = selectedTab == "Special Offers";
-              var rawList = isRofferSelected 
-                  ? rechargeController.rofferList 
+              var rawList = isRofferSelected
+                  ? rechargeController.rofferList
                   : (categorizedPlans[selectedTab] ?? []);
 
               // Filter based on search query
@@ -627,10 +711,19 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                 activeList = rawList;
               } else {
                 activeList = rawList.where((plan) {
-                  String amount = plan['rs']?.toString() ?? plan['amount']?.toString() ?? plan['price']?.toString() ?? "0";
-                  String desc = plan['desc']?.toString() ?? plan['description']?.toString() ?? "";
-                  return amount.toLowerCase().contains(searchQuery.toLowerCase()) || 
-                         desc.toLowerCase().contains(searchQuery.toLowerCase());
+                  String amount =
+                      plan['rs']?.toString() ??
+                      plan['amount']?.toString() ??
+                      plan['price']?.toString() ??
+                      "0";
+                  String desc =
+                      plan['desc']?.toString() ??
+                      plan['description']?.toString() ??
+                      "";
+                  return amount.toLowerCase().contains(
+                        searchQuery.toLowerCase(),
+                      ) ||
+                      desc.toLowerCase().contains(searchQuery.toLowerCase());
                 }).toList();
               }
 
@@ -647,7 +740,10 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                           onTap: () => _onTabSelected(index, currentTabs),
                           child: Container(
                             margin: EdgeInsets.only(right: 10),
-                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 5,
+                            ),
                             decoration: BoxDecoration(
                               gradient: isSelected
                                   ? const LinearGradient(
@@ -659,14 +755,20 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                               color: isSelected ? null : Colors.white,
                               borderRadius: BorderRadius.circular(30),
                               border: Border.all(
-                                color: isSelected ? Colors.transparent : Colors.grey.shade300,
+                                color: isSelected
+                                    ? Colors.transparent
+                                    : Colors.grey.shade300,
                               ),
                             ),
                             child: text(
                               currentTabs[index],
-                              textColor: isSelected ? Colors.white : Colors.black87,
+                              textColor: isSelected
+                                  ? Colors.white
+                                  : Colors.black87,
                               fontSize: 14,
-                              fontFamily: isSelected ? FontFamily.plusJakartaSansMedium : FontFamily.plusJakartaSansRegular,
+                              fontFamily: isSelected
+                                  ? FontFamily.plusJakartaSansMedium
+                                  : FontFamily.plusJakartaSansRegular,
                             ),
                           ),
                         );
@@ -674,37 +776,52 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  
+
                   if (activeList.isEmpty)
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.all(40.0),
                         child: Text(
-                          "No plans found for this category.", 
-                          style: TextStyle(color: Colors.grey, fontFamily: FontFamily.plusJakartaSansRegular)
+                          "No plans found for this category.",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: FontFamily.plusJakartaSansRegular,
+                          ),
                         ),
                       ),
                     )
                   else
                     ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: activeList.length,
                       itemBuilder: (context, index) {
                         var plan = activeList[index];
-                        String amount = plan['rs']?.toString() ?? plan['amount']?.toString() ?? plan['price']?.toString() ?? "0";
+                        String amount =
+                            plan['rs']?.toString() ??
+                            plan['amount']?.toString() ??
+                            plan['price']?.toString() ??
+                            "0";
                         String validity = _extractValidity(plan);
-                        String data = _extractData(plan); 
-                        String desc = plan['desc']?.toString() ?? plan['description']?.toString() ?? "";
-                        
+                        String data = _extractData(plan);
+                        String desc =
+                            plan['desc']?.toString() ??
+                            plan['description']?.toString() ??
+                            "";
+
                         bool has5G = desc.toLowerCase().contains("5g");
-                        bool isUnlimited = desc.toLowerCase().contains("unlimited") || data.toLowerCase().contains("unlimited");
-                        
+                        bool isUnlimited =
+                            desc.toLowerCase().contains("unlimited") ||
+                            data.toLowerCase().contains("unlimited");
+
                         String topTag = "";
                         Color tagBgColor = Colors.transparent;
                         Color tagTextColor = Colors.transparent;
-                        
+
                         if (isRofferSelected) {
                           topTag = "SPECIAL OFFER";
                           tagBgColor = Color(0xFFFFF3E0);
@@ -718,9 +835,9 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                           tagBgColor = Color(0xFFFFEBEE);
                           tagTextColor = Color(0xFFE53935);
                         }
-                        
+
                         return InkWell(
-                          onTap: (){
+                          onTap: () {
                             _showPlanDetailsBottomSheet(context, plan);
                           },
                           child: Container(
@@ -757,16 +874,19 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           text(
                                             "₹$amount",
                                             textColor: blackColor,
                                             fontSize: 32,
-                                            fontFamily: FontFamily.plusJakartaSansBold,
+                                            fontFamily:
+                                                FontFamily.plusJakartaSansBold,
                                           ),
                                           SizedBox(width: 20),
                                           Container(
@@ -777,15 +897,22 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                                           SizedBox(width: 15),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
-                                                text("Validity", textColor: Colors.grey, fontSize: 14),
+                                                text(
+                                                  "Validity",
+                                                  textColor: Colors.grey,
+                                                  fontSize: 14,
+                                                ),
                                                 text(
                                                   validity,
                                                   textColor: Colors.black,
                                                   fontSize: 16,
-                                                  fontFamily: FontFamily.plusJakartaSansBold,
+                                                  fontFamily: FontFamily
+                                                      .plusJakartaSansBold,
                                                 ),
                                               ],
                                             ),
@@ -798,14 +925,20 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                                           SizedBox(width: 15),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
                                               children: [
-                                                text("Data", textColor: Colors.grey, fontSize: 14),
+                                                text(
+                                                  "Data",
+                                                  textColor: Colors.grey,
+                                                  fontSize: 14,
+                                                ),
                                                 text(
                                                   data,
                                                   textColor: Colors.black,
                                                   fontSize: 16,
-                                                  fontFamily: FontFamily.plusJakartaSansBold,
+                                                  fontFamily: FontFamily
+                                                      .plusJakartaSansBold,
                                                 ),
                                               ],
                                             ),
@@ -813,40 +946,65 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
                                         ],
                                       ),
                                       SizedBox(height: 8),
-                                      Divider(color: Colors.grey.shade200, thickness: 1),
+                                      Divider(
+                                        color: Colors.grey.shade200,
+                                        thickness: 1,
+                                      ),
                                       SizedBox(height: 10),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
                                               if (has5G)
                                                 Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 6,
+                                                    vertical: 2,
+                                                  ),
                                                   decoration: BoxDecoration(
                                                     color: Colors.red,
-                                                    borderRadius: BorderRadius.circular(4)
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          4,
+                                                        ),
                                                   ),
-                                                  child: text("5G", textColor: Colors.white, fontSize: 10, fontFamily: FontFamily.plusJakartaSansBold),
+                                                  child: text(
+                                                    "5G",
+                                                    textColor: Colors.white,
+                                                    fontSize: 10,
+                                                    fontFamily: FontFamily
+                                                        .plusJakartaSansBold,
+                                                  ),
                                                 ),
                                               if (has5G) SizedBox(width: 8),
                                               text(
-                                                isUnlimited ? "" : "Data benefits included",
+                                                isUnlimited
+                                                    ? ""
+                                                    : "Data benefits included",
                                                 textColor: Colors.grey[700],
                                                 fontSize: 14,
-                                                fontFamily: FontFamily.plusJakartaSansMedium,
+                                                fontFamily: FontFamily
+                                                    .plusJakartaSansMedium,
                                               ),
                                             ],
                                           ),
                                           InkWell(
-                                            onTap: () => _showPlanDetailsBottomSheet(context, plan),
+                                            onTap: () =>
+                                                _showPlanDetailsBottomSheet(
+                                                  context,
+                                                  plan,
+                                                ),
                                             child: text(
                                               "Details",
-                                              textColor: secondaryColor, // Deep purple details link
+                                              textColor:
+                                                  secondaryColor, // Deep purple details link
                                               fontSize: 14,
-                                              fontFamily: FontFamily.plusJakartaSansBold,
+                                              fontFamily: FontFamily
+                                                  .plusJakartaSansBold,
                                             ),
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -876,20 +1034,18 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
     * 3. Metadata
     * */
 
-    showAlertDialog(context, "Payment Failed",
-        "Description: Something went wrong");
+    showAlertDialog(
+      context,
+      "Payment Failed",
+      "Description: Something went wrong",
+    );
     // showAlertDialog(context, "Payment Failed",
     //     "Code: ${response.code}\nDescription: ${response.message}\nMetadata:${response.error.toString()}");
   }
 
   void handlePaymentSuccessResponse(PaymentSuccessResponse response) async {
-    print("💳 Razorpay Payment Successful!");
-    print("Payment ID: ${response.paymentId}");
-    print("Order ID: ${response.orderId}");
-    print("Signature: ${response.signature}");
-
     String paymentId = response.paymentId ?? "";
-    String orderId   = response.orderId ?? "";
+    String orderId = response.orderId ?? "";
     String signature = response.signature ?? "";
 
     // 1. Verify payment with backend
@@ -901,9 +1057,9 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
     );
 
     // 2. Get operator/number info for the success screen
-    var opData       = rechargeController.operatorData;
-    String operator  = opData['company']?.toString() ?? "Mobile Recharge";
-    String number    = widget.mobileRechargeNumber ?? widget.number ?? "";
+    var opData = rechargeController.operatorData;
+    String operator = opData['company']?.toString() ?? "Mobile Recharge";
+    String number = widget.mobileRechargeNumber ?? widget.number ?? "";
 
     // 3. Navigate to PaymentSuccessScreen
     if (!context.mounted) return;
@@ -911,13 +1067,13 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
       context,
       MaterialPageRoute(
         builder: (_) => PaymentSuccessScreen(
-          serviceName:    "Mobile Recharge",
-          providerName:   operator,
+          serviceName: "Mobile Recharge",
+          providerName: operator,
           consumerNumber: number,
-          amount:         _lastSelectedAmount,
-          transactionId:  paymentId,
-          orderId:        orderId,
-          paidVia:        'Razorpay',
+          amount: _lastSelectedAmount,
+          transactionId: paymentId,
+          orderId: orderId,
+          paidVia: 'Razorpay',
         ),
       ),
     );
@@ -925,31 +1081,27 @@ class _RechargePlanScreenState extends State<RechargePlanScreen> {
 
   void handleExternalWalletSelected(ExternalWalletResponse response) {
     showAlertDialog(
-        context, "External Wallet Selected", "${response.walletName}");
+      context,
+      "External Wallet Selected",
+      "${response.walletName}",
+    );
   }
 
   void showAlertDialog(BuildContext context, String title, String message) {
-    // set up the buttons
-    Widget continueButton = ElevatedButton(
-      child: const Text("Continue"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(message),
-      actions: [
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    if (title.toLowerCase().contains("failed")) {
+      showCustomPaymentFailedDialog(
+        context,
+        title: title,
+        message: message,
+      );
+    } else {
+      showCustomAppDialog(
+        context,
+        type: CustomDialogType.info,
+        title: title,
+        message: message,
+        primaryButtonText: "Continue",
+      );
+    }
   }
 }

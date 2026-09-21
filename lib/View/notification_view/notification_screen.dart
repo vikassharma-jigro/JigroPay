@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_utils/app_colors.dart';
+import '../../app_utils/custom_dialog_widget.dart';
 import '../../app_utils/text_widget.dart';
 import '../../getx_controller/notification_controller.dart';
 import '../../model/notification_model.dart';
@@ -74,7 +75,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
         backgroundColor: white,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: blackColor, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: blackColor,
+            size: 20,
+          ),
           onPressed: () => Get.back(),
         ),
         title: Row(
@@ -89,7 +94,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
             const SizedBox(width: 8),
             Obx(() {
-              if (controller.unreadCount.value == 0) return const SizedBox.shrink();
+              if (controller.unreadCount.value == 0)
+                return const SizedBox.shrink();
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
@@ -110,6 +116,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
         actions: [
           PopupMenuButton<String>(
+            color: white,
             icon: const Icon(Icons.more_vert_rounded, color: blackColor),
             onSelected: (value) {
               if (value == 'mark_all_read') {
@@ -129,16 +136,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ],
                 ),
               ),
-              const PopupMenuItem(
-                value: 'clear_all',
-                child: Row(
-                  children: [
-                    Icon(Icons.delete_sweep_rounded, color: red1Color, size: 20),
-                    SizedBox(width: 10),
-                    Text("Clear all"),
-                  ],
-                ),
-              ),
+              // const PopupMenuItem(
+              //   value: 'clear_all',
+              //   child: Row(
+              //     children: [
+              //       Icon(Icons.delete_sweep_rounded, color: red1Color, size: 20),
+              //       SizedBox(width: 10),
+              //       Text("Clear all"),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ],
@@ -153,10 +160,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
               children: [
                 _buildFilterChip("All", 'all'),
                 const SizedBox(width: 10),
-                Obx(() => _buildFilterChip(
-                  "Unread (${controller.unreadCount.value})",
-                  'unread',
-                )),
+                Obx(
+                  () => _buildFilterChip(
+                    "Unread (${controller.unreadCount.value})",
+                    'unread',
+                  ),
+                ),
               ],
             ),
           ),
@@ -166,7 +175,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           Expanded(
             child: RefreshIndicator(
               color: primaryColor,
-              onRefresh: () => controller.fetchNotifications(context, showLoader: false),
+              onRefresh: () =>
+                  controller.fetchNotifications(context, showLoader: false),
               child: Obx(() {
                 if (controller.isLoading.value) {
                   return const Center(
@@ -174,9 +184,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   );
                 }
 
-                List<NotificationModel> displayList = controller.notificationList;
+                List<NotificationModel> displayList =
+                    controller.notificationList;
                 if (_selectedFilter == 'unread') {
-                  displayList = displayList.where((item) => !item.isRead).toList();
+                  displayList = displayList
+                      .where((item) => !item.isRead)
+                      .toList();
                 }
 
                 if (displayList.isEmpty) {
@@ -191,7 +204,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           Container(
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.08),
+                              color: primaryColor.withValues(alpha: .08),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
@@ -217,15 +230,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             child: Text(
                               "We'll notify you when something important arrives.",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: greyColor,
-                              ),
+                              style: TextStyle(fontSize: 14, color: greyColor),
                             ),
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton.icon(
-                            onPressed: () => controller.fetchNotifications(context),
+                            onPressed: () =>
+                                controller.fetchNotifications(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               foregroundColor: white,
@@ -244,7 +255,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                 return ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 12,
+                  ),
                   itemCount: displayList.length,
                   itemBuilder: (context, index) {
                     final item = displayList[index];
@@ -270,7 +284,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? primaryColor : lightGreyColor.withOpacity(0.4),
+          color: isSelected
+              ? primaryColor
+              : lightGreyColor.withValues(alpha: .4),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
@@ -295,11 +311,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: item.isRead ? Colors.transparent : primaryColor.withOpacity(0.3),
+          color: item.isRead
+              ? Colors.transparent
+              : primaryColor.withValues(alpha: .3),
           width: item.isRead ? 0 : 1,
         ),
       ),
-      color: item.isRead ? white : lightPink1Color.withOpacity(0.5),
+      color: item.isRead ? white : lightPink1Color.withValues(alpha: .5),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
@@ -317,7 +335,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: typeColor.withOpacity(0.12),
+                  color: typeColor.withValues(alpha: .12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(typeIcon, color: typeColor, size: 22),
@@ -339,7 +357,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 15,
-                              fontWeight: item.isRead ? FontWeight.w600 : FontWeight.bold,
+                              fontWeight: item.isRead
+                                  ? FontWeight.w600
+                                  : FontWeight.bold,
                               color: blackColor,
                             ),
                           ),
@@ -370,10 +390,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       const SizedBox(height: 6),
                       Text(
                         item.createdAt,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: greyColor,
-                        ),
+                        style: const TextStyle(fontSize: 11, color: greyColor),
                       ),
                     ],
                   ],
@@ -417,7 +434,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: typeColor.withOpacity(0.12),
+                    color: typeColor.withValues(alpha: .12),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(typeIcon, color: typeColor, size: 24),
@@ -483,37 +500,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   void _showClearConfirmationDialog() {
-    Get.dialog(
-      AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title:  Row(
-          children: [
-            Icon(Icons.warning_amber_rounded, color: red1Color),
-            SizedBox(width: 10),
-            text("Clear Notifications",textColor: blackColor,fontSize: 16),
-          ],
-        ),
-        content:  text(
-          "Are you sure you want to clear all notifications?",textColor: blackColor,fontSize: 16
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child:  text("Cancel", textColor: greyColor,fontSize: 16),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Get.back();
-              controller.clearAllNotifications(context);
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: red1Color,
-              foregroundColor: white,
-            ),
-            child:  text("Clear All", textColor: white,fontSize: 16),
-          ),
-        ],
-      ),
+    showCustomConfirmDialog(
+      context,
+      title: "Clear Notifications",
+      message: "Are you sure you want to clear all notifications?",
+      primaryButtonText: "Clear All",
+      secondaryButtonText: "Cancel",
+      onConfirm: () {
+        controller.clearAllNotifications(context);
+      },
     );
   }
 }

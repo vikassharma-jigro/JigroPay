@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
 import '../../../main.dart';
@@ -252,104 +253,44 @@ class _NpsDetailsScreenState extends State<NpsDetailsScreen> {
   }
 
   void showDialogBox(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            text(
-              "View Sample Bill",
-              textColor: blackColor,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
+    showCustomAppDialog(
+      context,
+      type: CustomDialogType.info,
+      title: "View Sample Bill",
+      primaryButtonText: "Close",
+      customContent: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: red1Color,
+            ),
+            child: text(
+              "NPS National Pension System",
+              textColor: white,
               fontFamily: FontFamily.plusJakartaSansBold,
+              fontSize: 14,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.close),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Container(
-                //height: 170,
-                width: 300,
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: red1Color,
-                        ),
-                        child: text(
-                          "nps national pension system",
-                          textColor: white,
-                          fontFamily: FontFamily.plusJakartaSansBold,
-                          fontSize: 14,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-
-                      text(
-                        "National Pension System",
-                        textColor: blackColor,
-                        fontFamily: FontFamily.plusJakartaSansRegular,
-                        fontSize: 14,
-                      ),
-                      SizedBox(height: 10),
-                      Divider(thickness: .5, color: greyColor),
-                      text(
-                        "PRAN (12 Digit)/Mobile Number (10 Digit) :9911223344",
-                        textColor: blackColor,
-                        fontFamily: FontFamily.plusJakartaSansMedium,
-                        fontSize: 13,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 50),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              height: 55,
-              child: CommonButton(
-                text: "Close",
-                textColor: white,
-                gradient: const LinearGradient(
-                  colors: [primaryColor, secondaryColor],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                fontWeight: FontWeight.w600,
-                fontFamily: FontFamily.plusJakartaSansBold,
-                fontSize: 16.0,
-
-                //padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                //borderRadius: BorderRadius.circular(40.0),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          text(
+            "National Pension System",
+            textColor: blackColor,
+            fontFamily: FontFamily.plusJakartaSansRegular,
+            fontSize: 14,
+          ),
+          const SizedBox(height: 10),
+          const Divider(thickness: .5, color: greyColor),
+          text(
+            "PRAN (12 Digit)/Mobile Number (10 Digit) : 9911223344",
+            textColor: blackColor,
+            fontFamily: FontFamily.plusJakartaSansMedium,
+            fontSize: 13,
+          ),
+        ],
       ),
     );
   }

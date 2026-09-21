@@ -1,22 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:jigrotech/View/dashdoard_view/payment_details_screen.dart';
 import '../../../app_utils/cms_helper.dart';
 import '../../../app_utils/app_colors.dart';
+import '../../../app_utils/category_utils.dart';
+import '../../../app_utils/custom_dialog_widget.dart';
 import '../../../app_utils/custom_textFiled.dart';
 import '../../../app_utils/font_family.dart';
 import '../../../app_utils/text_widget.dart';
-import '../../../app_utils/app_images.dart';
 import '../../../getx_controller/auth_controller.dart';
-import '../../../main.dart';
-import '../auth_view/login_screen.dart';
-import '../auth_view/verified_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -31,7 +30,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String _formatDateTime(dynamic item) {
     if (item is! Map) return "";
 
-    dynamic rawDate = item['created_at'] ??
+    dynamic rawDate =
+        item['created_at'] ??
         item['date'] ??
         item['created_date'] ??
         item['datetime'] ??
@@ -93,6 +93,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _showEditProfileModal(BuildContext context) {
     var user = authController.profileData;
+
+    final String imageUrl =
+        user['profile_image_url']?.toString() ??
+        user['avatar']?.toString() ??
+        "";
+
     TextEditingController nameController = TextEditingController(
       text: user['name']?.toString() ?? user['username']?.toString() ?? "",
     );
@@ -154,12 +160,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               border: Border.all(color: primaryColor, width: 2),
                             ),
                             child: ClipOval(
-                              child: selectedImagePath != null
-                                  ? Image.file(
+                              child: Builder(
+                                builder: (context) {
+                                  if (selectedImagePath != null &&
+                                      selectedImagePath!.isNotEmpty) {
+                                    return Image.file(
                                       File(selectedImagePath!),
                                       fit: BoxFit.cover,
-                                    )
-                                  : const Icon(Icons.person, size: 50, color: greyColor),
+                                      errorBuilder: (context, error, stackTrace) =>
+                                          const Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: greyColor,
+                                      ),
+                                    );
+                                  }
+                                  final localPath =
+                                      authController.localProfileImagePath.value;
+                                  if (localPath != null &&
+                                      localPath.isNotEmpty &&
+                                      File(localPath).existsSync()) {
+                                    return Image.file(
+                                      File(localPath),
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) =>
+                                          const Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: greyColor,
+                                      ),
+                                    );
+                                  }
+                                  if (imageUrl.isNotEmpty &&
+                                      imageUrl.startsWith('http')) {
+                                    return Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) =>
+                                          const Icon(
+                                        Icons.person,
+                                        size: 50,
+                                        color: greyColor,
+                                      ),
+                                    );
+                                  }
+                                  return const Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: greyColor,
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           Positioned(
@@ -183,7 +234,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: secondaryColor,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.camera_alt, color: white, size: 16),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: white,
+                                  size: 16,
+                                ),
                               ),
                             ),
                           ),
@@ -205,7 +260,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       maxLines: 2,
                       fillColor: Colors.transparent,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[a-zA-Z\s]'),
+                        ),
                         LengthLimitingTextInputFormatter(40),
                       ],
                     ),
@@ -223,9 +280,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       hintText: "Enter email address",
                       maxLines: 2,
                       fillColor: Colors.transparent,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(50),
-                      ],
+                      inputFormatters: [LengthLimitingTextInputFormatter(50)],
                     ),
                     const SizedBox(height: 25),
                     SizedBox(
@@ -233,7 +288,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 50,
                       child: Obx(() {
                         return authController.isLoading.value
-                            ? const Center(child: CircularProgressIndicator(color: primaryColor))
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: primaryColor,
+                                ),
+                              )
                             : CommonButton(
                                 text: "Update Profile",
                                 textColor: white,
@@ -248,7 +307,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   String email = emailController.text.trim();
 
                                   RegExp nameReg = RegExp(r'^[a-zA-Z\s]+$');
-                                  RegExp emailReg = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                                  RegExp emailReg = RegExp(
+                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                                  );
 
                                   if (name.isEmpty) {
                                     Fluttertoast.showToast(
@@ -258,13 +319,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     );
                                   } else if (!nameReg.hasMatch(name)) {
                                     Fluttertoast.showToast(
-                                      msg: "Please enter a valid name (alphabets only)",
+                                      msg:
+                                          "Please enter a valid name (alphabets only)",
                                       backgroundColor: Colors.red,
                                       textColor: Colors.white,
                                     );
                                   } else if (name.length < 2) {
                                     Fluttertoast.showToast(
-                                      msg: "Name must be at least 2 characters long",
+                                      msg:
+                                          "Name must be at least 2 characters long",
                                       backgroundColor: Colors.red,
                                       textColor: Colors.white,
                                     );
@@ -280,36 +343,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       backgroundColor: Colors.red,
                                       textColor: Colors.white,
                                     );
+                                    // } else {
+                                    //   String currentEmail =
+                                    //       user['email']?.toString() ??
+                                    //       user['user']?['email']?.toString() ??
+                                    //       "";
+                                    //   if (currentEmail.isNotEmpty &&
+                                    //       email.toLowerCase() !=
+                                    //           currentEmail.toLowerCase()) {
+                                    //     Navigator.pop(ctx);
+                                    //     Fluttertoast.showToast(
+                                    //       msg:
+                                    //           "Please verify your new email address to complete the update.",
+                                    //       backgroundColor: primaryColor,
+                                    //       textColor: Colors.white,
+                                    //     );
+                                    //     Navigator.push(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) => VerifiedScreen(
+                                    //           email: email,
+                                    //           mobile:
+                                    //               user['phone']?.toString() ??
+                                    //               user['mobile']?.toString(),
+                                    //         ),
+                                    //       ),
+                                    //     );
+                                    //   }
                                   } else {
-                                    String currentEmail = user['email']?.toString() ?? user['user']?['email']?.toString() ?? "";
-                                    if (currentEmail.isNotEmpty && email.toLowerCase() != currentEmail.toLowerCase()) {
-                                      Navigator.pop(ctx);
-                                      Fluttertoast.showToast(
-                                        msg: "Please verify your new email address to complete the update.",
-                                        backgroundColor: primaryColor,
-                                        textColor: Colors.white,
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => VerifiedScreen(
-                                            email: email,
-                                            mobile: user['phone']?.toString() ?? user['mobile']?.toString(),
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      authController.updateProfileApi(
-                                        context: ctx,
-                                        name: name,
-                                        email: email,
-                                        profileImage: selectedImagePath,
-                                        onSuccess: () {
-                                          Navigator.pop(ctx);
-                                        },
-                                      );
-                                    }
+                                    authController.updateProfileApi(
+                                      context: ctx,
+                                      name: name,
+                                      email: email,
+                                      profileImage: selectedImagePath,
+                                      onSuccess: () {
+                                        Navigator.pop(ctx);
+                                      },
+                                    );
                                   }
+                                  // }
                                 },
                               );
                       }),
@@ -341,15 +413,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _buildSectionHeader("Profile", "Settings"),
                   const SizedBox(height: 15),
                   _buildListItem(
-                    icon: Icons.person,
-                    iconColor: const Color(0xff6e2ae9),
+                    icon: IconsaxPlusLinear.user,
+                    iconColor: blackColor,
                     title: "Update Profile",
                     subtitle: "Manage your personal profile details",
                     onTap: () => _showEditProfileModal(context),
                   ),
                   _buildListItem(
-                    icon: Icons.history,
-                    iconColor: const Color(0xfff59e0b),
+                    icon: IconsaxPlusLinear.clock_1,
+                    iconColor: blackColor,
                     title: "Transaction History",
                     subtitle: "View your past transactions & bill payments",
                     onTap: () => _showTransactionHistoryModal(context),
@@ -387,21 +459,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   _buildSectionHeader("Security", "& Privacy"),
                   const SizedBox(height: 15),
                   _buildListItem(
-                    icon: Icons.description,
-                    iconColor: const Color(0xff64748b), // Slate Grey
+                    icon: IconsaxPlusLinear.document,
+                    iconColor: blackColor,
                     title: "Terms & Conditions",
                     subtitle: "Read terms and conditions",
-                    onTap: () => _openCmsPage(context, "Terms & Conditions", "terms_conditions"),
+                    onTap: () => _openCmsPage(
+                      context,
+                      "Terms & Conditions",
+                      "terms_conditions",
+                    ),
                   ),
                   _buildListItem(
-                    icon: Icons.privacy_tip,
-                    iconColor: const Color(0xff8b5cf6), // Purple
+                    icon: IconsaxPlusLinear.shield_security,
+                    iconColor: blackColor,
                     title: "Privacy & Policy",
                     subtitle: "Read our privacy policy",
-                    onTap: () => _openCmsPage(context, "Privacy Policy", "privacy_policy"),
+                    onTap: () => _openCmsPage(
+                      context,
+                      "Privacy Policy",
+                      "privacy_policy",
+                    ),
                   ),
                   _buildListItem(
-                    icon: Icons.logout,
+                    icon: IconsaxPlusLinear.logout_1,
                     iconColor: Colors.red,
                     title: "Logout",
                     subtitle: "Log out of your account",
@@ -418,6 +498,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _showTransactionHistoryModal(BuildContext context) {
+    IconData iconData = Icons.receipt_long;
+    Color iconColor = primaryColor;
     authController.getTransactionHistoryApi(context: context);
 
     showModalBottomSheet(
@@ -469,7 +551,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Icons.history, size: 60, color: greyColor),
+                              const Icon(
+                                Icons.history,
+                                size: 60,
+                                color: greyColor,
+                              ),
                               const SizedBox(height: 10),
                               text(
                                 "No transaction history found",
@@ -485,33 +571,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return ListView.separated(
                         controller: scrollController,
                         itemCount: historyList.length,
-                        separatorBuilder: (context, index) => const Divider(height: 1),
+                        separatorBuilder: (context, index) =>
+                            const Divider(height: 1),
                         itemBuilder: (context, index) {
                           var item = historyList[index];
-                          String title = item['title']?.toString() ??
-                              item['description']?.toString() ??
-                              item['type']?.toString() ??
-                              item['service_name']?.toString() ??
-                              "Transaction";
+                          String categoryName =
+                              CategoryUtils.extractCategoryName(item);
+                          String categoryType =
+                              CategoryUtils.extractAndFormatCategoryType(item);
+                          String consumerNo =
+                              item['consumer_number']?.toString() ??
+                              item['number']?.toString() ??
+                              item['mobile']?.toString() ??
+                              "";
+
+                          String title = categoryName.isNotEmpty
+                              ? categoryName
+                              : (item['category_name']?.toString() ??
+                                    item['biller_name']?.toString() ??
+                                    item['service_name']?.toString() ??
+                                    item['name']?.toString() ??
+                                    item['title']?.toString() ??
+                                    (categoryType.isNotEmpty
+                                        ? categoryType
+                                        : ""));
+                          if (title.isEmpty) {
+                            title = consumerNo.isNotEmpty
+                                ? "Payment ($consumerNo)"
+                                : "Payment Transaction";
+                          } else if (consumerNo.isNotEmpty &&
+                              !title.contains(consumerNo)) {
+                            title = "$title ($consumerNo)";
+                          }
                           String amount = item['amount']?.toString() ?? "0";
-                          String status = item['status']?.toString() ?? "Success";
+                          String status =
+                              item['status']?.toString() ?? "Success";
                           String date = _formatDateTime(item);
 
-                          bool isSuccess = status.toLowerCase() == "success" || status == "1" || status == "true";
+                          bool isSuccess =
+                              status.toLowerCase() == 'success' ||
+                              status == '1' ||
+                              status == 'true' ||
+                              status.toLowerCase() == 'successful';
+
+                          String formattedStatus = status.isNotEmpty
+                              ? '${status[0].toUpperCase()}${status.substring(1).toLowerCase()}'
+                              : status;
 
                           return ListTile(
-                            contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                            leading: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: (isSuccess ? Colors.green : Colors.red).withOpacity(0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                isSuccess ? Icons.arrow_downward : Icons.close,
-                                color: isSuccess ? Colors.green : Colors.red,
-                                size: 20,
-                              ),
+                            onTap: () {
+                              Get.to(
+                                PaymentDetailsScreen(transactionData: item),
+                              );
+                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 4,
+                            ),
+                            leading: _buildTransactionIcon(
+                              item,
+                              iconData,
+                              iconColor,
                             ),
                             title: text(
                               title,
@@ -524,7 +644,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     date,
                                     textColor: greyColor,
                                     fontSize: 12,
-                                    fontFamily: FontFamily.plusJakartaSansRegular,
+                                    fontFamily:
+                                        FontFamily.plusJakartaSansRegular,
                                   )
                                 : null,
                             trailing: Column(
@@ -538,8 +659,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontFamily: FontFamily.plusJakartaSansBold,
                                 ),
                                 text(
-                                  status,
-                                  textColor: isSuccess ? Colors.green : Colors.red,
+                                  formattedStatus,
+                                  textColor: isSuccess
+                                      ? Colors.green
+                                      : Colors.red,
                                   fontSize: 12,
                                   fontFamily: FontFamily.plusJakartaSansMedium,
                                 ),
@@ -559,31 +682,159 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildTransactionIcon(
+    dynamic item,
+    IconData fallbackIcon,
+    Color fallbackColor,
+  ) {
+    if (item is! Map) {
+      return _buildDefaultIconWidget(fallbackIcon, fallbackColor);
+    }
+
+    // Extract iconUrl (category model, item level, operator map, etc.)
+    String? iconUrl;
+    if (item['icon_url'] != null &&
+        item['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['icon_url'].toString().trim();
+    } else if (item['category'] is Map &&
+        item['category']['icon_url'] != null &&
+        item['category']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['category']['icon_url'].toString().trim();
+    } else if (item['category_model'] is Map &&
+        item['category_model']['icon_url'] != null &&
+        item['category_model']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['category_model']['icon_url'].toString().trim();
+    } else if (item['operator'] is Map &&
+        item['operator']['icon_url'] != null &&
+        item['operator']['icon_url'].toString().trim().isNotEmpty) {
+      iconUrl = item['operator']['icon_url'].toString().trim();
+    } else if (item['category_icon'] != null &&
+        item['category_icon'].toString().trim().isNotEmpty) {
+      iconUrl = item['category_icon'].toString().trim();
+    } else if (item['image'] != null &&
+        item['image'].toString().trim().isNotEmpty) {
+      iconUrl = item['image'].toString().trim();
+    } else if (item['icon'] != null &&
+        item['icon'].toString().trim().isNotEmpty) {
+      iconUrl = item['icon'].toString().trim();
+    } else if (item['logo'] != null &&
+        item['logo'].toString().trim().isNotEmpty) {
+      iconUrl = item['logo'].toString().trim();
+    }
+
+    // Extract operatorCode
+    String? operatorCode;
+    if (item['operator_code'] != null &&
+        item['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['operator_code'].toString().trim();
+    } else if (item['opcode'] != null &&
+        item['opcode'].toString().trim().isNotEmpty) {
+      operatorCode = item['opcode'].toString().trim();
+    } else if (item['op_code'] != null &&
+        item['op_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['op_code'].toString().trim();
+    } else if (item['category'] is Map &&
+        item['category']['operator_code'] != null &&
+        item['category']['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['category']['operator_code'].toString().trim();
+    } else if (item['operator'] is Map &&
+        item['operator']['operator_code'] != null &&
+        item['operator']['operator_code'].toString().trim().isNotEmpty) {
+      operatorCode = item['operator']['operator_code'].toString().trim();
+    }
+
+    // Fallback widget if iconUrl is missing or fails to load
+    Widget fallbackWidget;
+    if (operatorCode != null && operatorCode.isNotEmpty) {
+      fallbackWidget = _buildOperatorCodeWidget(operatorCode, fallbackColor);
+    } else {
+      fallbackWidget = _buildDefaultIconWidget(fallbackIcon, fallbackColor);
+    }
+
+    if (iconUrl != null && iconUrl.isNotEmpty) {
+      bool isSvg = iconUrl.toLowerCase().endsWith('.svg');
+      return Container(
+        width: 45,
+        height: 45,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: white,
+          border: Border.all(
+            color: fallbackColor.withValues(alpha: 0.3),
+            width: 1,
+          ),
+        ),
+        child: ClipOval(
+          child: isSvg
+              ? SvgPicture.network(
+                  iconUrl,
+                  width: 45,
+                  height: 45,
+                  fit: BoxFit.cover,
+                  placeholderBuilder: (context) => fallbackWidget,
+                )
+              : Image.network(
+                  iconUrl,
+                  width: 45,
+                  height: 45,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => fallbackWidget,
+                ),
+        ),
+      );
+    }
+
+    return fallbackWidget;
+  }
+
+  Widget _buildOperatorCodeWidget(String operatorCode, Color color) {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withValues(alpha: 0.1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: text(
+            operatorCode,
+            textColor: color,
+            fontSize: operatorCode.length > 5 ? 10 : 12,
+            fontFamily: FontFamily.plusJakartaSansBold,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
+            maxLine: 1,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDefaultIconWidget(IconData iconData, Color iconColor) {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: iconColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Center(child: Icon(iconData, color: iconColor, size: 24)),
+    );
+  }
+
   void _openCmsPage(BuildContext context, String pageTitle, String key) {
     CmsHelper.openCmsBottomSheet(context, pageTitle, key);
   }
 
   void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        title: const Text("Logout"),
-        content: const Text("Are you sure you want to log out?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text("Cancel", style: TextStyle(color: greyColor)),
-          ),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await authController.logoutApi(context: context);
-            },
-            child: const Text("Logout", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
+    showCustomLogoutDialog(
+      context,
+      onLogout: () async {
+        await authController.logoutApi(context: context);
+      },
     );
   }
 
@@ -606,7 +857,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
           ),
-          
+
           // SafeArea(
           //   child: Padding(
           //     padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -627,15 +878,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             right: 20,
             child: Obx(() {
               var user = authController.profileData;
-              String name = user['name']?.toString() ??
+              String name =
+                  user['name']?.toString() ??
                   user['username']?.toString() ??
                   "User Name";
-              String phone = user['phone']?.toString() ??
+              String phone =
+                  user['phone']?.toString() ??
                   user['mobile']?.toString() ??
                   user['contact']?.toString() ??
                   "";
               String email = user['email']?.toString() ?? "";
-              String? profileImg = user['profile_image_url']?.toString() ?? user['avatar']?.toString();
+              String? profileImg =
+                  user['profile_image_url']?.toString() ??
+                  user['avatar']?.toString();
 
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -650,25 +905,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ClipOval(
                       child: Obx(() {
                         // 1. Show local image immediately after update
-                        final localPath = authController.localProfileImagePath.value;
+                        final localPath =
+                            authController.localProfileImagePath.value;
                         if (localPath != null && localPath.isNotEmpty) {
                           return Image.file(
                             File(localPath),
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
-                                const Icon(Icons.person, size: 50, color: greyColor),
+                                const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: greyColor,
+                                ),
                           );
                         }
                         // 2. Fall back to network URL from API
-                        if (profileImg != null && profileImg.startsWith('http')) {
+                        if (profileImg != null &&
+                            profileImg.startsWith('http')) {
                           return Image.network(
                             profileImg,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
-                                const Icon(Icons.person, size: 50, color: greyColor),
+                                const Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: greyColor,
+                                ),
                           );
                         }
-                        return const Icon(Icons.person, size: 50, color: greyColor);
+                        return const Icon(
+                          Icons.person,
+                          size: 50,
+                          color: greyColor,
+                        );
                       }),
                     ),
                   ),

@@ -16,8 +16,6 @@ class PipedGasDetailsScreen extends StatefulWidget {
   State<PipedGasDetailsScreen> createState() => _PipedGasDetailsScreenState();
 }
 
-
-
 class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
   TextEditingController caCardNumberController = TextEditingController();
   final RechargeController rechargeController = Get.put(RechargeController());
@@ -26,7 +24,8 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
   String? _validateCaNo(String val) {
     if (val.trim().isEmpty) return 'CA Number is required';
     if (val.trim().length < 5) return 'Minimum 5 characters required';
-    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim())) return 'Only letters, digits, / or - allowed';
+    if (!RegExp(r'^[a-zA-Z0-9/-]+$').hasMatch(val.trim()))
+      return 'Only letters, digits, / or - allowed';
     return null;
   }
 
@@ -39,30 +38,36 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: white,
+    return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.arrow_back_ios, color: blackColor),
+            Expanded(
+              flex: 1,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios, color: blackColor),
+              ),
             ),
-            text(
-              widget.pipedServiceName ?? "",
-              textAlign: TextAlign.center,
-              isCentered: true,
-              textColor: blackColor,
-              fontSize: 18,
-              fontFamily: FontFamily.plusJakartaSansBold,
-              fontWeight: FontWeight.w600,
-            ),
-            Icon(Icons.help),
 
-            // SizedBox(width: 10,),
+            Expanded(
+              flex: 8,
+              child: text(
+                widget.pipedServiceName ?? "",
+                textAlign: TextAlign.center,
+                isCentered: true,
+                textColor: blackColor,
+                fontSize: 18,
+                fontFamily: FontFamily.plusJakartaSansBold,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Expanded(flex: 1, child: Icon(Icons.help)),
           ],
         ),
       ),
@@ -117,7 +122,7 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
                   ),
                 ),
 
-              const SizedBox(height: 50),
+              const SizedBox(height: 10),
               SizedBox(
                 width: MediaQuery.sizeOf(context).width,
                 height: 55,
@@ -137,17 +142,21 @@ class _PipedGasDetailsScreenState extends State<PipedGasDetailsScreen> {
                   //borderRadius: BorderRadius.circular(40.0),
                   onPressed: () async {
                     final error = _validateCaNo(caCardNumberController.text);
-                    setState(() { _caError = error; });
+                    setState(() {
+                      _caError = error;
+                    });
                     if (error != null) return;
 
                     if (widget.opcode != null) {
                       var response = await rechargeController.fetchUtilityBill(
-                        context: context, 
-                        consumerId: caCardNumberController.text.trim(), 
-                        opcode: widget.opcode!
+                        context: context,
+                        consumerId: caCardNumberController.text.trim(),
+                        opcode: widget.opcode!,
                       );
-                      
-                      if (response != null && (response['status'] == true || response['status'] == 'Success')) {
+
+                      if (response != null &&
+                          (response['status'] == true ||
+                              response['status'] == 'Success')) {
                         // show success dialog or navigation
                       }
                     }

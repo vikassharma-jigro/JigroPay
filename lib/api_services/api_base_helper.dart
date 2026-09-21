@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import '../app_utils/app_colors.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../app_utils/connectivity.dart';
+import '../app_utils/custom_dialog_widget.dart';
 import '../app_utils/shared_preferences.dart';
 import '../app_utils/show_dialog.dart';
 import '../main.dart';
@@ -18,32 +18,106 @@ import 'app_exception.dart';
 String cleanApiMessage(dynamic rawInput) {
   if (rawInput == null) return "";
 
+  const String fallbackServerError = "Server error occurred. Please try again.";
+
   // 1. If rawInput is a Map
   if (rawInput is Map) {
-    var val = rawInput['message'] ??
-        rawInput['msg'] ??
-        rawInput['error'] ??
-        rawInput['errors'] ??
-        rawInput['description'];
+    const messageKeys = [
+      'message',
+      'msg',
+      'error',
+      'errors',
+      'description',
+      'error_description',
+      'detail',
+      'details',
+      'reason',
+      'reasons',
+      'error_message',
+      'errorMessage',
+      'error_msg',
+      'errorMsg',
+      'statusMessage',
+      'status_message',
+      'responseMessage',
+      'response_message',
+      'res_msg',
+      'resMsg',
+      'info',
+      'response',
+    ];
 
-    if (val != null && val != rawInput) {
-      String extracted = cleanApiMessage(val);
-      if (extracted.isNotEmpty) return extracted;
+    for (var key in messageKeys) {
+      if (rawInput.containsKey(key)) {
+        var val = rawInput[key];
+        if (val != null && val != rawInput) {
+          String extracted = cleanApiMessage(val);
+          if (extracted.isNotEmpty && extracted != fallbackServerError) {
+            return extracted;
+          }
+        }
+      }
     }
+
+    const nestedKeys = ['data', 'result', 'payload', 'body', 'error'];
+    for (var key in nestedKeys) {
+      if (rawInput.containsKey(key)) {
+        var val = rawInput[key];
+        if (val is Map || val is List) {
+          String extracted = cleanApiMessage(val);
+          if (extracted.isNotEmpty && extracted != fallbackServerError) {
+            return extracted;
+          }
+        }
+      }
+    }
+
+    for (var value in rawInput.values) {
+      if (value is String && value.isNotEmpty) {
+        String trimmed = value.trim();
+        if (!_isTechnicalOrRawString(trimmed)) {
+          String res = cleanApiMessage(trimmed);
+          if (res.isNotEmpty && res != fallbackServerError) {
+            return res;
+          }
+        }
+      }
+    }
+
+    return fallbackServerError;
   }
 
-  // 2. If rawInput is a List (e.g. ["The consumer id is invalid"])
+  // 2. If rawInput is a List
   if (rawInput is List) {
-    if (rawInput.isNotEmpty) {
-      return cleanApiMessage(rawInput.first);
+    for (var item in rawInput) {
+      String extracted = cleanApiMessage(item);
+      if (extracted.isNotEmpty && extracted != fallbackServerError) {
+        return extracted;
+      }
     }
-    return "";
+    return fallbackServerError;
   }
 
   String text = rawInput.toString().trim();
   if (text.isEmpty) return "";
 
-  // 3. Handle raw JSON string e.g. {"status": false, "message": "Failed"}
+  // 3. Handle HTML responses (e.g. 500 Nginx/Apache error page)
+  if (text.contains('<html') || text.contains('<!DOCTYPE') || text.contains('<head') || text.contains('<body')) {
+    return fallbackServerError;
+  }
+
+  // 4. Handle Dio / Network / System exceptions
+  if (text.contains('DioException') || text.contains('SocketException') || text.contains('HttpException')) {
+    if (text.contains('SocketException') || text.contains('Failed host lookup') || text.contains('Network is unreachable')) {
+      return "No Internet connection. Please check your network.";
+    }
+    if (text.contains('connectTimeout') || text.contains('receiveTimeout') || text.contains('sendTimeout')) {
+      return "Request timed out. Please try again.";
+    }
+    return fallbackServerError;
+  }
+
+  // 5. Handle raw JSON string e.g. {"status": false, "message": "Failed"}
   if ((text.startsWith('{') && text.endsWith('}')) || (text.startsWith('[') && text.endsWith(']'))) {
     try {
       var decoded = jsonDecode(text);
@@ -54,7 +128,7 @@ String cleanApiMessage(dynamic rawInput) {
     } catch (_) {}
   }
 
-  // 4. Handle embedded JSON in exception strings e.g. Exception: {"message":"..."}
+  // 6. Handle embedded JSON in exception strings e.g. Exception: {"message":"..."}
   int firstBrace = text.indexOf('{');
   int lastBrace = text.lastIndexOf('}');
   if (firstBrace != -1 && lastBrace != -1 && lastBrace > firstBrace) {
@@ -68,17 +142,99 @@ String cleanApiMessage(dynamic rawInput) {
     } catch (_) {}
   }
 
+  // 7. Regex extract key-value message from Dart Map toString() e.g. {status: false, message: Payment failed}
+  RegExp messageRegExp = RegExp(r'(?:message|msg|error|description|detail|reason)\s*:\s*([^,\}\]]+)', caseSensitive: false);
+  Match? match = messageRegExp.firstMatch(text);
+  if (match != null && match.groupCount >= 1) {
+    String matchedMsg = match.group(1)?.trim() ?? "";
+    if (matchedMsg.isNotEmpty && !_isTechnicalOrRawString(matchedMsg)) {
+      String cleaned = matchedMsg.replaceAll('"', '').replaceAll("'", '').trim();
+      if (cleaned.isNotEmpty) return cleaned;
+    }
+  }
+
+  // 8. If text is technical / raw object representation
+  if (_isTechnicalOrRawString(text)) {
+    return fallbackServerError;
+  }
+
   // Cleanup outer symbols, quotes, brackets
-  text = text.replaceAll(RegExp(r'^[\{\[\"\s]+|[\}\]\"\s]+$'), '').trim();
+  text = text.replaceAll('{', '').replaceAll('}', '').replaceAll('[', '').replaceAll(']', '').replaceAll('"', '').trim();
 
   if (text.toLowerCase() == "invalid" || text.toLowerCase() == "invalid otp") {
     return "Invalid OTP. Please try again.";
   }
 
+  if (text.toLowerCase() == "internal server error" || text == "500" || text == "400" || text == "502" || text == "504") {
+    return fallbackServerError;
+  }
+
   return text;
 }
 
+bool _isTechnicalOrRawString(String str) {
+  if (str.startsWith('{') || str.startsWith('[') || str.endsWith('}') || str.endsWith(']')) return true;
+  if (str.contains('status:') || str.contains('statusCode:') || str.contains('status_code:')) return true;
+  if (str.contains('<!DOCTYPE') || str.contains('<html')) return true;
+  if (str.contains('DioException') || str.contains('Stack trace:') || str.contains('Exception:')) return true;
+  return false;
+}
+
 class ApiBaseHelper {
+  static final Dio _dio = _createDio();
+
+  static Dio _createDio() {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: BASE_URL,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+
+    if (kDebugMode) {
+      dio.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
+      );
+    }
+
+    return dio;
+  }
+
+  Options _getOptions() {
+    return Options(
+      headers: {
+        "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      validateStatus: (status) => status != null && status < 600,
+    );
+  }
+
+  dynamic _parseResponseData(dynamic data) {
+    if (data is String) {
+      try {
+        return jsonDecode(data);
+      } catch (_) {
+        return data;
+      }
+    }
+    return data;
+  }
+
   Future<dynamic> postApiCall(
     bool isShow,
     String url,
@@ -99,23 +255,11 @@ class ApiBaseHelper {
       );
     }
 
-    dynamic responseJson;
-    var apiHeader = {
-      "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
-      'accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-
     try {
-      String encodedBody = jsonEncode(jsonData ?? {});
-      print("🔹 API URL: ${BASE_URL + url}");
-      print("🔹 Header: $apiHeader");
-      print("🔹 Request Body: $encodedBody");
-
-      final http.Response response = await http.post(
-        Uri.parse(BASE_URL + url),
-        headers: apiHeader,
-        body: encodedBody,
+      final response = await _dio.post(
+        url,
+        data: jsonData ?? {},
+        options: _getOptions(),
       );
 
       if (isShow) {
@@ -124,12 +268,8 @@ class ApiBaseHelper {
         } catch (_) {}
       }
 
-      print("🔹 Status Code: ${response.statusCode}");
-      print("🔹 Response Body: ${response.body}");
+      final parsedResponse = _parseResponseData(response.data);
 
-      final parsedResponse = jsonDecode(response.body);
-
-      // Error handling
       if ([400, 401, 422, 403, 404, 409, 500].contains(response.statusCode)) {
         String msg = cleanApiMessage(parsedResponse);
         if (msg.isNotEmpty) {
@@ -145,12 +285,10 @@ class ApiBaseHelper {
         return parsedResponse;
       }
 
-      // Parse success
-      responseJson = _returnResponse(response);
+      dynamic responseJson = parsedResponse;
 
-      // Handle popup messages if required
       if (isPopup == true) {
-        final status = responseJson['status'];
+        final status = responseJson is Map ? responseJson['status'] : null;
         if ((status is bool && !status) || status == "Failure" || status == "false" || status == 0) {
           String msg = cleanApiMessage(responseJson);
           if (msg.isNotEmpty) {
@@ -181,7 +319,6 @@ class ApiBaseHelper {
           if (Get.isDialogOpen ?? false) Get.back();
         } catch (_) {}
       }
-      print("⚠️ API Exception: $e");
       String cleanErr = cleanApiMessage(e);
       return {"status": false, "message": cleanErr.isNotEmpty ? cleanErr : "Something went wrong"};
     }
@@ -209,26 +346,26 @@ class ApiBaseHelper {
     }
 
     try {
-      var uri = Uri.parse(BASE_URL + url);
-      var request = http.MultipartRequest('POST', uri);
-      request.headers.addAll({
-        "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
-        'accept': 'application/json',
-      });
-
-      request.fields.addAll(fields);
-
-      if (fileKey != null && filePath != null && filePath.isNotEmpty) {
-        var file = await http.MultipartFile.fromPath(fileKey, filePath);
-        request.files.add(file);
+      Map<String, dynamic> formMap = Map<String, dynamic>.from(fields);
+      if (fileKey != null &&
+          filePath != null &&
+          filePath.isNotEmpty &&
+          !filePath.startsWith('http')) {
+        formMap[fileKey] = await MultipartFile.fromFile(filePath);
       }
+      FormData formData = FormData.fromMap(formMap);
 
-      print("🔹 MULTIPART API URL: $uri");
-      print("🔹 Fields: $fields");
-      if (filePath != null) print("🔹 File: $fileKey -> $filePath");
-
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
+      final response = await _dio.post(
+        url,
+        data: formData,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
+            'accept': 'application/json',
+          },
+          validateStatus: (status) => status != null && status < 600,
+        ),
+      );
 
       if (isShow) {
         try {
@@ -236,10 +373,7 @@ class ApiBaseHelper {
         } catch (_) {}
       }
 
-      print("🔹 Status Code: ${response.statusCode}");
-      print("🔹 Response Body: ${response.body}");
-
-      final parsedResponse = jsonDecode(response.body);
+      final parsedResponse = _parseResponseData(response.data);
 
       if ([401, 422, 403, 404, 409, 500].contains(response.statusCode)) {
         String msg = cleanApiMessage(parsedResponse);
@@ -256,7 +390,7 @@ class ApiBaseHelper {
         return parsedResponse;
       }
 
-      return _returnResponse(response);
+      return parsedResponse;
     } on SocketException {
       if (isShow) {
         try {
@@ -271,7 +405,6 @@ class ApiBaseHelper {
           if (Get.isDialogOpen ?? false) Get.back();
         } catch (_) {}
       }
-      print("⚠️ Multipart API Exception: $e");
       String cleanErr = cleanApiMessage(e);
       return {"status": false, "message": cleanErr.isNotEmpty ? cleanErr : "Something went wrong"};
     }
@@ -296,17 +429,10 @@ class ApiBaseHelper {
       );
     }
 
-    dynamic responseJson;
-    var apiHeader = {
-      "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
-      'accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-
     try {
-      final http.Response response = await http.get(
-        Uri.parse(BASE_URL + url),
-        headers: apiHeader,
+      final response = await _dio.get(
+        url,
+        options: _getOptions(),
       );
 
       if (isShow) {
@@ -315,16 +441,8 @@ class ApiBaseHelper {
         } catch (_) {}
       }
 
-      if (kDebugMode) {
-        print("🔹 API URL: ${BASE_URL + url}");
-        print("🔹 Header: $apiHeader");
-        print("🔹 Status Code: ${response.statusCode}");
-        log('🔹 Response Body: ${response.body}');
-      }
+      final parsedResponse = _parseResponseData(response.data);
 
-      final parsedResponse = jsonDecode(response.body);
-
-      // Handle error status codes
       if ([401, 422, 403, 404, 409, 500].contains(response.statusCode)) {
         String msg = cleanApiMessage(parsedResponse);
         if (msg.isNotEmpty) {
@@ -340,12 +458,10 @@ class ApiBaseHelper {
         return parsedResponse;
       }
 
-      // Parse success response
-      responseJson = _returnResponse(response);
+      dynamic responseJson = parsedResponse;
 
-      // Optional popup message on failed status
       if (isPopup == true) {
-        final status = responseJson['status'];
+        final status = responseJson is Map ? responseJson['status'] : null;
         if (status is bool && !status) {
           String msg = cleanApiMessage(responseJson);
           if (msg.isNotEmpty) {
@@ -368,7 +484,6 @@ class ApiBaseHelper {
       throw FetchDataException('No Internet connection');
     } catch (e) {
       if (Get.isDialogOpen ?? false) Get.back();
-      print("⚠️ API Exception: $e");
       return {"status": false, "message": cleanApiMessage(e)};
     }
   }
@@ -393,21 +508,11 @@ class ApiBaseHelper {
       );
     }
 
-    var apiHeader = {
-      "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
-      'accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-
     try {
-      String encodedBody = jsonEncode(jsonData ?? {});
-      print("🔹 PUT API URL: ${BASE_URL + url}");
-      print("🔹 Request Body: $encodedBody");
-
-      final http.Response response = await http.put(
-        Uri.parse(BASE_URL + url),
-        headers: apiHeader,
-        body: encodedBody,
+      final response = await _dio.put(
+        url,
+        data: jsonData ?? {},
+        options: _getOptions(),
       );
 
       if (isShow) {
@@ -416,10 +521,7 @@ class ApiBaseHelper {
         } catch (_) {}
       }
 
-      print("🔹 Status Code: ${response.statusCode}");
-      print("🔹 Response Body: ${response.body}");
-
-      final parsedResponse = jsonDecode(response.body);
+      final parsedResponse = _parseResponseData(response.data);
 
       if ([400, 401, 422, 403, 404, 409, 500].contains(response.statusCode)) {
         String msg = cleanApiMessage(parsedResponse);
@@ -442,7 +544,6 @@ class ApiBaseHelper {
           if (Get.isDialogOpen ?? false) Get.back();
         } catch (_) {}
       }
-      print("⚠️ PUT API Exception: $e");
       return {"status": false, "message": cleanApiMessage(e)};
     }
   }
@@ -466,18 +567,10 @@ class ApiBaseHelper {
       );
     }
 
-    var apiHeader = {
-      "Authorization": "Bearer ${sp?.getString(SpUtil.ACCESS_TOKEN) ?? ""}",
-      'accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
-
     try {
-      print("🔹 DELETE API URL: ${BASE_URL + url}");
-
-      final http.Response response = await http.delete(
-        Uri.parse(BASE_URL + url),
-        headers: apiHeader,
+      final response = await _dio.delete(
+        url,
+        options: _getOptions(),
       );
 
       if (isShow) {
@@ -486,10 +579,7 @@ class ApiBaseHelper {
         } catch (_) {}
       }
 
-      print("🔹 Status Code: ${response.statusCode}");
-      print("🔹 Response Body: ${response.body}");
-
-      final parsedResponse = jsonDecode(response.body);
+      final parsedResponse = _parseResponseData(response.data);
 
       if ([400, 401, 422, 403, 404, 409, 500].contains(response.statusCode)) {
         String msg = cleanApiMessage(parsedResponse);
@@ -512,32 +602,7 @@ class ApiBaseHelper {
           if (Get.isDialogOpen ?? false) Get.back();
         } catch (_) {}
       }
-      print("⚠️ DELETE API Exception: $e");
       return {"status": false, "message": cleanApiMessage(e)};
-    }
-  }
-
-  dynamic _returnResponse(http.Response response) {
-    switch (response.statusCode) {
-      case 200:
-        var responseJson = json.decode(response.body.toString());
-        return responseJson;
-      case 201:
-        var responseJson = json.decode(response.body.toString());
-        return responseJson;
-      case 400:
-        throw BadRequestException(response.body.toString());
-      case 401:
-        throw UnauthorisedException(response.body.toString());
-      case 403:
-        throw UnauthorisedException(response.body.toString());
-      case 404:
-      //throw UnauthorisedException(response.body.toString());
-      case 500:
-      default:
-        throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode : ${response.statusCode}',
-        );
     }
   }
 
@@ -545,20 +610,16 @@ class ApiBaseHelper {
     if (Get.isDialogOpen ?? false) Get.back();
 
     Get.dialog(
-      AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: const Text(
-          'No Internet Connection',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        content: const Text(
-          'Please check your internet connection and try again.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
-        ],
+      CustomAppDialog(
+        type: CustomDialogType.warning,
+        title: 'No Internet Connection',
+        message: 'Please check your internet connection and try again.',
+        primaryButtonText: 'OK',
+        onPrimaryPressed: () => Get.back(),
+        customIcon: Icons.wifi_off_rounded,
       ),
       barrierDismissible: false,
     );
   }
 }
+
