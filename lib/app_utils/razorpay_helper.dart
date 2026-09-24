@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import '../api_services/api_base_helper.dart';
-import '../api_services/api_config.dart';
-import '../getx_controller/recharge_controller.dart';
-import '../View/common/payment_success_screen.dart';
 
+import '../core/errors/result.dart';
+import '../core/utils/api_message_cleaner.dart';
+import '../features/recharge/data/repositories/recharge_repository_impl.dart';
+import '../features/recharge/presentation/screens/payment_success_screen.dart';
+
+//. RazorPay Key Constants
+const String razorpayKeyConstant = String.fromEnvironment(
+  'RAZORPAY_KEY',
+  defaultValue: 'rzp_live_TLKy91eX8x6Xum',
+);
+
+//. Helper
 class RazorpayHelper {
   late Razorpay _razorpay;
   final BuildContext context;
@@ -34,6 +41,7 @@ class RazorpayHelper {
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
+  //. Payment Flow
   void startPaymentWithOrderFlow({
     required BuildContext context,
     required String opcode,
@@ -57,68 +65,41 @@ class RazorpayHelper {
     _billMonth = billMonth;
     _type = type ?? this.type;
 
-    final RechargeController rechargeController = Get.put(RechargeController());
+    final repo = RechargeRepositoryImpl();
 
-    String reqAmount = amount > 0 
-        ? (amount.toInt() == amount ? amount.toInt().toString() : amount.toString())
-        : "10";
-
-    var orderResponse = await rechargeController.createRechargeOrder(
-      context: context,
+    final orderResult = await repo.createOrder(
       opcode: opcode,
       number: number,
-      amount: reqAmount,
-      type: type,
+      amount: amount,
+      type: type ?? this.type,
       fetchId: fetchId,
-      pan: pan,
-      card: card,
     );
 
-    bool isSuccess = orderResponse != null &&
-        (orderResponse['status'] == true ||
-         orderResponse['status'] == 'Success' ||
-         orderResponse['status'] == 'success' ||
-         orderResponse['success'] == true ||
-         orderResponse['status'] == 1 ||
-         orderResponse['status'] == '1' ||
-         orderResponse['statusCode'] == 200 ||
-         orderResponse['statusCode'] == '200' ||
-         orderResponse['order_id'] != null ||
-         (orderResponse['data'] != null && (orderResponse['data']['order_id'] != null || orderResponse['data']['id'] != null))) &&
-        (orderResponse['status'] != 'Failure' && orderResponse['status'] != false && orderResponse['status'] != 'false');
-
-    if (isSuccess && orderResponse != null) {
-      String orderId = orderResponse['order_id']?.toString() ??
-          orderResponse['data']?['order_id']?.toString() ??
-          orderResponse['data']?['id']?.toString() ??
-          '';
-      String? apiKey = orderResponse['key']?.toString() ??
-          orderResponse['razorpay_key']?.toString() ??
-          orderResponse['key_id']?.toString() ??
-          orderResponse['data']?['key']?.toString() ??
-          orderResponse['data']?['razorpay_key']?.toString() ??
-          orderResponse['data']?['key_id']?.toString();
-
-      openPayment(
-        amount: amount,
-        description: description,
-        contact: number,
-        orderId: orderId.isNotEmpty ? orderId : null,
-        apiKey: apiKey,
-      );
-    } else {
-      String apiMessage = cleanApiMessage(orderResponse);
-      if (apiMessage.isNotEmpty) {
-        Fluttertoast.showToast(
-          msg: apiMessage,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
+    switch (orderResult) {
+      case Success(:final data):
+        openPayment(
+          amount: amount,
+          description: description,
+          contact: number,
+          orderId: data.razorpayOrderId.isNotEmpty
+              ? data.razorpayOrderId
+              : data.orderId,
+          apiKey: data.razorpayKey,
         );
-      }
+      case Error(:final failure):
+        String apiMessage = cleanApiMessage(failure.message);
+        if (apiMessage.isNotEmpty) {
+          Fluttertoast.showToast(
+            msg: apiMessage,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
     }
   }
 
+  //. Open Payment Screen
   void openPayment({
     required double amount,
     String name = 'JigroPay',
@@ -129,7 +110,9 @@ class RazorpayHelper {
     String? apiKey,
   }) {
     int amountInPaise = (amount * 100).toInt();
-    String activeKey = (apiKey != null && apiKey.isNotEmpty) ? apiKey : razorpayKeyConstant;
+    String activeKey = (apiKey != null && apiKey.isNotEmpty)
+        ? apiKey
+        : razorpayKeyConstant;
 
     var options = {
       'key': activeKey,
@@ -140,12 +123,16 @@ class RazorpayHelper {
       'retry': {'enabled': true},
       'send_sms_hash': true,
       'prefill': {
-        'contact': (contact != null && contact.isNotEmpty) ? contact : '9694870658',
-        'email': (email != null && email.isNotEmpty) ? email : 'user@jigropay.com',
+        'contact': (contact != null && contact.isNotEmpty)
+            ? contact
+            : '9694870658',
+        'email': (email != null && email.isNotEmpty)
+            ? email
+            : 'user@jigropay.com',
       },
       'external': {
-        'wallets': ['paytm']
-      }
+        'wallets': ['paytm'],
+      },
     };
 
     try {
@@ -159,15 +146,15 @@ class RazorpayHelper {
     }
   }
 
+  //. Handles Success Response
   void _handleSuccess(PaymentSuccessResponse response) async {
-    final RechargeController rechargeController = Get.put(RechargeController());
+    final repo = RechargeRepositoryImpl();
     String paymentId = response.paymentId ?? "";
     String orderId = response.orderId ?? "";
     String signature = response.signature ?? "";
 
     // Always verify payment with backend
-    await rechargeController.verifyRechargePayment(
-      context: context,
+    await repo.verifyPayment(
       razorpayPaymentId: paymentId,
       razorpayOrderId: orderId,
       razorpaySignature: signature,
@@ -185,19 +172,22 @@ class RazorpayHelper {
       context,
       MaterialPageRoute(
         builder: (_) => PaymentSuccessScreen(
-          serviceName: _serviceName,
-          providerName: _providerName,
-          consumerNumber: _consumerNumber,
-          amount: _paidAmount.toString(),
-          transactionId: paymentId,
-          orderId: orderId,
-          billMonth: _billMonth,
-          paidVia: 'Razorpay',
+          args: PaymentSuccessArgs(
+            serviceName: _serviceName,
+            providerName: _providerName,
+            consumerNumber: _consumerNumber,
+            amount: _paidAmount.toString(),
+            transactionId: paymentId,
+            orderId: orderId,
+            billMonth: _billMonth,
+            paidVia: 'Razorpay',
+          ),
         ),
       ),
     );
   }
 
+  //. Handles Error Response
   void _handleError(PaymentFailureResponse response) {
     if (onFailure != null) {
       onFailure!(response);
@@ -212,10 +202,14 @@ class RazorpayHelper {
     }
   }
 
+  //. Handles External Response
   void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(msg: "External Wallet Selected: ${response.walletName}");
+    Fluttertoast.showToast(
+      msg: "External Wallet Selected: ${response.walletName}",
+    );
   }
 
+  //. Clear
   void clear() {
     _razorpay.clear();
   }
