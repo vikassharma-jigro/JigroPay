@@ -16,6 +16,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
   Future<Result<List<TransactionModel>>> fetchTransactionHistory({
     String? type,
     String? status,
+    int? page,
   }) async {
     try {
       final queryParams = <String, dynamic>{};
@@ -24,6 +25,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
       }
       if (status != null && status.isNotEmpty && status != 'All') {
         queryParams['status'] = status.toLowerCase();
+      }
+      if (page != null && page > 0) {
+        queryParams['page'] = page;
       }
 
       final response = await _apiClient.get(

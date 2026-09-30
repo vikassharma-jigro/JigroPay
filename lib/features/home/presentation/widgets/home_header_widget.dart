@@ -97,8 +97,9 @@ class HomeHeaderWidget extends StatelessWidget {
             ),
             BlocBuilder<DashboardCubit, DashboardState>(
               builder: (context, state) {
-                final unreadCount =
-                    state is DashboardLoaded ? state.unreadCount : 0;
+                final unreadCount = state is DashboardLoaded
+                    ? state.unreadCount
+                    : 0;
                 return Stack(
                   alignment: Alignment.center,
                   children: [

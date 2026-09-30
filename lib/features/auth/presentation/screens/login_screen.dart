@@ -4,8 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:smart_auth/smart_auth.dart';
 
 import '../../../../core/constants/app_assets.dart';
@@ -25,7 +25,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with UiFeedbackMixin {
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode _phoneFocusNode = FocusNode();
   bool _isRequestingPhoneNumber = false;
@@ -77,16 +77,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onContinuePressed() {
-    FocusScope.of(context).unfocus();
+    hideKeyboard();
     final phone = _phoneController.text.trim();
     final error = InputValidators.mobile(phone);
 
     if (error != null) {
-      Fluttertoast.showToast(
-        msg: error,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast(error);
       return;
     }
 
@@ -98,23 +94,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthOtpSent) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: AppColors.primary,
-            textColor: Colors.white,
-          );
+          showSuccessToast(state.message);
           context.push(
             '/otp',
             extra: {'phone': state.phone, 'email': state.email},
           );
         } else if (state is AuthError) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(state.message);
           context.read<AuthCubit>().reset();
         }
       },

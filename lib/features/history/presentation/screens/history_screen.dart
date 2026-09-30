@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jigrotech/core/mixins/debounce_mixin.dart';
+import 'package:jigrotech/core/mixins/scroll_pagination_mixin.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -34,9 +37,25 @@ class _HistoryView extends StatefulWidget {
   State<_HistoryView> createState() => _HistoryViewState();
 }
 
-class _HistoryViewState extends State<_HistoryView> {
+class _HistoryViewState extends State<_HistoryView>
+    with ScrollPaginationMixin<_HistoryView>, DebounceMixin, UiFeedbackMixin {
   final TextEditingController _searchController = TextEditingController();
   final List<String> _filters = ['All', 'Success', 'Pending', 'Failed'];
+
+  //. On Search Changed
+  void _onSearchChanged(String query) {
+    debounce(() {
+      context.read<HistoryCubit>().search(query);
+    });
+  }
+
+  @override
+  void onScrollNearBottom() {
+    final state = context.read<HistoryCubit>().state;
+    if (state is HistoryLoaded && !state.isLoadingMore && state.hasMore) {
+      context.read<HistoryCubit>().loadMore();
+    }
+  }
 
   @override
   void dispose() {
@@ -76,7 +95,8 @@ class _HistoryViewState extends State<_HistoryView> {
               ),
               child: TextField(
                 controller: _searchController,
-                onChanged: (q) => context.read<HistoryCubit>().search(q),
+                onChanged: _onSearchChanged,
+                onSubmitted: (_) => hideKeyboard(),
                 decoration: InputDecoration(
                   hintText: 'Search by operator, number, amount...',
                   hintStyle: const TextStyle(
@@ -147,8 +167,10 @@ class _HistoryViewState extends State<_HistoryView> {
                                 : AppColors.border,
                           ),
                         ),
-                        onSelected: (_) =>
-                            context.read<HistoryCubit>().filterByStatus(filter),
+                        onSelected: (_) {
+                          hideKeyboard();
+                          context.read<HistoryCubit>().filterByStatus(filter);
+                        },
                       ),
                     );
                   }).toList(),
@@ -195,13 +217,24 @@ class _HistoryViewState extends State<_HistoryView> {
                     color: AppColors.primary,
                     onRefresh: () => context.read<HistoryCubit>().loadHistory(),
                     child: ListView.separated(
+                      controller: scrollController,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,
                       ),
-                      itemCount: list.length,
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      itemCount: list.length + (state.isLoadingMore ? 1 : 0),
                       separatorBuilder: (_, __) => const SizedBox(height: 10),
                       itemBuilder: (context, index) {
+                        if (index == list.length) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            child: Center(
+                              child: CircularProgressIndicator.adaptive(),
+                            ),
+                          );
+                        }
                         final tx = list[index];
                         return TransactionCardWidget(
                           transaction: tx,

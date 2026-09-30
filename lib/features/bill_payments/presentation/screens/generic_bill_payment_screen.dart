@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jigrotech/core/constants/app_assets.dart';
 import 'package:jigrotech/core/constants/app_endpoints.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -74,7 +74,8 @@ class _GenericBillPaymentView extends StatefulWidget {
       _GenericBillPaymentViewState();
 }
 
-class _GenericBillPaymentViewState extends State<_GenericBillPaymentView> {
+class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
+    with UiFeedbackMixin {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _consumerNumberController =
       TextEditingController();
@@ -109,12 +110,7 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView> {
             ),
           );
         } else if (state is BillPaymentError) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(state.message);
         }
       },
       builder: (context, state) {
@@ -451,11 +447,7 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView> {
               FocusScope.of(context).unfocus();
               final consumerNo = _consumerNumberController.text.trim();
               if (consumerNo.isEmpty) {
-                Fluttertoast.showToast(
-                  msg: 'Please enter ${widget.accountNumberLabel}',
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                );
+                showErrorToast('Please enter ${widget.accountNumberLabel}');
                 return;
               }
 

@@ -3,8 +3,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:jigrotech/core/mixins/safe_set_state_mixin.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -21,20 +22,15 @@ class PaymentDetailsScreen extends StatefulWidget {
   State<PaymentDetailsScreen> createState() => _PaymentDetailsScreenState();
 }
 
-class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
+class _PaymentDetailsScreenState extends State<PaymentDetailsScreen>
+    with SafeSetStateMixin, UiFeedbackMixin {
   final GlobalKey _receiptKey = GlobalKey();
   bool _isSharing = false;
 
   void _copyToClipboard(String value, String label) {
     if (value.trim().isEmpty) return;
     Clipboard.setData(ClipboardData(text: value));
-    Fluttertoast.showToast(
-      msg: "$label copied to clipboard",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: AppColors.black,
-      textColor: AppColors.white,
-    );
+    showSuccessToast("$label copied to clipboard");
   }
 
   String _formatAmount(double amount) {
@@ -165,7 +161,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
     required String amountInWords,
   }) async {
     if (_isSharing) return;
-    setState(() => _isSharing = true);
+    safeSetState(() => _isSharing = true);
 
     try {
       await Future.delayed(const Duration(milliseconds: 100));
@@ -174,7 +170,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               as RenderRepaintBoundary?;
 
       if (boundary == null) {
-        Fluttertoast.showToast(msg: "Failed to render receipt image");
+        showErrorToast("Failed to render receipt image");
         return;
       }
 
@@ -184,7 +180,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       );
 
       if (byteData == null) {
-        Fluttertoast.showToast(msg: "Failed to process receipt image");
+        showErrorToast("Failed to process receipt image");
         return;
       }
 
@@ -201,11 +197,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
         subject: "JigroPay Payment Receipt - $toName",
       );
     } catch (e) {
-      Fluttertoast.showToast(msg: "Error sharing receipt: $e");
+      showErrorToast("Error sharing receipt: $e");
     } finally {
-      if (mounted) {
-        setState(() => _isSharing = false);
-      }
+      safeSetState(() => _isSharing = false);
     }
   }
 

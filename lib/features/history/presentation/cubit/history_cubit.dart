@@ -17,16 +17,75 @@ class HistoryCubit extends Cubit<HistoryState> {
     emit(const HistoryLoading());
 
     final result =
-        await _getTransactionHistoryUseCase(type: type, status: status);
+        await _getTransactionHistoryUseCase(type: type, status: status, page: 1);
 
     switch (result) {
       case Success(:final data):
         emit(HistoryLoaded(
           allTransactions: data,
           displayedTransactions: data,
+          currentPage: 1,
+          hasMore: data.isNotEmpty,
+          isLoadingMore: false,
         ));
       case Error(:final failure):
         emit(HistoryError(failure.message));
+    }
+  }
+
+  /// Loads the next page of transactions when user scrolls near the bottom.
+  Future<void> loadMore() async {
+    if (state is! HistoryLoaded) return;
+    final current = state as HistoryLoaded;
+
+    if (current.isLoadingMore || !current.hasMore) return;
+
+    // Do not load more while filtering via search text
+    if (current.searchQuery.trim().isNotEmpty) return;
+
+    emit(current.copyWith(isLoadingMore: true));
+
+    final nextPage = current.currentPage + 1;
+    final result = await _getTransactionHistoryUseCase(
+      status: current.selectedFilter != 'All' ? current.selectedFilter : null,
+      page: nextPage,
+    );
+
+    switch (result) {
+      case Success(:final data):
+        if (data.isEmpty) {
+          emit(current.copyWith(
+            isLoadingMore: false,
+            hasMore: false,
+          ));
+        } else {
+          final existingIds = current.allTransactions.map((t) => t.id).toSet();
+          final uniqueNew =
+              data.where((t) => !existingIds.contains(t.id)).toList();
+
+          if (uniqueNew.isEmpty) {
+            emit(current.copyWith(
+              isLoadingMore: false,
+              hasMore: false,
+            ));
+          } else {
+            final updatedAll = [...current.allTransactions, ...uniqueNew];
+            final updatedDisplayed = _applyFilters(
+              updatedAll,
+              current.selectedFilter,
+              current.searchQuery,
+            );
+            emit(current.copyWith(
+              allTransactions: updatedAll,
+              displayedTransactions: updatedDisplayed,
+              currentPage: nextPage,
+              hasMore: data.length >= 10,
+              isLoadingMore: false,
+            ));
+          }
+        }
+      case Error():
+        emit(current.copyWith(isLoadingMore: false));
     }
   }
 

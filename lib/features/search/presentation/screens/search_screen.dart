@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:jigrotech/core/mixins/debounce_mixin.dart';
+import 'package:jigrotech/core/mixins/safe_set_state_mixin.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -28,12 +31,20 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with DebounceMixin, UiFeedbackMixin, SafeSetStateMixin {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
   String _selectedCategory = "All";
   String _searchQuery = "";
+
+  //. Search Debouncer
+  void _onSearchChanged(String query) {
+    debounce(() {
+      safeSetState(() => _searchQuery = query);
+    });
+  }
 
   final List<String> _categories = [
     "All",
@@ -220,7 +231,8 @@ class _SearchScreenState extends State<SearchScreen> {
     return _allServices.where((item) {
       final matchesCategory =
           _selectedCategory == "All" || item.category == _selectedCategory;
-      final matchesQuery = _searchQuery.isEmpty ||
+      final matchesQuery =
+          _searchQuery.isEmpty ||
           item.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
           item.category.toLowerCase().contains(_searchQuery.toLowerCase());
       return matchesCategory && matchesQuery;
@@ -267,7 +279,10 @@ class _SearchScreenState extends State<SearchScreen> {
         children: [
           // Search Input Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Container(
               decoration: BoxDecoration(
                 color: AppColors.lightWhite1,
@@ -278,11 +293,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 controller: _searchController,
                 focusNode: _searchFocusNode,
                 autofocus: true,
-                onChanged: (val) {
-                  setState(() {
-                    _searchQuery = val.trim();
-                  });
-                },
+                onChanged: _onSearchChanged,
+                onSubmitted: (_) => hideKeyboard(),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: const Icon(
@@ -342,18 +354,22 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     selected: isSelected,
                     onSelected: (bool selected) {
-                      setState(() {
-                        _selectedCategory = category;
-                      });
+                      hideKeyboard();
+                      safeSetState(() => _selectedCategory = category);
                     },
                     backgroundColor: AppColors.lightWhite1,
                     selectedColor: AppColors.primary,
                     showCheckmark: false,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide(
-                        color: isSelected ? AppColors.primary : AppColors.border,
+                        color: isSelected
+                            ? AppColors.primary
+                            : AppColors.border,
                         width: 1,
                       ),
                     ),
@@ -366,7 +382,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
           // Header summary count
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 4.0,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -436,7 +455,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.all(16),
                     itemCount: filteredList.length,
-                    separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
                     itemBuilder: (context, index) {
                       final item = filteredList[index];
                       return GestureDetector(
@@ -472,7 +494,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                   color: AppColors.lightPink,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Icon(item.icon, color: AppColors.primary),
+                                child: Icon(
+                                  item.icon,
+                                  color: AppColors.primary,
+                                ),
                               ),
                               const SizedBox(width: 14),
                               Expanded(
@@ -495,7 +520,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                         vertical: 2,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: AppColors.primary.withValues(alpha: 0.08),
+                                        color: AppColors.primary.withValues(
+                                          alpha: 0.08,
+                                        ),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: Text(
@@ -503,7 +530,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                         style: const TextStyle(
                                           color: AppColors.primary,
                                           fontSize: 10,
-                                          fontFamily: AppTypography.outfitMedium,
+                                          fontFamily:
+                                              AppTypography.outfitMedium,
                                         ),
                                       ),
                                     ),

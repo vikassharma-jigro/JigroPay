@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/app_colors.dart';
@@ -36,7 +36,8 @@ class _CmsContentSheet extends StatefulWidget {
   State<_CmsContentSheet> createState() => _CmsContentSheetState();
 }
 
-class _CmsContentSheetState extends State<_CmsContentSheet> {
+class _CmsContentSheetState extends State<_CmsContentSheet>
+    with UiFeedbackMixin {
   bool _isLoading = true;
   String _title = '';
   String _content = '';
@@ -237,10 +238,10 @@ class _CmsContentSheetState extends State<_CmsContentSheet> {
               await launchUrl(uri, mode: LaunchMode.externalApplication);
               return true;
             } else {
-              Fluttertoast.showToast(msg: 'Could not open link: $url');
+              showErrorToast('Could not open link: $url');
             }
           } catch (e) {
-            Fluttertoast.showToast(msg: 'Could not open link');
+            showErrorToast('Could not open link');
           }
           return false;
         },

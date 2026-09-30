@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -62,7 +62,8 @@ class _RechargePlanView extends StatefulWidget {
   State<_RechargePlanView> createState() => _RechargePlanViewState();
 }
 
-class _RechargePlanViewState extends State<_RechargePlanView> {
+class _RechargePlanViewState extends State<_RechargePlanView>
+    with UiFeedbackMixin {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -90,12 +91,7 @@ class _RechargePlanViewState extends State<_RechargePlanView> {
             ),
           );
         } else if (state is RechargeError) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(state.message);
         }
       },
       builder: (context, state) {

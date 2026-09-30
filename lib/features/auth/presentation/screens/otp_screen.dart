@@ -6,15 +6,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
 import '../../../../core/services/storage_service.dart';
-import '../../../../core/utils/input_validators.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
@@ -29,7 +28,7 @@ class OtpScreen extends StatefulWidget {
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenState extends State<OtpScreen> with UiFeedbackMixin {
   final TextEditingController _otpController = TextEditingController();
   Timer? _timer;
   final int _timerMaxSeconds = 60;
@@ -104,16 +103,12 @@ class _OtpScreenState extends State<OtpScreen> {
   void _onVerifyPressed() {
     FocusScope.of(context).unfocus();
     final otp = _otpController.text.trim();
-    final error = InputValidators.otp(otp);
+    // final error = InputValidators.otp(otp);
 
-    if (error != null) {
-      Fluttertoast.showToast(
-        msg: error,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-      return;
-    }
+    // if (error != null) {
+    //   showErrorToast(error);
+    //   return;
+    // }
 
     context.read<AuthCubit>().verifyOtp(
       phone: widget.phone,
@@ -127,20 +122,10 @@ class _OtpScreenState extends State<OtpScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          Fluttertoast.showToast(
-            msg: 'OTP verified successfully.',
-            gravity: ToastGravity.CENTER,
-            backgroundColor: AppColors.primary,
-            textColor: Colors.white,
-          );
+          showSuccessToast('OTP verified successfully.');
           context.go('/dashboard');
         } else if (state is AuthError) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(state.message);
           context.read<AuthCubit>().reset();
         } else if (state is AuthOtpSent) {
           _startTimeout();

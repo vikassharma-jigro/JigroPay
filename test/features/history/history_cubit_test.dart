@@ -14,6 +14,7 @@ class _FakeHistoryRepository implements HistoryRepository {
   Future<Result<List<TransactionModel>>> fetchTransactionHistory({
     String? type,
     String? status,
+    int? page,
   }) async {
     if (shouldSucceed) {
       return Success([
@@ -95,5 +96,16 @@ void main() {
     final state = cubit.state as HistoryLoaded;
     expect(state.displayedTransactions.length, 1);
     expect(state.displayedTransactions.first.amount, 666);
+  });
+
+  test('loadMore appends unique items when available', () async {
+    await cubit.loadHistory();
+    expect((cubit.state as HistoryLoaded).allTransactions.length, 2);
+
+    await cubit.loadMore();
+    // In fake repo, duplicate ids '1' and '2' are filtered out and hasMore becomes false
+    final state = cubit.state as HistoryLoaded;
+    expect(state.isLoadingMore, isFalse);
+    expect(state.hasMore, isFalse);
   });
 }

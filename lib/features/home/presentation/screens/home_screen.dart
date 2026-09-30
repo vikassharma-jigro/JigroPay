@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jigrotech/features/auth/presentation/cubit/auth_cubit.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../cubit/dashboard_cubit.dart';
@@ -23,6 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<DashboardCubit>().loadDashboard();
     });
+
+    // Profile Picture
+    context.read<AuthCubit>().fetchProfile();
   }
 
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_assets.dart';
@@ -39,7 +39,8 @@ class _PanServicesView extends StatefulWidget {
   State<_PanServicesView> createState() => _PanServicesViewState();
 }
 
-class _PanServicesViewState extends State<_PanServicesView> {
+class _PanServicesViewState extends State<_PanServicesView>
+    with UiFeedbackMixin {
   final TextEditingController _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String? _mobileError;
@@ -53,18 +54,12 @@ class _PanServicesViewState extends State<_PanServicesView> {
   Future<void> _handleUrlLaunch(String url) async {
     final uri = Uri.tryParse(url);
     if (uri == null) {
-      Fluttertoast.showToast(
-        msg: 'Invalid redirection URL received',
-        backgroundColor: Colors.red,
-      );
+      showErrorToast('Invalid redirection URL received');
       return;
     }
 
     try {
-      final launched = await launchUrl(
-        uri,
-        mode: LaunchMode.inAppBrowserView,
-      );
+      final launched = await launchUrl(uri, mode: LaunchMode.inAppBrowserView);
       if (!launched) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       }
@@ -72,10 +67,7 @@ class _PanServicesViewState extends State<_PanServicesView> {
       try {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } catch (e) {
-        Fluttertoast.showToast(
-          msg: 'Could not open browser. Please visit: $url',
-          backgroundColor: Colors.red,
-        );
+        showErrorToast('Could not open browser. Please visit: $url');
       }
     }
   }
@@ -90,8 +82,8 @@ class _PanServicesViewState extends State<_PanServicesView> {
     }
 
     context.read<PanServiceCubit>().initiatePanApplication(
-          mobileNumber: mobile,
-        );
+      mobileNumber: mobile,
+    );
   }
 
   @override
@@ -102,7 +94,10 @@ class _PanServicesViewState extends State<_PanServicesView> {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: AppColors.black,
+          ),
           onPressed: () => context.pop(),
         ),
         title: const Text(
@@ -121,22 +116,13 @@ class _PanServicesViewState extends State<_PanServicesView> {
           if (state is PanServiceSuccess) {
             if (state.redirectUrl.startsWith('http://') ||
                 state.redirectUrl.startsWith('https://')) {
-              Fluttertoast.showToast(
-                msg: 'Redirecting to NSDL PAN portal...',
-                backgroundColor: AppColors.primary,
-              );
+              showLoadingToast('Redirecting to NSDL PAN portal...');
               _handleUrlLaunch(state.redirectUrl);
             } else {
-              Fluttertoast.showToast(
-                msg: state.redirectUrl,
-                backgroundColor: Colors.green,
-              );
+              showSuccessToast(state.redirectUrl);
             }
           } else if (state is PanServiceError) {
-            Fluttertoast.showToast(
-              msg: state.message,
-              backgroundColor: Colors.red,
-            );
+            showErrorToast(state.message);
           }
         },
         builder: (context, state) {

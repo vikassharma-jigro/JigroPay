@@ -28,14 +28,25 @@ class NotificationItemModel {
   factory NotificationItemModel.fromJson(Map<String, dynamic> json) {
     return NotificationItemModel(
       id: _int(json['id'] ?? json['notification_id']),
-      title: (json['title'] ?? json['heading'] ?? json['subject'] ?? '').toString(),
-      body: (json['body'] ?? json['message'] ?? json['content'] ?? json['description'] ?? '').toString(),
-      createdAt: _dateOrNow(json['created_at'] ?? json['date'] ?? json['sent_at']),
+      title: (json['title'] ?? json['heading'] ?? json['subject'] ?? '')
+          .toString(),
+      body:
+          (json['body'] ??
+                  json['message'] ??
+                  json['content'] ??
+                  json['description'] ??
+                  '')
+              .toString(),
+      createdAt: _dateOrNow(
+        json['created_at'] ?? json['date'] ?? json['sent_at'],
+      ),
       imageUrl: _str(json['image'] ?? json['image_url'] ?? json['icon']),
       type: _str(json['type'] ?? json['notification_type'] ?? json['category']),
-      isRead: _boolDef(json['is_read'] ?? json['read'] ?? json['seen'], def: false),
+      isRead: _checkIsRead(json),
       deepLink: _str(json['deep_link'] ?? json['action'] ?? json['redirect']),
-      extra: json['data'] is Map ? Map<String, dynamic>.from(json['data']) : null,
+      extra: json['data'] is Map
+          ? Map<String, dynamic>.from(json['data'])
+          : null,
     );
   }
 
@@ -73,7 +84,9 @@ class NotificationItemModel {
 
     return rawList
         .whereType<Map>()
-        .map((e) => NotificationItemModel.fromJson(Map<String, dynamic>.from(e)))
+        .map(
+          (e) => NotificationItemModel.fromJson(Map<String, dynamic>.from(e)),
+        )
         .toList();
   }
 
@@ -130,7 +143,37 @@ bool _boolDef(dynamic v, {required bool def}) {
   return def;
 }
 
+bool _checkIsRead(Map<String, dynamic> json) {
+  // 1. Check the 'reads' array from the API response
+  final reads = json['reads'];
+  if (reads is List && reads.isNotEmpty) {
+    return reads.any((entry) {
+      if (entry is Map) {
+        final readAt = entry['read_at'];
+        return readAt != null &&
+            readAt.toString().trim().isNotEmpty &&
+            readAt.toString() != 'null';
+      }
+      return false;
+    });
+  }
+
+  // 2. Direct read_at check (in case single notification endpoints return read_at directly)
+  if (json['read_at'] != null &&
+      json['read_at'].toString().trim().isNotEmpty &&
+      json['read_at'].toString() != 'null') {
+    return true;
+  }
+
+  // 3. Fallback to boolean flags if present
+  return _boolDef(json['is_read'] ?? json['read'] ?? json['seen'], def: false);
+}
+
 DateTime _dateOrNow(dynamic v) {
   if (v == null) return DateTime.now();
-  try { return DateTime.parse(v.toString()).toLocal(); } catch (_) { return DateTime.now(); }
+  try {
+    return DateTime.parse(v.toString()).toLocal();
+  } catch (_) {
+    return DateTime.now();
+  }
 }

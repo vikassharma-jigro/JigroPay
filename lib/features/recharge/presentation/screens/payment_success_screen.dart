@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -42,10 +42,7 @@ class PaymentSuccessArgs {
 
 /// Clean-architecture Payment Success screen with PDF receipt generation & sharing.
 class PaymentSuccessScreen extends StatefulWidget {
-  const PaymentSuccessScreen({
-    super.key,
-    required this.args,
-  });
+  const PaymentSuccessScreen({super.key, required this.args});
 
   final PaymentSuccessArgs args;
 
@@ -54,7 +51,7 @@ class PaymentSuccessScreen extends StatefulWidget {
 }
 
 class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, UiFeedbackMixin {
   late AnimationController _scaleController;
   late AnimationController _fadeController;
   late AnimationController _slideController;
@@ -81,13 +78,15 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
       duration: const Duration(milliseconds: 800),
     );
 
-    _scaleAnim =
-        CurvedAnimation(parent: _scaleController, curve: Curves.elasticOut);
-    _fadeAnim =
-        CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+    _scaleAnim = CurvedAnimation(
+      parent: _scaleController,
+      curve: Curves.elasticOut,
+    );
+    _fadeAnim = CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
     _slideAnim = Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero)
-        .animate(CurvedAnimation(
-            parent: _slideController, curve: Curves.easeOutCubic));
+        .animate(
+          CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
+        );
 
     _scaleController.forward();
     Future.delayed(const Duration(milliseconds: 200), () {
@@ -119,16 +118,19 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
   }
 
   Future<File> _generatePdfReceipt(
-      String txnId, String dateTime, String paidVia) async {
+    String txnId,
+    String dateTime,
+    String paidVia,
+  ) async {
     final pdf = pw.Document();
     final String amountStr =
         double.tryParse(widget.args.amount)?.toStringAsFixed(2) ??
-            widget.args.amount;
+        widget.args.amount;
     final String ticketId = txnId.replaceAll(RegExp(r'\D'), '');
     final String formattedTicketId = ticketId.isNotEmpty
         ? (ticketId.length > 13
-            ? ticketId.substring(ticketId.length - 13)
-            : ticketId.padLeft(13, '0'))
+              ? ticketId.substring(ticketId.length - 13)
+              : ticketId.padLeft(13, '0'))
         : '0120034399434';
 
     pdf.addPage(
@@ -144,7 +146,9 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                 color: PdfColor.fromHex('#FFFFFF'),
                 borderRadius: pw.BorderRadius.circular(16),
                 border: pw.Border.all(
-                    color: PdfColor.fromHex('#E2E8F0'), width: 1),
+                  color: PdfColor.fromHex('#E2E8F0'),
+                  width: 1,
+                ),
               ),
               child: pw.Column(
                 mainAxisSize: pw.MainAxisSize.min,
@@ -156,64 +160,88 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                       shape: pw.BoxShape.circle,
                       color: PdfColor.fromHex('#FAF5FF'),
                       border: pw.Border.all(
-                          color: PdfColor.fromHex('#8C2AC4'), width: 2.5),
+                        color: PdfColor.fromHex('#8C2AC4'),
+                        width: 2.5,
+                      ),
                     ),
                     alignment: pw.Alignment.center,
-                    child: pw.Text('✓',
-                        style: pw.TextStyle(
-                            fontSize: 26,
-                            fontWeight: pw.FontWeight.bold,
-                            color: PdfColor.fromHex('#8C2AC4'))),
+                    child: pw.Text(
+                      '✓',
+                      style: pw.TextStyle(
+                        fontSize: 26,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColor.fromHex('#8C2AC4'),
+                      ),
+                    ),
                   ),
                   pw.SizedBox(height: 12),
-                  pw.Text('Thank you!',
-                      style: pw.TextStyle(
-                          fontSize: 22,
-                          fontWeight: pw.FontWeight.bold,
-                          color: PdfColor.fromHex('#0F172A'))),
+                  pw.Text(
+                    'Thank you!',
+                    style: pw.TextStyle(
+                      fontSize: 22,
+                      fontWeight: pw.FontWeight.bold,
+                      color: PdfColor.fromHex('#0F172A'),
+                    ),
+                  ),
                   pw.SizedBox(height: 4),
-                  pw.Text('Your payment has been completed successfully.',
-                      style: pw.TextStyle(
-                          fontSize: 11, color: PdfColor.fromHex('#64748B')),
-                      textAlign: pw.TextAlign.center),
+                  pw.Text(
+                    'Your payment has been completed successfully.',
+                    style: pw.TextStyle(
+                      fontSize: 11,
+                      color: PdfColor.fromHex('#64748B'),
+                    ),
+                    textAlign: pw.TextAlign.center,
+                  ),
                   pw.SizedBox(height: 16),
                   pw.Divider(
-                      borderStyle: pw.BorderStyle.dashed,
-                      color: PdfColor.fromHex('#CBD5E1'),
-                      thickness: 1),
+                    borderStyle: pw.BorderStyle.dashed,
+                    color: PdfColor.fromHex('#CBD5E1'),
+                    thickness: 1,
+                  ),
                   pw.SizedBox(height: 16),
                   pw.Container(
                     width: double.infinity,
                     padding: const pw.EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 16),
+                      vertical: 14,
+                      horizontal: 16,
+                    ),
                     decoration: pw.BoxDecoration(
                       color: PdfColor.fromHex('#FAF5FF'),
                       borderRadius: pw.BorderRadius.circular(12),
                       border: pw.Border.all(
-                          color: PdfColor.fromHex('#E9D5FF'), width: 1),
+                        color: PdfColor.fromHex('#E9D5FF'),
+                        width: 1,
+                      ),
                     ),
                     child: pw.Column(
                       children: [
-                        pw.Text('Total Amount Paid',
-                            style: pw.TextStyle(
-                                fontSize: 12,
-                                color: PdfColor.fromHex('#64748B'))),
+                        pw.Text(
+                          'Total Amount Paid',
+                          style: pw.TextStyle(
+                            fontSize: 12,
+                            color: PdfColor.fromHex('#64748B'),
+                          ),
+                        ),
                         pw.SizedBox(height: 4),
-                        pw.Text('INR $amountStr',
-                            style: pw.TextStyle(
-                                fontSize: 24,
-                                fontWeight: pw.FontWeight.bold,
-                                color: PdfColor.fromHex('#8C2AC4'))),
+                        pw.Text(
+                          'INR $amountStr',
+                          style: pw.TextStyle(
+                            fontSize: 24,
+                            fontWeight: pw.FontWeight.bold,
+                            color: PdfColor.fromHex('#8C2AC4'),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   pw.SizedBox(height: 16),
                   _pdfDetailRow('Receipt ID', formattedTicketId),
-                  _pdfDetailRow(
-                      'Service Name', widget.args.serviceName),
+                  _pdfDetailRow('Service Name', widget.args.serviceName),
                   _pdfDetailRow('Provider', widget.args.providerName),
                   _pdfDetailRow(
-                      'Consumer / Mobile', widget.args.consumerNumber),
+                    'Consumer / Mobile',
+                    widget.args.consumerNumber,
+                  ),
                   _pdfDetailRow('Transaction ID', txnId),
                   if (widget.args.orderId != null &&
                       widget.args.orderId!.isNotEmpty)
@@ -232,7 +260,9 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                     child: pw.Text(
                       'This is an electronically generated receipt from JigroPay, BBPS Verified & Secure Payment.',
                       style: pw.TextStyle(
-                          fontSize: 9, color: PdfColor.fromHex('#6B21A8')),
+                        fontSize: 9,
+                        color: PdfColor.fromHex('#6B21A8'),
+                      ),
                       textAlign: pw.TextAlign.center,
                     ),
                   ),
@@ -256,21 +286,31 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
       child: pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Text(label,
-              style: pw.TextStyle(
-                  color: PdfColor.fromHex('#64748B'), fontSize: 11)),
-          pw.Text(value.isNotEmpty ? value : '-',
-              style: pw.TextStyle(
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColor.fromHex('#0F172A'),
-                  fontSize: 11)),
+          pw.Text(
+            label,
+            style: pw.TextStyle(
+              color: PdfColor.fromHex('#64748B'),
+              fontSize: 11,
+            ),
+          ),
+          pw.Text(
+            value.isNotEmpty ? value : '-',
+            style: pw.TextStyle(
+              fontWeight: pw.FontWeight.bold,
+              color: PdfColor.fromHex('#0F172A'),
+              fontSize: 11,
+            ),
+          ),
         ],
       ),
     );
   }
 
   Future<void> _shareReceipt(
-      String txnId, String dateTime, String paidVia) async {
+    String txnId,
+    String dateTime,
+    String paidVia,
+  ) async {
     setState(() => _isGeneratingPdf = true);
     try {
       final file = await _generatePdfReceipt(txnId, dateTime, paidVia);
@@ -281,21 +321,24 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
             'JigroPay Receipt - ${widget.args.serviceName} Payment of INR ${widget.args.amount}',
       );
     } catch (e) {
-      Fluttertoast.showToast(msg: 'Error sharing receipt: $e');
+      showErrorToast('Error sharing receipt: $e');
     } finally {
       if (mounted) setState(() => _isGeneratingPdf = false);
     }
   }
 
   Future<void> _downloadReceipt(
-      String txnId, String dateTime, String paidVia) async {
+    String txnId,
+    String dateTime,
+    String paidVia,
+  ) async {
     setState(() => _isGeneratingPdf = true);
     try {
       final file = await _generatePdfReceipt(txnId, dateTime, paidVia);
       await OpenFile.open(file.path);
-      Fluttertoast.showToast(msg: 'Receipt saved to device');
+      showSuccessToast('Receipt saved to device');
     } catch (e) {
-      Fluttertoast.showToast(msg: 'Error saving receipt: $e');
+      showErrorToast('Error saving receipt: $e');
     } finally {
       if (mounted) setState(() => _isGeneratingPdf = false);
     }
@@ -386,13 +429,16 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                     Text(
                       'Your ${widget.args.serviceName.toLowerCase()} has been paid successfully.',
                       textAlign: TextAlign.center,
-                      style: AppTypography.body2
-                          .copyWith(color: AppColors.grey),
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.grey,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 24),
+                        vertical: 12,
+                        horizontal: 24,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.lightWhite1,
                         borderRadius: BorderRadius.circular(16),
@@ -455,8 +501,11 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                         _detailRow('Bill Month', widget.args.billMonth!),
                       _detailRow('Date & Time', dateTime),
                       _detailRow('Paid Via', paidVia),
-                      _detailRow('Status', 'COMPLETED',
-                          valueColor: AppColors.success),
+                      _detailRow(
+                        'Status',
+                        'COMPLETED',
+                        valueColor: AppColors.success,
+                      ),
                     ],
                   ),
                 ),
@@ -478,13 +527,17 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                       onPressed: _isGeneratingPdf
                           ? null
                           : () => _downloadReceipt(txnId, dateTime, paidVia),
-                      icon: const Icon(Icons.download_rounded,
-                          color: AppColors.primary, size: 20),
+                      icon: const Icon(
+                        Icons.download_rounded,
+                        color: AppColors.primary,
+                        size: 20,
+                      ),
                       label: const Text(
                         'Download PDF',
                         style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w600),
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -501,13 +554,17 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                       onPressed: _isGeneratingPdf
                           ? null
                           : () => _shareReceipt(txnId, dateTime, paidVia),
-                      icon: const Icon(Icons.share_outlined,
-                          color: AppColors.primary, size: 20),
+                      icon: const Icon(
+                        Icons.share_outlined,
+                        color: AppColors.primary,
+                        size: 20,
+                      ),
                       label: const Text(
                         'Share Receipt',
                         style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w600),
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -528,8 +585,12 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
     );
   }
 
-  Widget _detailRow(String label, String value,
-      {Color? valueColor, bool canCopy = false}) {
+  Widget _detailRow(
+    String label,
+    String value, {
+    Color? valueColor,
+    bool canCopy = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
@@ -566,10 +627,13 @@ class _PaymentSuccessScreenState extends State<PaymentSuccessScreen>
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
-                      Fluttertoast.showToast(msg: 'Copied to clipboard');
+                      showLoadingToast('Copied to clipboard');
                     },
-                    child: const Icon(Icons.copy,
-                        size: 14, color: AppColors.grey),
+                    child: const Icon(
+                      Icons.copy,
+                      size: 14,
+                      color: AppColors.grey,
+                    ),
                   ),
                 ],
               ],

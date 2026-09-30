@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jigrotech/core/config/env_configu.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../core/errors/result.dart';
@@ -8,13 +9,10 @@ import '../features/recharge/data/repositories/recharge_repository_impl.dart';
 import '../features/recharge/presentation/screens/payment_success_screen.dart';
 
 //. RazorPay Key Constants
-const String razorpayKeyConstant = String.fromEnvironment(
-  'RAZORPAY_KEY',
-  defaultValue: 'rzp_live_TLKy91eX8x6Xum',
-);
+final razorpayKeyConstant = EnvConfig.razorpayLiveKey;
 
 //. Helper
-class RazorpayHelper {
+class RazorpayHelper with UiFeedbackMixin {
   late Razorpay _razorpay;
   final BuildContext context;
   final String? type;
@@ -57,6 +55,7 @@ class RazorpayHelper {
     String? card,
   }) async {
     FocusManager.instance.primaryFocus?.unfocus();
+
     // Store metadata for success screen
     _serviceName = serviceName;
     _providerName = providerName;
@@ -89,12 +88,7 @@ class RazorpayHelper {
       case Error(:final failure):
         String apiMessage = cleanApiMessage(failure.message);
         if (apiMessage.isNotEmpty) {
-          Fluttertoast.showToast(
-            msg: apiMessage,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(apiMessage);
         }
     }
   }
@@ -138,11 +132,7 @@ class RazorpayHelper {
     try {
       _razorpay.open(options);
     } catch (e) {
-      Fluttertoast.showToast(
-        msg: "Error launching payment: $e",
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast("Error launching payment: $e");
     }
   }
 
@@ -194,19 +184,13 @@ class RazorpayHelper {
     } else {
       String cleanMsg = cleanApiMessage(response.message);
       if (cleanMsg.isEmpty) cleanMsg = "Payment was cancelled or failed.";
-      Fluttertoast.showToast(
-        msg: "Payment Failed: $cleanMsg",
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast("Payment Failed: $cleanMsg");
     }
   }
 
   //. Handles External Response
   void _handleExternalWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(
-      msg: "External Wallet Selected: ${response.walletName}",
-    );
+    showLoadingToast("External Wallet Selected: ${response.walletName}");
   }
 
   //. Clear

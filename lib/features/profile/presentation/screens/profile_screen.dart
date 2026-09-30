@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with UiFeedbackMixin {
   @override
   void initState() {
     super.initState();
@@ -617,44 +617,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
 
                                   if (name.isEmpty) {
-                                    Fluttertoast.showToast(
-                                      msg: "Please enter your full name",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                    showErrorToast(
+                                      "Please enter your full name",
                                     );
                                     return;
                                   }
                                   if (!nameReg.hasMatch(name)) {
-                                    Fluttertoast.showToast(
-                                      msg:
-                                          "Please enter a valid name (alphabets only)",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                    showErrorToast(
+                                      "Please enter a valid name (alphabets only)",
                                     );
                                     return;
                                   }
                                   if (name.length < 2) {
-                                    Fluttertoast.showToast(
-                                      msg:
-                                          "Name must be at least 2 characters long",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                    showErrorToast(
+                                      "Name must be at least 2 characters long",
                                     );
                                     return;
                                   }
                                   if (email.isEmpty) {
-                                    Fluttertoast.showToast(
-                                      msg: "Please enter your email address",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                    showErrorToast(
+                                      "Please enter your email address",
                                     );
                                     return;
                                   }
                                   if (!emailReg.hasMatch(email)) {
-                                    Fluttertoast.showToast(
-                                      msg: "Please enter a valid email address",
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
+                                    showErrorToast(
+                                      "Please enter a valid email address",
                                     );
                                     return;
                                   }
@@ -672,15 +660,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   if (ctx.mounted) {
                                     setModalState(() => isSubmitting = false);
                                     if (success) {
-                                      Fluttertoast.showToast(
-                                        msg: "Profile updated successfully",
+                                      showLoadingToast(
+                                        "Profile updated successfully",
                                       );
                                       Navigator.pop(ctx);
                                     } else {
-                                      Fluttertoast.showToast(
-                                        msg: "Failed to update profile",
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
+                                      showErrorToast(
+                                        "Failed to update profile",
                                       );
                                     }
                                   }

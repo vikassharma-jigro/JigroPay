@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -22,7 +22,7 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> with UiFeedbackMixin {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -57,19 +57,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
 
     if (!_isChecked) {
-      Fluttertoast.showToast(
-        msg: 'Please select the checkbox to agree to terms',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast('Please select the checkbox to agree to terms');
       return;
     }
 
-    context.read<AuthCubit>().register(
-          name: name,
-          email: email,
-          phone: phone,
-        );
+    context.read<AuthCubit>().register(name: name, email: email, phone: phone);
   }
 
   @override
@@ -77,23 +69,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthOtpSent) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: AppColors.primary,
-            textColor: Colors.white,
-          );
+          showSuccessToast(state.message);
           context.push(
             '/otp',
             extra: {'phone': state.phone, 'email': state.email},
           );
         } else if (state is AuthError) {
-          Fluttertoast.showToast(
-            msg: state.message,
-            gravity: ToastGravity.CENTER,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          );
+          showErrorToast(state.message);
           context.read<AuthCubit>().reset();
         }
       },
@@ -109,9 +91,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
               onPressed: () => context.pop(),
             ),
-            title: Center(
-              child: Image.asset(AppAssets.jigro, height: 40),
-            ),
+            title: Center(child: Image.asset(AppAssets.jigro, height: 40)),
             actions: const [SizedBox(width: 48)],
           ),
           body: SingleChildScrollView(
@@ -191,9 +171,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         setState(() => _emailError = null);
                       }
                     },
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(50),
-                    ],
+                    inputFormatters: [LengthLimitingTextInputFormatter(50)],
                   ),
                   if (_emailError != null)
                     Padding(

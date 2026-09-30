@@ -6,7 +6,15 @@ class GetTransactionHistoryUseCase {
   const GetTransactionHistoryUseCase(this._repository);
   final HistoryRepository _repository;
 
-  Future<Result<List<TransactionModel>>> call({String? type, String? status}) {
-    return _repository.fetchTransactionHistory(type: type, status: status);
+  Future<Result<List<TransactionModel>>> call({
+    String? type,
+    String? status,
+    int? page,
+  }) {
+    return _repository.fetchTransactionHistory(
+      type: type,
+      status: status,
+      page: page,
+    );
   }
 }

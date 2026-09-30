@@ -23,21 +23,24 @@ class OperatorItem {
   /// Constructs an [OperatorItem] from a raw API Map.
   /// Handles all known key variations from the existing API responses.
   factory OperatorItem.fromMap(Map<String, dynamic> map) {
-    final name = map['name']?.toString() ??
+    final name =
+        map['name']?.toString() ??
         map['operator_name']?.toString() ??
         map['biller_name']?.toString() ??
         map['company']?.toString() ??
         map['company_name']?.toString() ??
         '';
 
-    final opcode = map['operator_code']?.toString() ??
+    final opcode =
+        map['operator_code']?.toString() ??
         map['opcode']?.toString() ??
         map['company_code']?.toString() ??
         map['biller_id']?.toString() ??
         map['id']?.toString() ??
         'A';
 
-    final iconUrl = map['image']?.toString() ??
+    final iconUrl =
+        map['image']?.toString() ??
         map['icon']?.toString() ??
         map['logo']?.toString() ??
         map['operator_image']?.toString();
@@ -74,33 +77,6 @@ class OperatorListConfig {
 
 // ── Widget ────────────────────────────────────────────────────────────────────
 
-/// Generic reusable operator/biller list widget.
-///
-/// **Replaces** the copy-pasted operator list UI in:
-/// - `WaterServiceScreen`
-/// - `BroadbandServiceScreen`
-/// - `InsuranceProviderScreen`
-/// - `GasServicesScreen`
-/// - `CableServiceScreen`
-/// - `MunicipalScreen`
-/// - `LandlineServiceScreen`
-/// - `DthServiceScreen`
-///
-/// The parent screen passes [operators] (already fetched via its Cubit) and
-/// provides [onOperatorSelected] to handle navigation.
-///
-/// **Lazy API loading**: This widget does NOT call any API itself.
-/// The parent Cubit fetches data when the screen opens (in [initState]).
-///
-/// Usage:
-/// ```dart
-/// GenericOperatorListWidget(
-///   operators: state.operators,
-///   isLoading: state is OperatorsLoading,
-///   onOperatorSelected: (op) => context.push('/water/pay', extra: op),
-///   config: const OperatorListConfig(title: 'Water Providers'),
-/// )
-/// ```
 class GenericOperatorListWidget extends StatefulWidget {
   const GenericOperatorListWidget({
     super.key,
@@ -128,8 +104,7 @@ class GenericOperatorListWidget extends StatefulWidget {
       _GenericOperatorListWidgetState();
 }
 
-class _GenericOperatorListWidgetState
-    extends State<GenericOperatorListWidget> {
+class _GenericOperatorListWidgetState extends State<GenericOperatorListWidget> {
   final TextEditingController _searchController = TextEditingController();
   List<OperatorItem> _filtered = [];
 
@@ -156,8 +131,8 @@ class _GenericOperatorListWidgetState
       _filtered = q.isEmpty
           ? widget.operators
           : widget.operators
-              .where((op) => op.name.toLowerCase().contains(q))
-              .toList();
+                .where((op) => op.name.toLowerCase().contains(q))
+                .toList();
     });
   }
 
@@ -171,9 +146,7 @@ class _GenericOperatorListWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: widget.showAppBar
-          ? _buildAppBar(context)
-          : null,
+      appBar: widget.showAppBar ? _buildAppBar(context) : null,
       body: LoadingOverlay(
         isLoading: widget.isLoading && widget.operators.isEmpty,
         child: Column(
@@ -194,10 +167,14 @@ class _GenericOperatorListWidgetState
       backgroundColor: AppColors.white,
       elevation: 0,
       automaticallyImplyLeading: false,
-      leading: widget.appBarLeading ??
+      leading:
+          widget.appBarLeading ??
           IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                color: AppColors.black, size: 20),
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.black,
+              size: 20,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
       title: Text(widget.config.title, style: AppTypography.h3),
@@ -222,7 +199,8 @@ class _GenericOperatorListWidgetState
         icon: widget.config.fallbackIcon,
         title: widget.config.emptyTitle,
         subtitle: widget.config.emptySubtitle,
-        iconColor: widget.config.fallbackIconColor ??
+        iconColor:
+            widget.config.fallbackIconColor ??
             AppColors.primary.withValues(alpha: 0.5),
       );
     }
@@ -230,8 +208,8 @@ class _GenericOperatorListWidgetState
     return ListView.separated(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       itemCount: _filtered.length,
-      separatorBuilder: (_, __) => Divider(
-          color: AppColors.lightGrey.withValues(alpha: 0.6), height: 1),
+      separatorBuilder: (_, __) =>
+          Divider(color: AppColors.lightGrey.withValues(alpha: 0.6), height: 1),
       itemBuilder: (context, index) => _OperatorTile(
         item: _filtered[index],
         onTap: () => widget.onOperatorSelected(_filtered[index]),
@@ -259,21 +237,27 @@ class _SearchBar extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: AppTypography.inputHint,
-          prefixIcon:
-              const Icon(Icons.search_rounded, color: AppColors.grey, size: 22),
+          prefixIcon: const Icon(
+            Icons.search_rounded,
+            color: AppColors.grey,
+            size: 22,
+          ),
           filled: true,
           fillColor: AppColors.lightWhite1,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide:
-                const BorderSide(color: AppColors.lightGrey, width: 1.2),
+            borderSide: const BorderSide(
+              color: AppColors.lightGrey,
+              width: 1.2,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide:
-                const BorderSide(color: AppColors.primary, width: 1.8),
+            borderSide: const BorderSide(color: AppColors.primary, width: 1.8),
           ),
         ),
       ),

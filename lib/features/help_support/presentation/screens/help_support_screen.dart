@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -37,7 +37,8 @@ class _HelpSupportView extends StatefulWidget {
   State<_HelpSupportView> createState() => _HelpSupportViewState();
 }
 
-class _HelpSupportViewState extends State<_HelpSupportView> {
+class _HelpSupportViewState extends State<_HelpSupportView>
+    with UiFeedbackMixin {
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
   String _selectedCategory = 'Recharge & Bill Payment';
@@ -61,7 +62,7 @@ class _HelpSupportViewState extends State<_HelpSupportView> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
-      Fluttertoast.showToast(msg: 'Could not open phone dialer');
+      showLoadingToast('Could not open phone dialer');
     }
   }
 
@@ -70,7 +71,7 @@ class _HelpSupportViewState extends State<_HelpSupportView> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
-      Fluttertoast.showToast(msg: 'Could not open email client');
+      showLoadingToast('Could not open email client');
     }
   }
 
@@ -359,9 +360,7 @@ class _HelpSupportViewState extends State<_HelpSupportView> {
                         final subject = _subjectController.text.trim();
                         final message = _messageController.text.trim();
                         if (subject.isEmpty || message.isEmpty) {
-                          Fluttertoast.showToast(
-                            msg: 'Please fill in all fields',
-                          );
+                          showErrorToast('Please fill in all fields');
                           return;
                         }
 
@@ -373,8 +372,8 @@ class _HelpSupportViewState extends State<_HelpSupportView> {
                         );
 
                         if (success) {
-                          Fluttertoast.showToast(
-                            msg: 'Enquiry submitted! We will respond shortly.',
+                          showSuccessToast(
+                            'Enquiry submitted! We will respond shortly.',
                           );
                           _subjectController.clear();
                           _messageController.clear();
@@ -383,9 +382,8 @@ class _HelpSupportViewState extends State<_HelpSupportView> {
                           final errorMsg = currentState is HelpSupportLoaded
                               ? currentState.submitError
                               : null;
-                          Fluttertoast.showToast(
-                            msg:
-                                errorMsg ??
+                          showErrorToast(
+                            errorMsg ??
                                 'Failed to submit enquiry. Please try again.',
                           );
                         }
