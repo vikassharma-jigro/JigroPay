@@ -11,7 +11,7 @@ import '../models/recharge_plan_model.dart';
 
 class RechargeRepositoryImpl implements RechargeRepository {
   RechargeRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient.instance;
+    : _apiClient = apiClient ?? ApiClient.instance;
 
   final ApiClient _apiClient;
 
@@ -24,6 +24,7 @@ class RechargeRepositoryImpl implements RechargeRepository {
         AppEndpoints.operatorFetch,
         data: {'mobile': mobileNumber},
       );
+      _apiClient.throwIfError(response);
 
       final data = response.data;
       if (data is Map<String, dynamic>) {
@@ -46,7 +47,9 @@ class RechargeRepositoryImpl implements RechargeRepository {
     bool isDth = false,
   }) async {
     try {
-      final path = isDth ? AppEndpoints.dthRechargePlans : AppEndpoints.rechargePlans;
+      final path = isDth
+          ? AppEndpoints.dthRechargePlans
+          : AppEndpoints.rechargePlans;
       final body = {
         if (isDth) 'dth_number': mobileNumber else 'mobile': mobileNumber,
         'opcode': opcode,
@@ -57,6 +60,7 @@ class RechargeRepositoryImpl implements RechargeRepository {
       };
 
       final response = await _apiClient.post(path, data: body);
+      _apiClient.throwIfError(response);
       final data = response.data;
       if (data is Map<String, dynamic>) {
         return Success(CategorisedPlans.fromApiResponse(data));
@@ -80,11 +84,7 @@ class RechargeRepositoryImpl implements RechargeRepository {
       final orderId = DateTime.now().millisecondsSinceEpoch.toString();
       final response = await _apiClient.post(
         AppEndpoints.rOffer,
-        data: {
-          'mobile': mobileNumber,
-          'opcode': opcode,
-          'orderid': orderId,
-        },
+        data: {'mobile': mobileNumber, 'opcode': opcode, 'orderid': orderId},
       );
 
       final data = response.data;
@@ -127,6 +127,7 @@ class RechargeRepositoryImpl implements RechargeRepository {
         AppEndpoints.createOrder,
         data: body,
       );
+      _apiClient.throwIfError(response);
 
       final data = response.data;
       if (data is Map<String, dynamic>) {
@@ -160,6 +161,7 @@ class RechargeRepositoryImpl implements RechargeRepository {
         AppEndpoints.verifyPayment,
         data: body,
       );
+      _apiClient.throwIfError(response);
 
       final data = response.data;
       if (data is Map<String, dynamic>) {

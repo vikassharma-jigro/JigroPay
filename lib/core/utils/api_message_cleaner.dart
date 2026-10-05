@@ -13,7 +13,7 @@ String cleanApiMessage(dynamic rawInput) {
   // 1. Map — scan known message keys, then nested keys, then any string value.
   if (rawInput is Map) {
     const messageKeys = [
-      'message', 'msg', 'error', 'errors', 'description',
+      'text', 'message', 'msg', 'error', 'errors', 'description',
       'error_description', 'detail', 'details', 'reason', 'reasons',
       'error_message', 'errorMessage', 'error_msg', 'errorMsg',
       'statusMessage', 'status_message', 'responseMessage',

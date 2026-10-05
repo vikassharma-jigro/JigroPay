@@ -4,8 +4,13 @@
 /// or just `AppEndpoints.login` when [ApiClient] already has [baseUrl] set.
 abstract final class AppEndpoints {
   // ── Base ────────────────────────────────────────────────────────────────────
-  static const String host = 'https://bbps.jigropay.com/';
-  static const String baseUrl = '${host}api/';
+  static const String _host = 'https://bbps.jigropay.com/';
+  static const String baseUrl = '${_host}api/';
+
+  //. Method to access host
+  static String getHost() {
+    return _host;
+  }
 
   // ── Auth ────────────────────────────────────────────────────────────────────
   static const String partnerStream = 'stream';
@@ -38,10 +43,11 @@ abstract final class AppEndpoints {
   static const String dthRechargePlans = 'ekyc/fetch/dth/plan';
   static const String rOffer = 'ekyc/fetch/roffer';
 
-  /// Append service-type slug: e.g. [operatorsByType] + 'water'
+  /// Append service-type slug: e.g. [operatorsByType] + 'water_bill'
   static const String operatorsByType = 'ekyc/operators/';
 
   // ── Bill Payments ─────────────────────────────────────────────────────────────
+  static const String postpaidBillFetch = 'ekyc/fetch/postpaid_bill';
   static const String fastagBillFetch = 'ekyc/fetch/fastag_bill';
   static const String utilityBillFetch = 'ekyc/fetch/bill';
   static const String creditCardBillFetch = 'inspay/credit_card/bill_fetch';
@@ -53,4 +59,7 @@ abstract final class AppEndpoints {
   static const String createOrder = 'inspay/recharge/create-order';
   static const String verifyPayment = 'inspay/recharge/verify';
   static const String recentRecharges = 'inspay/recharge/latest';
+
+  // ── Version Control ───────────────────────────────────────────────────────────────────
+  static const String versionControl = 'app-versions';
 }

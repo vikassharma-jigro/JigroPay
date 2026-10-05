@@ -19,13 +19,13 @@ class RechargeCubit extends Cubit<RechargeState> {
     required VerifyRechargePaymentUseCase verifyRechargePaymentUseCase,
     required GetRecentRechargesUseCase getRecentRechargesUseCase,
     PaymentService? paymentService,
-  })  : _getOperatorAndPlansUseCase = getOperatorAndPlansUseCase,
-        _getRoffersUseCase = getRoffersUseCase,
-        _createRechargeOrderUseCase = createRechargeOrderUseCase,
-        _verifyRechargePaymentUseCase = verifyRechargePaymentUseCase,
-        _getRecentRechargesUseCase = getRecentRechargesUseCase,
-        _paymentService = paymentService ?? PaymentService(),
-        super(const RechargeInitial());
+  }) : _getOperatorAndPlansUseCase = getOperatorAndPlansUseCase,
+       _getRoffersUseCase = getRoffersUseCase,
+       _createRechargeOrderUseCase = createRechargeOrderUseCase,
+       _verifyRechargePaymentUseCase = verifyRechargePaymentUseCase,
+       _getRecentRechargesUseCase = getRecentRechargesUseCase,
+       _paymentService = paymentService ?? PaymentService(),
+       super(const RechargeInitial());
 
   final GetOperatorAndPlansUseCase _getOperatorAndPlansUseCase;
   final GetRoffersUseCase _getRoffersUseCase;
@@ -38,7 +38,9 @@ class RechargeCubit extends Cubit<RechargeState> {
   Future<void> loadOperatorAndPlans({required String mobileNumber}) async {
     emit(const RechargeLoading('Fetching operator & plans...'));
 
-    final result = await _getOperatorAndPlansUseCase(mobileNumber: mobileNumber);
+    final result = await _getOperatorAndPlansUseCase(
+      mobileNumber: mobileNumber,
+    );
     switch (result) {
       case Success(:final data):
         final categorised = data.categorisedPlans;
@@ -47,18 +49,19 @@ class RechargeCubit extends Cubit<RechargeState> {
             : 'All Plans';
         final initialPlans = categorised.forCategory(initialCategory);
 
-        emit(RechargeLoaded(
-          operator: data.operator,
-          categorisedPlans: categorised,
-          selectedCategory: initialCategory,
-          displayedPlans: initialPlans.isNotEmpty ? initialPlans : categorised.allPlans,
-        ));
+        emit(
+          RechargeLoaded(
+            operator: data.operator,
+            categorisedPlans: categorised,
+            selectedCategory: initialCategory,
+            displayedPlans: initialPlans.isNotEmpty
+                ? initialPlans
+                : categorised.allPlans,
+          ),
+        );
 
         // Load R-Offers in background without blocking screen load
-        _loadRoffers(
-          mobileNumber: mobileNumber,
-          opcode: data.operator.opcode,
-        );
+        _loadRoffers(mobileNumber: mobileNumber, opcode: data.operator.opcode);
 
       case Error(:final failure):
         emit(RechargeError(failure.message));
@@ -92,10 +95,12 @@ class RechargeCubit extends Cubit<RechargeState> {
         ? current.roffers
         : current.categorisedPlans.forCategory(category);
 
-    emit(current.copyWith(
-      selectedCategory: category,
-      displayedPlans: _applySearch(plans, current.searchQuery),
-    ));
+    emit(
+      current.copyWith(
+        selectedCategory: category,
+        displayedPlans: _applySearch(plans, current.searchQuery),
+      ),
+    );
   }
 
   /// Filters plans in the active category by [query].
@@ -107,13 +112,16 @@ class RechargeCubit extends Cubit<RechargeState> {
         ? current.roffers
         : current.categorisedPlans.forCategory(current.selectedCategory);
 
-    final effectiveBase =
-        basePlans.isNotEmpty ? basePlans : current.categorisedPlans.allPlans;
+    final effectiveBase = basePlans.isNotEmpty
+        ? basePlans
+        : current.categorisedPlans.allPlans;
 
-    emit(current.copyWith(
-      searchQuery: query,
-      displayedPlans: _applySearch(effectiveBase, query),
-    ));
+    emit(
+      current.copyWith(
+        searchQuery: query,
+        displayedPlans: _applySearch(effectiveBase, query),
+      ),
+    );
   }
 
   List<RechargePlanModel> _applySearch(
@@ -160,7 +168,11 @@ class RechargeCubit extends Cubit<RechargeState> {
         );
 
         switch (paymentResult) {
-          case PaymentSuccess(:final paymentId, :final orderId, :final signature):
+          case PaymentSuccess(
+            :final paymentId,
+            :final orderId,
+            :final signature,
+          ):
             emit(const RechargePaymentProcessing('Verifying payment...'));
             final verifyResult = await _verifyRechargePaymentUseCase(
               razorpayPaymentId: paymentId,
@@ -170,11 +182,13 @@ class RechargeCubit extends Cubit<RechargeState> {
 
             switch (verifyResult) {
               case Success(:final data):
-                emit(RechargePaymentSuccess(
-                  verifyResult: data,
-                  amount: plan.amount,
-                  mobileNumber: mobileNumber,
-                ));
+                emit(
+                  RechargePaymentSuccess(
+                    verifyResult: data,
+                    amount: plan.amount,
+                    mobileNumber: mobileNumber,
+                  ),
+                );
               case Error(:final failure):
                 emit(RechargeError(failure.message));
             }

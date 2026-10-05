@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jigrotech/core/constants/app_assets.dart';
 import 'package:jigrotech/core/constants/app_endpoints.dart';
 import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
@@ -264,9 +263,6 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
                   itemBuilder: (context, index) {
                     final biller = state.displayedBillers[index];
 
-                    debugPrint(
-                      "Operator Name: ${biller.name} -> Image URL: ${biller.imageUrl}",
-                    );
                     return GestureDetector(
                       onTap: () {
                         setState(() => _selectedBiller = biller);
@@ -293,19 +289,38 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
                                     biller.imageUrl != null &&
                                         biller.imageUrl!.isNotEmpty
                                     ? Image.network(
-                                        "${AppEndpoints.host}${biller.imageUrl!.trim()}",
+                                        "${AppEndpoints.getHost()}${biller.imageUrl!.trim()}",
                                         fit: BoxFit.cover,
                                         errorBuilder: (_, __, ___) {
-                                          return const Icon(
-                                            Icons.receipt_long,
-                                            color: AppColors.primary,
+                                          return Center(
+                                            child: Text(
+                                              biller.opcode
+                                                  .substring(0, 2)
+                                                  .toUpperCase(),
+                                              style: const TextStyle(
+                                                fontFamily:
+                                                    AppTypography.outfitBold,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.black,
+                                              ),
+                                            ),
                                           );
                                         },
                                       )
-                                    : Image.asset(
-                                        AppAssets.jigro,
-                                        height: 44,
-                                        width: 44,
+                                    : Center(
+                                        child: Text(
+                                          biller.opcode
+                                              .substring(0, 2)
+                                              .toUpperCase(),
+                                          style: const TextStyle(
+                                            fontFamily:
+                                                AppTypography.outfitBold,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.black,
+                                          ),
+                                        ),
                                       ),
                               ),
                             ),

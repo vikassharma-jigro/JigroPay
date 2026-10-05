@@ -10,7 +10,7 @@ import '../models/biller_model.dart';
 
 class BillPaymentRepositoryImpl implements BillPaymentRepository {
   BillPaymentRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient.instance;
+    : _apiClient = apiClient ?? ApiClient.instance;
 
   final ApiClient _apiClient;
 
@@ -19,8 +19,11 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
     required String serviceType,
   }) async {
     try {
-      final normalizedType =
-          serviceType == 'municipal' ? 'municipal_taxes' : serviceType;
+      final normalizedType = switch (serviceType.toLowerCase().trim()) {
+        'municipal' => 'municipal_taxes',
+        'water' => 'water_bill',
+        _ => serviceType,
+      };
       final response = await _apiClient.get(
         '${AppEndpoints.operatorsByType}$normalizedType',
       );
@@ -28,7 +31,8 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
       final data = response.data;
       List rawList = [];
       if (data is Map<String, dynamic>) {
-        rawList = data['data'] as List? ??
+        rawList =
+            data['data'] as List? ??
             data['operators'] as List? ??
             data['billers'] as List? ??
             [];
@@ -64,10 +68,10 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
       final normType = serviceType.toLowerCase().replaceAll('-', '_');
       if (normType == 'fastag') {
         endpoint = AppEndpoints.fastagBillFetch;
-        body = {
-          'consumer_id': consumerNumber,
-          'opcode': billerCode,
-        };
+        body = {'consumer_id': consumerNumber, 'opcode': billerCode};
+      } else if (normType == 'postpaid') {
+        endpoint = AppEndpoints.postpaidBillFetch;
+        body = {'consumer_id': consumerNumber, 'opcode': billerCode};
       } else if (normType == 'credit_card') {
         endpoint = AppEndpoints.creditCardBillFetch;
         body = {
@@ -77,10 +81,7 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
         };
       } else {
         endpoint = AppEndpoints.utilityBillFetch;
-        body = {
-          'consumer_id': consumerNumber,
-          'opcode': billerCode,
-        };
+        body = {'consumer_id': consumerNumber, 'opcode': billerCode};
       }
 
       if (extraFields != null && extraFields.isNotEmpty) {
@@ -88,6 +89,8 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
       }
 
       final response = await _apiClient.post(endpoint, data: body);
+      _apiClient.throwIfError(response);
+
       final data = response.data;
       if (data is Map<String, dynamic>) {
         final bill = BillDetailsModel.fromJson(data);
@@ -122,6 +125,7 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
         AppEndpoints.createOrder,
         data: body,
       );
+      _apiClient.throwIfError(response);
 
       final data = response.data;
       if (data is Map<String, dynamic>) {
@@ -155,6 +159,7 @@ class BillPaymentRepositoryImpl implements BillPaymentRepository {
         AppEndpoints.verifyPayment,
         data: body,
       );
+      _apiClient.throwIfError(response);
 
       final data = response.data;
       if (data is Map<String, dynamic>) {

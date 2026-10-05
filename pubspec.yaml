@@ -1,7 +1,12 @@
 name: jigrotech
 description: "A new Flutter project."
-publish_to: 'none'    
+publish_to: 'none'
+
+#------- android-------
 version: 1.0.0+7
+
+#------- ios-------
+# version: 1.0.0+1
 
 environment:
   sdk: ^3.9.2
@@ -39,6 +44,9 @@ dependencies:
   smart_auth: ^3.2.0
   flutter_widget_from_html_core: ^0.17.4
 
+  # ── Version Control ──
+  version: ^3.0.2
+
   # ── Clean Architecture / State Management ──
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
@@ -51,6 +59,7 @@ dependencies:
 
   # ── DOT env to secure the keys ──
   flutter_dotenv: ^6.0.1
+  package_info_plus: ^10.2.2
 
 
 dev_dependencies:

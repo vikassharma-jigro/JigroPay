@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jigrotech/core/mixins/safe_set_state_mixin.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -37,7 +38,8 @@ class _MobileRechargeNumberView extends StatefulWidget {
       _MobileRechargeNumberViewState();
 }
 
-class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
+class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView>
+    with SafeSetStateMixin {
   final TextEditingController _searchController = TextEditingController();
   List<Contact> _contacts = [];
   List<Contact> _filteredContacts = [];
@@ -63,7 +65,7 @@ class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
     final status = await Permission.contacts.request();
     if (!status.isGranted) {
       if (mounted) {
-        setState(() {
+        safeSetState(() {
           _permissionDenied = true;
           _isLoadingContacts = false;
         });
@@ -77,7 +79,7 @@ class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
         withThumbnail: true,
       );
       if (mounted) {
-        setState(() {
+        safeSetState(() {
           _contacts = contacts;
           _filteredContacts = contacts;
           _isLoadingContacts = false;
@@ -85,7 +87,7 @@ class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
       }
     } catch (_) {
       if (mounted) {
-        setState(() {
+        safeSetState(() {
           _isLoadingContacts = false;
         });
       }
@@ -94,7 +96,7 @@ class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
 
   void _filterContacts() {
     final query = _searchController.text.trim().toLowerCase();
-    setState(() {
+    safeSetState(() {
       if (query.isEmpty) {
         _filteredContacts = _contacts;
       } else {
@@ -201,7 +203,7 @@ class _MobileRechargeNumberViewState extends State<_MobileRechargeNumberView> {
                   ),
                 ),
                 onChanged: (value) {
-                  setState(() {});
+                  safeSetState(() {});
                   final clean = value.replaceAll(RegExp(r'\D'), '');
                   if (clean.length == 10) {
                     _navigateToPlan(clean);

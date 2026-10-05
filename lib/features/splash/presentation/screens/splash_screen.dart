@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/widgets/custom_dialogs.dart';
 import '../cubit/splash_cubit.dart';
 import '../cubit/splash_state.dart';
 
@@ -74,6 +75,20 @@ class _SplashScreenState extends State<SplashScreen>
         context.go('/dashboard');
       case SplashUnauthenticated(:final showOnboarding):
         context.go(showOnboarding ? '/onboarding' : '/login');
+      case SplashUpdateRequired(:final updateResult, :final nextState):
+        showUpdateDialog(
+          context,
+          storeUrl: updateResult.updateUrl,
+          isForceUpdate: updateResult.isForceUpdate,
+          message: updateResult.message.isNotEmpty
+              ? updateResult.message
+              : null,
+          onLater: () {
+            if (nextState != null) {
+              _navigate(nextState);
+            }
+          },
+        );
       case SplashInitial():
         break;
     }

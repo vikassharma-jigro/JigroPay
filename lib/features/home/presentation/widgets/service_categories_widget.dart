@@ -36,6 +36,20 @@ class ServiceCategoriesWidget extends StatelessWidget {
         onTap: () => context.push('/mobile-recharge'),
       ),
       ServiceItem(
+        title: 'Postpaid\nBill',
+        iconPath: AppAssets.mobileRecharge,
+        iconHeight: 32,
+        onTap: () => context.push(
+          '/bill-payment',
+          extra: {
+            'serviceType': 'postpaid',
+            'title': 'Postpaid Mobile Bill',
+            'accountNumberLabel': 'Mobile Number',
+            'accountNumberHint': 'Enter 10-digit mobile number',
+          },
+        ),
+      ),
+      ServiceItem(
         title: 'Electricity\nBill',
         iconPath: AppAssets.electricity1,
         iconHeight: 32,
@@ -64,6 +78,9 @@ class ServiceCategoriesWidget extends StatelessWidget {
           },
         ),
       ),
+    ];
+
+    final List<ServiceItem> row2 = [
       ServiceItem(
         title: 'Water\nBill',
         iconPath: AppAssets.water1,
@@ -72,29 +89,10 @@ class ServiceCategoriesWidget extends StatelessWidget {
         onTap: () => context.push(
           '/bill-payment',
           extra: {
-            'serviceType': 'water',
+            'serviceType': 'water_bill',
             'title': 'Water Bill',
             'accountNumberLabel': 'Consumer / Connection ID',
             'accountNumberHint': 'Enter connection or account number',
-          },
-        ),
-      ),
-    ];
-
-    final List<ServiceItem> row2 = [
-      ServiceItem(
-        title: 'Credit Card\nBill',
-        iconPath: AppAssets.crCard,
-        iconHeight: 32,
-        iconWidth: 32,
-        tintColor: const Color(0xFFEC4899),
-        onTap: () => context.push(
-          '/bill-payment',
-          extra: {
-            'serviceType': 'credit_card',
-            'title': 'Credit Card Bill',
-            'accountNumberLabel': 'Last 4 Digits of Card',
-            'accountNumberHint': 'Enter last 4 digits of credit card',
           },
         ),
       ),
@@ -622,7 +620,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                             context.push(
                               '/bill-payment',
                               extra: {
-                                'serviceType': 'water',
+                                'serviceType': 'water_bill',
                                 'title': 'Water Bill',
                                 'accountNumberLabel':
                                     'Consumer / Connection ID',

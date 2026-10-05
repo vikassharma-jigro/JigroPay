@@ -104,7 +104,7 @@ class _SearchScreenState extends State<SearchScreen>
       icon: IconsaxPlusLinear.drop,
       routePath: '/bill-payment',
       routeExtra: {
-        'serviceType': 'water',
+        'serviceType': 'water_bill',
         'title': 'Water Bill',
         'accountNumberLabel': 'RR Number / Consumer ID',
         'accountNumberHint': 'Enter RR Number or Consumer ID',
@@ -461,6 +461,7 @@ class _SearchScreenState extends State<SearchScreen>
                         const SizedBox(height: 10),
                     itemBuilder: (context, index) {
                       final item = filteredList[index];
+
                       return GestureDetector(
                         onTap: () => _navigateToService(item),
                         child: Container(

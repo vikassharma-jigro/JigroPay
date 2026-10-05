@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_typography.dart';
 
@@ -278,6 +279,51 @@ Future<void> showNoInternetDialog(BuildContext context) {
     customIcon: Icons.wifi_off_rounded,
     barrierDismissible: false,
     primaryButtonText: 'OK',
+  );
+}
+
+/// App update dialog.
+/// If [isForceUpdate] is true, dismissal and back button navigation are disabled.
+Future<void> showUpdateDialog(
+  BuildContext context, {
+  required String storeUrl,
+  required bool isForceUpdate,
+  String? title,
+  String? message,
+  VoidCallback? onLater,
+}) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: !isForceUpdate,
+    barrierColor: Colors.black54,
+    builder: (dialogCtx) => PopScope(
+      canPop: !isForceUpdate,
+      child: AppDialog(
+        type: AppDialogType.info,
+        customIcon: Icons.system_update_rounded,
+        title: title ?? (isForceUpdate ? 'Update Required' : 'New Update Available'),
+        message: message ??
+            (isForceUpdate
+                ? 'A new version of JigroPay is required to continue. Please update to the latest version.'
+                : 'A new version of JigroPay is available with improvements and fixes.'),
+        primaryButtonText: 'Update Now',
+        onPrimaryPressed: () async {
+          if (storeUrl.isNotEmpty) {
+            final uri = Uri.parse(storeUrl);
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri, mode: LaunchMode.externalApplication);
+            }
+          }
+        },
+        secondaryButtonText: isForceUpdate ? null : 'Later',
+        onSecondaryPressed: isForceUpdate
+            ? null
+            : () {
+                Navigator.of(dialogCtx).pop();
+                onLater?.call();
+              },
+      ),
+    ),
   );
 }
 

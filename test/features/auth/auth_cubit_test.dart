@@ -52,7 +52,9 @@ class FakeAuthRepository implements AuthRepository {
   @override
   Future<Result<UserModel>> getProfile() async {
     if (shouldSucceed) {
-      return const Success(UserModel(id: 1, name: 'Profile User', phone: '9876543210'));
+      return const Success(
+        UserModel(id: 1, name: 'Profile User', phone: '9876543210'),
+      );
     }
     return Error(ServerFailure(errorMessage));
   }
@@ -64,7 +66,9 @@ class FakeAuthRepository implements AuthRepository {
     String? profileImage,
   }) async {
     if (shouldSucceed) {
-      return Success(UserModel(id: 1, name: name, phone: '9876543210', email: email));
+      return Success(
+        UserModel(id: 1, name: name, phone: '9876543210', email: email),
+      );
     }
     return Error(ServerFailure(errorMessage));
   }
@@ -107,7 +111,10 @@ void main() {
     test('emits [AuthLoading, AuthOtpSent] on success', () async {
       final expected = [
         const AuthLoading(),
-        const AuthOtpSent(phone: '9876543210', message: 'OTP Sent Successfully'),
+        const AuthOtpSent(
+          phone: '9876543210',
+          message: 'OTP Sent Successfully',
+        ),
       ];
 
       expectLater(authCubit.stream, emitsInOrder(expected));
@@ -149,10 +156,7 @@ void main() {
       fakeRepo.shouldSucceed = false;
       fakeRepo.errorMessage = 'Invalid OTP';
 
-      final expected = [
-        const AuthLoading(),
-        const AuthError('Invalid OTP'),
-      ];
+      final expected = [const AuthLoading(), const AuthError('Invalid OTP')];
 
       expectLater(authCubit.stream, emitsInOrder(expected));
       await authCubit.verifyOtp(
@@ -185,10 +189,7 @@ void main() {
 
   group('logout', () {
     test('emits [AuthLoading, AuthUnauthenticated]', () async {
-      final expected = [
-        const AuthLoading(),
-        const AuthUnauthenticated(),
-      ];
+      final expected = [const AuthLoading(), const AuthUnauthenticated()];
 
       expectLater(authCubit.stream, emitsInOrder(expected));
       await authCubit.logout();

@@ -27,33 +27,36 @@ class HomeHeaderWidget extends StatelessWidget {
                 if (state is AuthAuthenticated) {
                   avatarUrl = state.user.profileImageUrl;
                 }
-                return Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.secondary.withValues(alpha: 0.12),
-                    border: Border.all(
-                      color: AppColors.secondary.withValues(alpha: 0.3),
-                      width: 1.5,
+                return InkWell(
+                  onTap: () => context.push('/profile'),
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.secondary.withValues(alpha: 0.12),
+                      border: Border.all(
+                        color: AppColors.secondary.withValues(alpha: 0.3),
+                        width: 1.5,
+                      ),
                     ),
-                  ),
-                  child: ClipOval(
-                    child: (avatarUrl != null && avatarUrl.startsWith('http'))
-                        ? Image.network(
-                            avatarUrl,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(
+                    child: ClipOval(
+                      child: (avatarUrl != null && avatarUrl.startsWith('http'))
+                          ? Image.network(
+                              avatarUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Icon(
+                                Icons.person,
+                                color: AppColors.secondary,
+                                size: 24,
+                              ),
+                            )
+                          : const Icon(
                               Icons.person,
                               color: AppColors.secondary,
                               size: 24,
                             ),
-                          )
-                        : const Icon(
-                            Icons.person,
-                            color: AppColors.secondary,
-                            size: 24,
-                          ),
+                    ),
                   ),
                 );
               },

@@ -191,10 +191,12 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen>
       final File imgFile = File('${tempDir.path}/$fileName');
       await imgFile.writeAsBytes(pngBytes);
 
-      await Share.shareXFiles(
-        [XFile(imgFile.path)],
-        text: "JigroPay Payment Receipt - $toName",
-        subject: "JigroPay Payment Receipt - $toName",
+      await SharePlus.instance.share(
+        ShareParams(
+          files: [XFile(imgFile.path)],
+          text: "JigroPay Payment Receipt - $toName",
+          subject: "JigroPay Payment Receipt - $toName",
+        ),
       );
     } catch (e) {
       showErrorToast("Error sharing receipt: $e");

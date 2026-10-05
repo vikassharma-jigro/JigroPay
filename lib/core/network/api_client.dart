@@ -8,15 +8,6 @@ import '../errors/exceptions.dart';
 import '../services/storage_service.dart';
 import '../utils/api_message_cleaner.dart';
 
-/// Central Dio HTTP client for JigroPay.
-///
-/// Key design decisions:
-/// - **No [BuildContext]** in any method — loading/error state is the Cubit's job.
-/// - **No [Get.dialog]** — eliminated entirely.
-/// - Auto-injects `Authorization: Bearer <token>` via [InterceptorsWrapper].
-/// - On `401` → adds to [unauthorizedStream]; [app.dart] listens and triggers logout.
-/// - Returns raw [Response] to callers; repositories interpret the status codes.
-/// - [cleanApiMessage] is now in its own util, not embedded here.
 class ApiClient {
   ApiClient._();
   static final ApiClient instance = ApiClient._();
@@ -168,11 +159,7 @@ class ApiClient {
   }
 
   /// HTTP PUT.
-  Future<Response> put(
-    String path, {
-    dynamic data,
-    Options? options,
-  }) async {
+  Future<Response> put(String path, {dynamic data, Options? options}) async {
     await _assertConnected();
     try {
       return await _dio.put(path, data: data ?? {}, options: options);
@@ -184,10 +171,7 @@ class ApiClient {
   }
 
   /// HTTP DELETE.
-  Future<Response> delete(
-    String path, {
-    Options? options,
-  }) async {
+  Future<Response> delete(String path, {Options? options}) async {
     await _assertConnected();
     try {
       return await _dio.delete(path, options: options);
@@ -218,10 +202,16 @@ class ApiClient {
       );
     }
 
-    // Check application-level failure flag (status: false)
+    // Check application-level failure flag (status: false / Failure / failure)
     if (response.data is Map) {
-      final status = response.data['status'];
-      if (status == false || status == 'false' || status == 0 || status == 'Failure') {
+      final status = response.data['status']?.toString().toLowerCase();
+      final success = response.data['success']?.toString().toLowerCase();
+      if (status == 'failure' ||
+          status == 'failed' ||
+          status == 'false' ||
+          status == '0' ||
+          success == 'false' ||
+          success == '0') {
         final msg = cleanApiMessage(response.data);
         throw ServerException(
           message: msg.isNotEmpty ? msg : 'Request failed.',
@@ -235,8 +225,9 @@ class ApiClient {
 
   Future<void> _assertConnected() async {
     try {
-      final result = await InternetAddress.lookup('google.com')
-          .timeout(const Duration(seconds: 5));
+      final result = await InternetAddress.lookup(
+        'google.com',
+      ).timeout(const Duration(seconds: 5));
       if (result.isEmpty || result[0].rawAddress.isEmpty) {
         throw const NetworkException();
       }

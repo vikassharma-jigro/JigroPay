@@ -1,6 +1,4 @@
-/// Typed recharge plan model.
-///
-/// Covers both mobile and DTH plans returned by the plans API.
+
 class RechargePlanModel {
   const RechargePlanModel({
     required this.id,
