@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
+    //. Animation
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -75,6 +76,8 @@ class _SplashScreenState extends State<SplashScreen>
         context.go('/dashboard');
       case SplashUnauthenticated(:final showOnboarding):
         context.go(showOnboarding ? '/onboarding' : '/login');
+
+      //. Version Check
       case SplashUpdateRequired(:final updateResult, :final nextState):
         showUpdateDialog(
           context,
