@@ -45,18 +45,25 @@ class _OtpScreenState extends State<OtpScreen> with UiFeedbackMixin {
   Future<void> _initFcmToken() async {
     try {
       final savedToken = await StorageService.instance.getFcmToken();
-      if (savedToken != null && mounted) {
+      if (savedToken != null && savedToken.isNotEmpty && mounted) {
         setState(() {
           _fcmToken = savedToken;
         });
         return;
       }
       if (!kIsWeb && Platform.isIOS) {
-        final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+        String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+        int attempts = 0;
+        while (apnsToken == null && attempts < 5) {
+          await Future.delayed(const Duration(seconds: 1));
+          apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+          attempts++;
+        }
         if (apnsToken == null) return;
       }
       final token = await FirebaseMessaging.instance.getToken();
       if (token != null && mounted) {
+        await StorageService.instance.setFcmToken(token);
         setState(() {
           _fcmToken = token;
         });

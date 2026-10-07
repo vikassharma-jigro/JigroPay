@@ -36,6 +36,16 @@ mixin UiFeedbackMixin {
     );
   }
 
+  void showInfoToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      gravity: ToastGravity.TOP,
+      backgroundColor: Colors.yellow,
+      textColor: Colors.black,
+      fontSize: 16,
+    );
+  }
+
   //. Hide Keyboard
   void hideKeyboard([BuildContext? context]) {
     if (context != null) {

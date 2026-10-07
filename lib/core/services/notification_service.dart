@@ -37,8 +37,6 @@ class NotificationService {
 
   // ── Initialization ────────────────────────────────────────────────────────────
 
-  /// Initialize FCM, local notifications and permission request.
-  /// Call **once** from [main()] after Firebase is initialized.
   static Future<void> initialize() async {
     // 1. Register background handler
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -56,29 +54,34 @@ class NotificationService {
     try {
       if (!kIsWeb && Platform.isIOS) {
         // On iOS, an APNS token must be registered with Apple before FCM can generate a registration token.
-        // In the simulator or immediately on cold start, APNS token might not be ready yet.
+        // It may take several seconds on first launch on a real device.
         String? apnsToken = await messaging.getAPNSToken();
-        if (apnsToken == null) {
-          await Future.delayed(const Duration(seconds: 2));
+        int attempts = 0;
+        while (apnsToken == null && attempts < 10) {
+          await Future.delayed(const Duration(seconds: 1));
           apnsToken = await messaging.getAPNSToken();
+          attempts++;
         }
+
         if (apnsToken == null) {
           debugPrint(
-            '[FCM] APNS token not set yet (normal on iOS Simulator). '
-            'FCM registration will complete when APNS token becomes available.',
+            '[FCM] APNS token is still null after $attempts attempts.\n'
+            'IMPORTANT: iOS Simulators cannot receive remote APNs push notifications from Firebase.\n'
+            'Please test on a physical iOS device with an active Apple Developer profile and APNs Key (.p8).',
           );
         } else {
+          debugPrint('[FCM] APNS token obtained successfully.');
           final token = await messaging.getToken();
           if (token != null) {
             await StorageService.instance.setFcmToken(token);
-            debugPrint('[FCM] token=$token');
+            debugPrint('[FCM] iOS FCM registration token: $token');
           }
         }
       } else {
         final token = await messaging.getToken();
         if (token != null) {
           await StorageService.instance.setFcmToken(token);
-          debugPrint('[FCM] token=$token');
+          debugPrint('[FCM] FCM registration token: $token');
         }
       }
     } catch (e) {
@@ -114,11 +117,11 @@ class NotificationService {
         >()
         ?.createNotificationChannel(_channel);
 
-    // 6. Set iOS foreground presentation
+    // 6. Set iOS foreground presentation (delegated to flutter_local_notifications for rich media support)
     await messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
+      alert: false,
       badge: true,
-      sound: true,
+      sound: false,
     );
 
     // 7. Listen for foreground messages

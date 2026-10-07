@@ -27,10 +27,8 @@ class PlanDetailsBottomSheet extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (context) => PlanDetailsBottomSheet(
-        plan: plan,
-        onProceedToPay: onProceedToPay,
-      ),
+      builder: (context) =>
+          PlanDetailsBottomSheet(plan: plan, onProceedToPay: onProceedToPay),
     );
   }
 
@@ -85,13 +83,13 @@ class PlanDetailsBottomSheet extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Expanded(
-                    child: _buildMetric(
-                      title: 'Data',
-                      value: plan.data ?? 'N/A',
-                      icon: Icons.data_usage_outlined,
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: _buildMetric(
+                  //     title: 'Data',
+                  //     value: plan.data ?? 'N/A',
+                  //     icon: Icons.data_usage_outlined,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -126,8 +124,11 @@ class PlanDetailsBottomSheet extends StatelessWidget {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.phone_outlined,
-                              size: 16, color: AppColors.primary),
+                          const Icon(
+                            Icons.phone_outlined,
+                            size: 16,
+                            color: AppColors.primary,
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             'Talktime: ${plan.talktime}',

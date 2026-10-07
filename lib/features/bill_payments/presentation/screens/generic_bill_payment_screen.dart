@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jigrotech/core/constants/app_endpoints.dart';
+import 'package:jigrotech/core/mixins/safe_set_state_mixin.dart';
 import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -74,7 +75,7 @@ class _GenericBillPaymentView extends StatefulWidget {
 }
 
 class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
-    with UiFeedbackMixin {
+    with UiFeedbackMixin, SafeSetStateMixin {
   final TextEditingController _searchController = TextEditingController();
   final TextEditingController _consumerNumberController =
       TextEditingController();
@@ -109,6 +110,17 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
             ),
           );
         } else if (state is BillPaymentError) {
+          final message = state.message.toLowerCase();
+          final isPostpaid = widget.serviceType.toLowerCase() == 'postpaid';
+
+          if (isPostpaid && message.contains('prepaid')) {
+            showInfoToast(
+              'Numeber belongs to prepaid. Redirecting to Mobie Recharge...',
+            );
+            Future.delayed(const Duration(seconds: 2), () {
+              safeSetState(() => context.go('/mobile-recharge'));
+            });
+          }
           showErrorToast(state.message);
         }
       },
@@ -131,7 +143,7 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
                       serviceType: widget.serviceType,
                     );
                   } else if (_selectedBiller != null) {
-                    setState(() => _selectedBiller = null);
+                    safeSetState(() => _selectedBiller = null);
                   } else {
                     context.pop();
                   }
@@ -265,7 +277,7 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
 
                     return GestureDetector(
                       onTap: () {
-                        setState(() => _selectedBiller = biller);
+                        safeSetState(() => _selectedBiller = biller);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(14),
@@ -402,7 +414,7 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
                   ),
                 ),
                 TextButton(
-                  onPressed: () => setState(() => _selectedBiller = null),
+                  onPressed: () => safeSetState(() => _selectedBiller = null),
                   child: const Text(
                     'Change',
                     style: TextStyle(color: AppColors.primary),
