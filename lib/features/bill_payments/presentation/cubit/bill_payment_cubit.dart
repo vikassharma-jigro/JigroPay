@@ -2,6 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/errors/result.dart';
 import '../../../../core/services/payment_service.dart';
 import '../../../../core/utils/currency_formatter.dart';
+import '../../../recharge/data/models/recharge_plan_model.dart';
+import '../../../recharge/data/repositories/recharge_repository_impl.dart';
+import '../../../recharge/domain/usecases/get_dth_plans_usecase.dart';
 import '../../data/models/bill_details_model.dart';
 import '../../data/models/biller_model.dart';
 import '../../domain/usecases/fetch_bill_details_usecase.dart';
@@ -14,13 +17,17 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
     required FetchBillersUseCase fetchBillersUseCase,
     required FetchBillDetailsUseCase fetchBillDetailsUseCase,
     required PayBillUseCase payBillUseCase,
+    GetDthPlansUseCase? getDthPlansUseCase,
     PaymentService? paymentService,
-  })  : _fetchBillersUseCase = fetchBillersUseCase,
-        _fetchBillDetailsUseCase = fetchBillDetailsUseCase,
-        _payBillUseCase = payBillUseCase,
-        _paymentService = paymentService ?? PaymentService(),
-        super(const BillPaymentInitial());
+  }) : _fetchBillersUseCase = fetchBillersUseCase,
+       _fetchBillDetailsUseCase = fetchBillDetailsUseCase,
+       _payBillUseCase = payBillUseCase,
+       _paymentService = paymentService ?? PaymentService(),
+       _getDthPlansUseCase =
+           getDthPlansUseCase ?? GetDthPlansUseCase(RechargeRepositoryImpl()),
+       super(const BillPaymentInitial());
 
+  final GetDthPlansUseCase _getDthPlansUseCase;
   final FetchBillersUseCase _fetchBillersUseCase;
   final FetchBillDetailsUseCase _fetchBillDetailsUseCase;
   final PayBillUseCase _payBillUseCase;
@@ -33,10 +40,7 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
     final result = await _fetchBillersUseCase(serviceType: serviceType);
     switch (result) {
       case Success(:final data):
-        emit(BillersLoaded(
-          billers: data,
-          displayedBillers: data,
-        ));
+        emit(BillersLoaded(billers: data, displayedBillers: data));
       case Error(:final failure):
         emit(BillPaymentError(failure.message));
     }
@@ -48,10 +52,9 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
     final current = state as BillersLoaded;
 
     if (query.trim().isEmpty) {
-      emit(current.copyWith(
-        searchQuery: '',
-        displayedBillers: current.billers,
-      ));
+      emit(
+        current.copyWith(searchQuery: '', displayedBillers: current.billers),
+      );
       return;
     }
 
@@ -62,10 +65,7 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
       return nameMatch || stateMatch;
     }).toList();
 
-    emit(current.copyWith(
-      searchQuery: query,
-      displayedBillers: filtered,
-    ));
+    emit(current.copyWith(searchQuery: query, displayedBillers: filtered));
   }
 
   /// Fetches bill details for a given consumer ID before payment.
@@ -86,14 +86,112 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
 
     switch (result) {
       case Success(:final data):
-        emit(BillFetched(
-          billDetails: data,
-          selectedBiller: biller,
-          consumerNumber: consumerNumber,
-        ));
+        emit(
+          BillFetched(
+            billDetails: data,
+            selectedBiller: biller,
+            consumerNumber: consumerNumber,
+          ),
+        );
       case Error(:final failure):
         emit(BillPaymentError(failure.message));
     }
+  }
+
+  Future<void> fetchPlans({
+    required BillerModel biller,
+    required String consumerNumber,
+  }) async {
+    emit(const BillPaymentLoading('Fetching DTH plans...'));
+
+    final result = await _getDthPlansUseCase(
+      dthNumber: consumerNumber,
+      opcode: biller.opcode,
+    );
+
+    switch (result) {
+      case Success(:final data):
+        final initialCategory = data.categories.isNotEmpty
+            ? data.categories.first
+            : 'All Plans';
+        final initialPlans = data.forCategory(initialCategory);
+
+        emit(
+          DthPlanFetched(
+            plans: data,
+            selectedBiller: biller,
+            consumerNumber: consumerNumber,
+            selectedCategory: initialCategory,
+            displayedPlans: initialPlans.isNotEmpty
+                ? initialPlans
+                : data.allPlans,
+          ),
+        );
+      case Error(:final failure):
+        emit(BillPaymentError(failure.message));
+    }
+  }
+
+  void selectDthPlanCategory(String category) {
+    if (state is! DthPlanFetched) return;
+    final current = state as DthPlanFetched;
+    final plans = current.plans.forCategory(category);
+    final effective = plans.isNotEmpty ? plans : current.plans.allPlans;
+
+    emit(
+      current.copyWith(
+        selectedCategory: category,
+        displayedPlans: _filterDthPlans(effective, current.searchQuery),
+      ),
+    );
+  }
+
+  void searchDthPlans(String query) {
+    if (state is! DthPlanFetched) return;
+    final current = state as DthPlanFetched;
+    final basePlans = current.plans.forCategory(current.selectedCategory);
+    final effective = basePlans.isNotEmpty ? basePlans : current.plans.allPlans;
+
+    emit(
+      current.copyWith(
+        searchQuery: query,
+        displayedPlans: _filterDthPlans(effective, query),
+      ),
+    );
+  }
+
+  List<RechargePlanModel> _filterDthPlans(
+    List<RechargePlanModel> plans,
+    String query,
+  ) {
+    if (query.trim().isEmpty) return plans;
+    final q = query.trim().toLowerCase();
+    return plans.where((plan) {
+      final amountMatch = plan.amount.toString().contains(q);
+      final descMatch = plan.description.toLowerCase().contains(q);
+      final validityMatch = (plan.validity ?? '').toLowerCase().contains(q);
+      return amountMatch || descMatch || validityMatch;
+    }).toList();
+  }
+
+  /// Selects a plan from DTH list and transitions to BillFetched for confirmation & payment
+  void selectPlan(RechargePlanModel plan) {
+    if (state is! DthPlanFetched) return;
+    final current = state as DthPlanFetched;
+
+    emit(
+      BillFetched(
+        billDetails: BillDetailsModel(
+          fetchId: DateTime.now().millisecondsSinceEpoch.toString(),
+          consumerName: current.selectedBiller.name,
+          amount: plan.amount,
+          consumerNumber: current.consumerNumber,
+          billerName: current.selectedBiller.name,
+        ),
+        selectedBiller: current.selectedBiller,
+        consumerNumber: current.consumerNumber,
+      ),
+    );
   }
 
   /// Initiates payment for a fetched bill.
@@ -111,7 +209,9 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
       consumerNumber: consumerNumber,
       amount: billDetails.amount,
       fetchId: billDetails.fetchId,
-      serviceType: serviceType,
+      serviceType: serviceType?.toLowerCase() == 'dth'
+          ? 'recharge'
+          : serviceType,
     );
 
     switch (orderResult) {
@@ -128,7 +228,11 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
         );
 
         switch (paymentResult) {
-          case PaymentSuccess(:final paymentId, :final orderId, :final signature):
+          case PaymentSuccess(
+            :final paymentId,
+            :final orderId,
+            :final signature,
+          ):
             emit(const BillPaymentProcessing('Verifying bill payment...'));
             final verifyResult = await _payBillUseCase.verifyPayment(
               paymentId: paymentId,
@@ -139,11 +243,13 @@ class BillPaymentCubit extends Cubit<BillPaymentState> {
 
             switch (verifyResult) {
               case Success(:final data):
-                emit(BillPaymentSuccess(
-                  verifyResult: data,
-                  amount: billDetails.amount,
-                  consumerName: billDetails.consumerName,
-                ));
+                emit(
+                  BillPaymentSuccess(
+                    verifyResult: data,
+                    amount: billDetails.amount,
+                    consumerName: billDetails.consumerName,
+                  ),
+                );
               case Error(:final failure):
                 emit(BillPaymentError(failure.message));
             }

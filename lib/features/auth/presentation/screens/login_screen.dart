@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> with UiFeedbackMixin {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(child: Image.asset(AppAssets.lMobile)),
+                    Center(child: Image.asset(AppAssets.loginPoster)),
                     const SizedBox(height: 10),
                     Center(
                       child: Row(

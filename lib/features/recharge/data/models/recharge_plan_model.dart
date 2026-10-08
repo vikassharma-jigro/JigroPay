@@ -29,25 +29,132 @@ class RechargePlanModel {
   final String? tag;
 
   factory RechargePlanModel.fromJson(Map<String, dynamic> json) {
+    // Check if DTH PricingList exists with multiple prices
+    final pricingList = json['PricingList'] ?? json['pricing_list'] ?? json['pricing'];
+    Map<String, dynamic>? firstPricing;
+    if (pricingList is List && pricingList.isNotEmpty && pricingList.first is Map) {
+      firstPricing = Map<String, dynamic>.from(pricingList.first);
+    }
+
+    final planName = _str(json['PlanName'] ?? json['plan_name'] ?? json['name']);
+    final channels = _str(json['Channels'] ?? json['channels']);
+    final paidChannels = _str(json['PaidChannels'] ?? json['paid_channels']);
+    final hdChannels = _str(json['HdChannels'] ?? json['hd_channels']);
+
+    final List<String> channelParts = [];
+    if (channels != null) channelParts.add(channels);
+    if (paidChannels != null) channelParts.add(paidChannels);
+    if (hdChannels != null && hdChannels != 'No HD Channels') {
+      channelParts.add(hdChannels);
+    }
+    final channelSummary = channelParts.join(' • ');
+
     return RechargePlanModel(
-      id: (json['id'] ?? json['plan_id'] ?? json['recharge_id'] ?? '').toString(),
-      amount: _double(json['rs'] ?? json['amount'] ?? json['price'] ?? json['recharge_amount']),
+      id: (json['id'] ?? json['plan_id'] ?? json['recharge_id'] ?? planName ?? '').toString(),
+      amount: _double(
+        json['rs'] ??
+        json['amount'] ??
+        json['Amount'] ??
+        json['price'] ??
+        json['Price'] ??
+        json['recharge_amount'] ??
+        firstPricing?['Amount'] ??
+        firstPricing?['amount'] ??
+        firstPricing?['rs'],
+      ),
       description: (json['desc'] ??
               json['description'] ??
               json['plan_description'] ??
+              (planName != null && channelSummary.isNotEmpty
+                  ? '$planName\n$channelSummary'
+                  : planName) ??
               json['details'] ??
               '')
           .toString(),
-      validity: _str(json['validity'] ?? json['plan_validity']),
+      validity: _str(
+        json['validity'] ??
+        json['plan_validity'] ??
+        json['Month'] ??
+        json['month'] ??
+        firstPricing?['Month'] ??
+        firstPricing?['month'],
+      ),
       talktime: _str(json['talktime'] ?? json['talk_time'] ?? json['calling']),
-      data: _str(json['data'] ?? json['plan_data'] ?? json['internet']),
+      data: _str(
+        json['data'] ??
+        json['plan_data'] ??
+        json['internet'] ??
+        (channels != null && paidChannels != null
+            ? '$channels ($paidChannels)'
+            : channels),
+      ),
       sms: _str(json['sms']),
-      category: _str(json['type'] ?? json['category'] ?? json['plan_type']),
+      category: _str(json['type'] ?? json['category'] ?? json['plan_type'] ?? json['Language']),
       opcode: _str(json['opcode'] ?? json['operator_code']),
       circle: _str(json['circle'] ?? json['circle_code']),
       isPopular: _bool(json['is_popular'] ?? json['popular']),
-      tag: _str(json['tag'] ?? json['label'] ?? json['badge']),
+      tag: _str(
+        json['tag'] ??
+        json['label'] ??
+        json['badge'] ??
+        (hdChannels != null && hdChannels != 'No HD Channels'
+            ? hdChannels
+            : channels),
+      ),
     );
+  }
+
+  /// Parses a DTH plan JSON which may contain a [PricingList] with multiple durations.
+  /// Expands each pricing tier into an individual selectable [RechargePlanModel].
+  static List<RechargePlanModel> fromDthPlanJson(
+    Map<String, dynamic> json, {
+    String? category,
+  }) {
+    final planName = _str(json['PlanName'] ?? json['plan_name'] ?? json['name'] ?? json['desc']) ?? 'DTH Plan';
+    final channels = _str(json['Channels'] ?? json['channels']);
+    final paidChannels = _str(json['PaidChannels'] ?? json['paid_channels']);
+    final hdChannels = _str(json['HdChannels'] ?? json['hd_channels']);
+    final pricingList = json['PricingList'] ?? json['pricing_list'] ?? json['pricing'];
+
+    final List<String> channelParts = [];
+    if (channels != null) channelParts.add(channels);
+    if (paidChannels != null) channelParts.add(paidChannels);
+    if (hdChannels != null && hdChannels != 'No HD Channels') {
+      channelParts.add(hdChannels);
+    }
+    final channelSummary = channelParts.join(' • ');
+
+    final tag = (hdChannels != null && hdChannels != 'No HD Channels')
+        ? hdChannels
+        : channels;
+
+    if (pricingList is List && pricingList.isNotEmpty) {
+      final List<RechargePlanModel> plans = [];
+      for (final p in pricingList) {
+        if (p is Map<String, dynamic> || p is Map) {
+          final pMap = Map<String, dynamic>.from(p as Map);
+          final amount = _double(pMap['Amount'] ?? pMap['amount'] ?? pMap['rs']);
+          final month = _str(pMap['Month'] ?? pMap['month'] ?? pMap['validity']);
+
+          plans.add(
+            RechargePlanModel(
+              id: '${planName}_${month ?? amount}',
+              amount: amount,
+              description: channelSummary.isNotEmpty
+                  ? '$planName\n$channelSummary'
+                  : planName,
+              validity: month,
+              data: channels,
+              category: category,
+              tag: tag,
+            ),
+          );
+        }
+      }
+      if (plans.isNotEmpty) return plans;
+    }
+
+    return [RechargePlanModel.fromJson(json)];
   }
 
   Map<String, dynamic> toJson() => {
@@ -73,7 +180,7 @@ class RechargePlanModel {
   int get hashCode => id.hashCode;
 }
 
-/// Holds categorised recharge plans (e.g. Talktime, Data, Combos).
+/// Holds categorised recharge plans (e.g. Talktime, Data, Combos, or DTH Languages).
 class CategorisedPlans {
   const CategorisedPlans(this.plans);
 
@@ -82,39 +189,120 @@ class CategorisedPlans {
   bool get isEmpty => plans.isEmpty;
   bool get isNotEmpty => plans.isNotEmpty;
 
-  List<String> get categories => plans.keys.toList();
+  List<String> get categories {
+    final keys = plans.keys.toList();
+    if (keys.length > 1 && !keys.contains('All Plans')) {
+      return ['All Plans', ...keys];
+    }
+    return keys;
+  }
 
   List<RechargePlanModel> get allPlans =>
       plans.values.expand((list) => list).toList();
 
-  List<RechargePlanModel> forCategory(String category) =>
-      plans[category] ?? [];
+  List<RechargePlanModel> forCategory(String category) {
+    if (category == 'All Plans' && !plans.containsKey('All Plans')) {
+      return allPlans;
+    }
+    return plans[category] ?? [];
+  }
 
   /// Parses the API response into a [CategorisedPlans] object.
-  ///
-  /// Handles both `Map<category, List<plan>>` and bare `List<plan>` structures.
+  /// Handles:
+  /// - DTH Language groups: `[ { "Language": "Hindi", "Details": [ ... ] } ]`
+  /// - Mobile category maps: `{ "Truly Unlimited": [ ... ], "Data": [ ... ] }`
+  /// - Flat plan lists: `[ { "rs": 299, ... } ]`
   factory CategorisedPlans.fromApiResponse(Map<String, dynamic> response) {
-    final raw = response['data'] ?? response['plans'] ?? response;
+    dynamic raw = response['data'] ?? response['records'] ?? response['plans'] ?? response;
 
+    // If raw is a Map wrapping records/plans, unpack it
     if (raw is Map) {
-      final result = <String, List<RechargePlanModel>>{};
+      if (raw.containsKey('records') && raw['records'] is List) {
+        raw = raw['records'];
+      } else if (raw.length == 1 && raw.values.first is List) {
+        final firstKey = raw.keys.first.toString().toLowerCase();
+        if (firstKey == 'data' || firstKey == 'records' || firstKey == 'plans' || firstKey == 'details') {
+          raw = raw.values.first;
+        }
+      }
+    }
+
+    final result = <String, List<RechargePlanModel>>{};
+
+    // 1. Check if raw is a List
+    if (raw is List) {
+      for (final item in raw) {
+        if (item is Map<String, dynamic> || item is Map) {
+          final itemMap = Map<String, dynamic>.from(item as Map);
+          final language = _str(itemMap['Language'] ?? itemMap['language'] ?? itemMap['category'] ?? itemMap['Category']);
+          final details = itemMap['Details'] ?? itemMap['details'] ?? itemMap['plans'] ?? itemMap['Plans'];
+
+          if (details is List) {
+            // DTH Group by Language
+            final categoryName = language ?? 'All Plans';
+            final categoryPlans = <RechargePlanModel>[];
+
+            for (final detail in details) {
+              if (detail is Map<String, dynamic> || detail is Map) {
+                final dMap = Map<String, dynamic>.from(detail as Map);
+                categoryPlans.addAll(
+                  RechargePlanModel.fromDthPlanJson(dMap, category: categoryName),
+                );
+              }
+            }
+
+            if (categoryPlans.isNotEmpty) {
+              result.putIfAbsent(categoryName, () => []).addAll(categoryPlans);
+            }
+          } else {
+            // Flat plan item in list
+            final parsedPlans = RechargePlanModel.fromDthPlanJson(
+              itemMap,
+              category: language ?? 'All Plans',
+            );
+            result.putIfAbsent(language ?? 'All Plans', () => []).addAll(parsedPlans);
+          }
+        }
+      }
+
+      if (result.isNotEmpty) {
+        return CategorisedPlans(result);
+      }
+    }
+
+    // 2. Check if raw is a Map of categories -> lists
+    if (raw is Map) {
       raw.forEach((key, value) {
         if (value is List) {
-          result[key.toString()] = value
-              .whereType<Map<String, dynamic>>()
-              .map(RechargePlanModel.fromJson)
-              .toList();
+          final categoryPlans = <RechargePlanModel>[];
+          for (final item in value) {
+            if (item is Map<String, dynamic> || item is Map) {
+              final itemMap = Map<String, dynamic>.from(item as Map);
+              if (itemMap.containsKey('Details') && itemMap['Details'] is List) {
+                final lang = _str(itemMap['Language']) ?? key.toString();
+                final details = itemMap['Details'] as List;
+                for (final d in details) {
+                  if (d is Map) {
+                    categoryPlans.addAll(
+                      RechargePlanModel.fromDthPlanJson(Map<String, dynamic>.from(d), category: lang),
+                    );
+                  }
+                }
+              } else if (itemMap.containsKey('PricingList') || itemMap.containsKey('PlanName')) {
+                categoryPlans.addAll(
+                  RechargePlanModel.fromDthPlanJson(itemMap, category: key.toString()),
+                );
+              } else {
+                categoryPlans.add(RechargePlanModel.fromJson(itemMap));
+              }
+            }
+          }
+          if (categoryPlans.isNotEmpty) {
+            result[key.toString()] = categoryPlans;
+          }
         }
       });
       return CategorisedPlans(result);
-    }
-
-    if (raw is List) {
-      final plans = raw
-          .whereType<Map<String, dynamic>>()
-          .map(RechargePlanModel.fromJson)
-          .toList();
-      return CategorisedPlans({'All Plans': plans});
     }
 
     return const CategorisedPlans({});

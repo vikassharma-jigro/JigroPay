@@ -2,16 +2,6 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_typography.dart';
 
-/// Primary gradient button with optional loading state and icon.
-///
-/// Usage:
-/// ```dart
-/// AppButton(
-///   label: 'Pay Now',
-///   onPressed: _pay,
-///   isLoading: state is PaymentLoading,
-/// )
-/// ```
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
@@ -23,7 +13,7 @@ class AppButton extends StatelessWidget {
     this.width,
     this.height = 52,
     this.borderRadius = 14,
-    this.gradient,
+    // this.gradient,
     this.textStyle,
   });
 
@@ -35,14 +25,14 @@ class AppButton extends StatelessWidget {
   final double? width;
   final double height;
   final double borderRadius;
-  final Gradient? gradient;
+  // final Gradient? gradient;
   final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
-    final effectiveGradient = (!isEnabled || isLoading)
-        ? const LinearGradient(colors: [Color(0xffb0b0b0), Color(0xff909090)])
-        : (gradient ?? AppColors.brandGradient);
+    // final effectiveGradient = (!isEnabled || isLoading)
+    //     ? const LinearGradient(colors: [Color(0xffb0b0b0), Color(0xff909090)])
+    //     : (gradient ?? AppColors.brandGradient);
 
     return AnimatedOpacity(
       opacity: (!isEnabled) ? 0.6 : 1.0,
@@ -52,7 +42,8 @@ class AppButton extends StatelessWidget {
         height: height,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            gradient: effectiveGradient,
+            // gradient: effectiveGradient,
+            color: AppColors.primary,
             borderRadius: BorderRadius.circular(borderRadius),
             boxShadow: (!isEnabled || isLoading)
                 ? []

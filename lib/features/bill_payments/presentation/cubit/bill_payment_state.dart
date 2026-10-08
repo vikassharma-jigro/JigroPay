@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:jigrotech/features/recharge/data/models/recharge_plan_model.dart';
 import '../../../recharge/data/models/order_model.dart';
 import '../../data/models/bill_details_model.dart';
 import '../../data/models/biller_model.dart';
@@ -94,3 +95,51 @@ final class BillPaymentError extends BillPaymentState {
   @override
   List<Object?> get props => [message];
 }
+
+class DthPlanFetched extends BillPaymentState {
+  const DthPlanFetched({
+    required this.plans,
+    required this.selectedBiller,
+    required this.consumerNumber,
+    this.selectedCategory = 'All Plans',
+    this.searchQuery = '',
+    this.displayedPlans = const [],
+  });
+
+  final CategorisedPlans plans;
+  final BillerModel selectedBiller;
+  final String consumerNumber;
+  final String selectedCategory;
+  final String searchQuery;
+  final List<RechargePlanModel> displayedPlans;
+
+  DthPlanFetched copyWith({
+    CategorisedPlans? plans,
+    BillerModel? selectedBiller,
+    String? consumerNumber,
+    String? selectedCategory,
+    String? searchQuery,
+    List<RechargePlanModel>? displayedPlans,
+  }) {
+    return DthPlanFetched(
+      plans: plans ?? this.plans,
+      selectedBiller: selectedBiller ?? this.selectedBiller,
+      consumerNumber: consumerNumber ?? this.consumerNumber,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      searchQuery: searchQuery ?? this.searchQuery,
+      displayedPlans: displayedPlans ?? this.displayedPlans,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        plans,
+        selectedBiller,
+        consumerNumber,
+        selectedCategory,
+        searchQuery,
+        displayedPlans,
+      ];
+}
+
+typedef DthPlansFetched = DthPlanFetched;

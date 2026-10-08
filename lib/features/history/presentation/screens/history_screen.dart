@@ -68,7 +68,7 @@ class _HistoryViewState extends State<_HistoryView>
     return Scaffold(
       backgroundColor: AppColors.light,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.light,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: const Text(

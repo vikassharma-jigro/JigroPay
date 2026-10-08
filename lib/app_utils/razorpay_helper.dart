@@ -120,9 +120,7 @@ class RazorpayHelper with UiFeedbackMixin {
         'contact': (contact != null && contact.isNotEmpty)
             ? contact
             : '9694870658',
-        'email': (email != null && email.isNotEmpty)
-            ? email
-            : 'user@jigropay.com',
+        'email': (email != null && email.isNotEmpty) ? email : '',
       },
       'external': {
         'wallets': ['paytm'],

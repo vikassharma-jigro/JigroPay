@@ -13,11 +13,29 @@ String cleanApiMessage(dynamic rawInput) {
   // 1. Map — scan known message keys, then nested keys, then any string value.
   if (rawInput is Map) {
     const messageKeys = [
-      'text', 'message', 'msg', 'error', 'errors', 'description',
-      'error_description', 'detail', 'details', 'reason', 'reasons',
-      'error_message', 'errorMessage', 'error_msg', 'errorMsg',
-      'statusMessage', 'status_message', 'responseMessage',
-      'response_message', 'res_msg', 'resMsg', 'info', 'response',
+      'text',
+      'message',
+      'msg',
+      'error',
+      'errors',
+      'description',
+      'error_description',
+      'detail',
+      'details',
+      'reason',
+      'reasons',
+      'error_message',
+      'errorMessage',
+      'error_msg',
+      'errorMsg',
+      'statusMessage',
+      'status_message',
+      'responseMessage',
+      'response_message',
+      'res_msg',
+      'resMsg',
+      'info',
+      'response',
     ];
 
     for (final key in messageKeys) {
@@ -126,8 +144,7 @@ String cleanApiMessage(dynamic rawInput) {
   if (match != null && match.groupCount >= 1) {
     final matchedMsg = match.group(1)?.trim() ?? '';
     if (matchedMsg.isNotEmpty && !_isTechnical(matchedMsg)) {
-      final cleaned =
-          matchedMsg.replaceAll('"', '').replaceAll("'", '').trim();
+      final cleaned = matchedMsg.replaceAll('"', '').replaceAll("'", '').trim();
       if (cleaned.isNotEmpty) return cleaned;
     }
   }
@@ -143,8 +160,7 @@ String cleanApiMessage(dynamic rawInput) {
       .replaceAll('"', '')
       .trim();
 
-  if (text.toLowerCase() == 'invalid' ||
-      text.toLowerCase() == 'invalid otp') {
+  if (text.toLowerCase() == 'invalid' || text.toLowerCase() == 'invalid otp') {
     return 'Invalid OTP. Please try again.';
   }
 

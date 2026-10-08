@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
+import 'package:jigrotech/core/widgets/app_button.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -589,98 +590,68 @@ class _ProfileScreenState extends State<ProfileScreen> with UiFeedbackMixin {
                           ? const Center(
                               child: CircularProgressIndicator.adaptive(),
                             )
-                          : Container(
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    AppColors.primary,
-                                    AppColors.secondary,
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  final name = nameController.text.trim();
-                                  final email = emailController.text.trim();
+                          : AppButton(
+                              label: 'Update Profile',
+                              onPressed: () async {
+                                final name = nameController.text.trim();
+                                final email = emailController.text.trim();
 
-                                  final nameReg = RegExp(r'^[a-zA-Z\s]+$');
-                                  final emailReg = RegExp(
-                                    r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                                final nameReg = RegExp(r'^[a-zA-Z\s]+$');
+                                final emailReg = RegExp(
+                                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                                );
+
+                                if (name.isEmpty) {
+                                  showErrorToast("Please enter your full name");
+                                  return;
+                                }
+                                if (!nameReg.hasMatch(name)) {
+                                  showErrorToast(
+                                    "Please enter a valid name (alphabets only)",
                                   );
+                                  return;
+                                }
+                                if (name.length < 2) {
+                                  showErrorToast(
+                                    "Name must be at least 2 characters long",
+                                  );
+                                  return;
+                                }
+                                if (email.isEmpty) {
+                                  showErrorToast(
+                                    "Please enter your email address",
+                                  );
+                                  return;
+                                }
+                                if (!emailReg.hasMatch(email)) {
+                                  showErrorToast(
+                                    "Please enter a valid email address",
+                                  );
+                                  return;
+                                }
 
-                                  if (name.isEmpty) {
-                                    showErrorToast(
-                                      "Please enter your full name",
-                                    );
-                                    return;
-                                  }
-                                  if (!nameReg.hasMatch(name)) {
-                                    showErrorToast(
-                                      "Please enter a valid name (alphabets only)",
-                                    );
-                                    return;
-                                  }
-                                  if (name.length < 2) {
-                                    showErrorToast(
-                                      "Name must be at least 2 characters long",
-                                    );
-                                    return;
-                                  }
-                                  if (email.isEmpty) {
-                                    showErrorToast(
-                                      "Please enter your email address",
-                                    );
-                                    return;
-                                  }
-                                  if (!emailReg.hasMatch(email)) {
-                                    showErrorToast(
-                                      "Please enter a valid email address",
-                                    );
-                                    return;
-                                  }
+                                setModalState(() => isSubmitting = true);
 
-                                  setModalState(() => isSubmitting = true);
+                                final success = await context
+                                    .read<AuthCubit>()
+                                    .updateProfile(
+                                      name: name,
+                                      email: email,
+                                      profileImage: selectedImagePath,
+                                    );
 
-                                  final success = await context
-                                      .read<AuthCubit>()
-                                      .updateProfile(
-                                        name: name,
-                                        email: email,
-                                        profileImage: selectedImagePath,
-                                      );
-
-                                  if (ctx.mounted) {
-                                    setModalState(() => isSubmitting = false);
-                                    if (success) {
-                                      showLoadingToast(
-                                        "Profile updated successfully",
-                                      );
-                                      Navigator.pop(ctx);
-                                    } else {
-                                      showErrorToast(
-                                        "Failed to update profile",
-                                      );
-                                    }
+                                if (ctx.mounted) {
+                                  setModalState(() => isSubmitting = false);
+                                  if (success) {
+                                    showLoadingToast(
+                                      "Profile updated successfully",
+                                    );
+                                    Navigator.pop(ctx);
+                                  } else {
+                                    showErrorToast("Failed to update profile");
                                   }
-                                },
-                                child: const Text(
-                                  "Update Profile",
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 15,
-                                    fontFamily: AppTypography.outfitMedium,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
+                                }
+                              },
                             ),
                     ),
                   ],

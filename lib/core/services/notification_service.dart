@@ -53,8 +53,6 @@ class NotificationService {
     // 3. Fetch & persist FCM token
     try {
       if (!kIsWeb && Platform.isIOS) {
-        // On iOS, an APNS token must be registered with Apple before FCM can generate a registration token.
-        // It may take several seconds on first launch on a real device.
         String? apnsToken = await messaging.getAPNSToken();
         int attempts = 0;
         while (apnsToken == null && attempts < 10) {

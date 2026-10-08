@@ -350,9 +350,9 @@ class _PanServicesViewState extends State<_PanServicesView>
                     AppButton(
                       label: 'Re-open NSDL Portal',
                       onPressed: () => _handleUrlLaunch(state.redirectUrl),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF2E7D32), Color(0xFF4CAF50)],
-                      ),
+                      // gradient: const LinearGradient(
+                      //   colors: [Color(0xFF2E7D32), Color(0xFF4CAF50)],
+                      // ),
                       icon: IconsaxPlusLinear.link_2,
                     ),
                   ],

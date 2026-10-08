@@ -20,6 +20,9 @@ import '../../domain/usecases/fetch_bill_details_usecase.dart';
 import '../../domain/usecases/fetch_billers_usecase.dart';
 import '../../domain/usecases/pay_bill_usecase.dart';
 import '../../../recharge/presentation/screens/payment_success_screen.dart';
+import '../../../recharge/presentation/widgets/plan_card_widget.dart';
+import '../../../recharge/presentation/widgets/plan_category_tabs_widget.dart';
+import '../../../recharge/presentation/widgets/plan_details_bottom_sheet.dart';
 import '../cubit/bill_payment_cubit.dart';
 import '../cubit/bill_payment_state.dart';
 
@@ -139,6 +142,18 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
                 icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
                 onPressed: () {
                   if (state is BillFetched) {
+                    if (widget.serviceType.toLowerCase() == 'dth' &&
+                        _selectedBiller != null) {
+                      context.read<BillPaymentCubit>().fetchPlans(
+                        biller: _selectedBiller!,
+                        consumerNumber: _consumerNumberController.text.trim(),
+                      );
+                    } else {
+                      context.read<BillPaymentCubit>().loadBillers(
+                        serviceType: widget.serviceType,
+                      );
+                    }
+                  } else if (state is DthPlanFetched) {
                     context.read<BillPaymentCubit>().loadBillers(
                       serviceType: widget.serviceType,
                     );
@@ -188,6 +203,10 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
 
     if (state is BillFetched) {
       return _buildBillDetailsCard(context, state);
+    }
+
+    if (state is DthPlanFetched) {
+      return _buildDthPlansView(context, state);
     }
 
     if (_selectedBiller != null) {
@@ -468,28 +487,175 @@ class _GenericBillPaymentViewState extends State<_GenericBillPaymentView>
           ],
 
           const SizedBox(height: 32),
-          AppButton(
-            label: 'Fetch Bill',
-            onPressed: () {
-              FocusScope.of(context).unfocus();
-              final consumerNo = _consumerNumberController.text.trim();
-              if (consumerNo.isEmpty) {
-                showErrorToast('Please enter ${widget.accountNumberLabel}');
-                return;
-              }
+          if (widget.serviceType.toLowerCase() == 'dth') ...[
+            AppButton(
+              label: 'Fetch Plan',
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                final consumerNo = _consumerNumberController.text.trim();
+                if (consumerNo.isEmpty) {
+                  showErrorToast('Please enter ${widget.accountNumberLabel}');
+                  return;
+                }
 
-              context.read<BillPaymentCubit>().fetchBill(
-                serviceType: widget.serviceType,
-                biller: biller,
-                consumerNumber: consumerNo,
-                extraFields: isCreditCard
-                    ? {'mobile': _mobileController.text.trim()}
-                    : null,
-              );
-            },
-          ),
+                context.read<BillPaymentCubit>().fetchPlans(
+                  biller: biller,
+                  consumerNumber: consumerNo,
+                );
+              },
+            ),
+          ] else ...[
+            AppButton(
+              label: 'Fetch Bill',
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                final consumerNo = _consumerNumberController.text.trim();
+                if (consumerNo.isEmpty) {
+                  showErrorToast('Please enter ${widget.accountNumberLabel}');
+                  return;
+                }
+
+                context.read<BillPaymentCubit>().fetchBill(
+                  serviceType: widget.serviceType,
+                  biller: biller,
+                  consumerNumber: consumerNo,
+                  extraFields: isCreditCard
+                      ? {'mobile': _mobileController.text.trim()}
+                      : null,
+                );
+              },
+            ),
+          ],
         ],
       ),
+    );
+  }
+
+  // ── Step 2.5: DTH Plans List & Category Tabs ────────────────────────────────
+
+  Widget _buildDthPlansView(BuildContext context, DthPlanFetched state) {
+    return Column(
+      children: [
+        // Biller banner
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          decoration: BoxDecoration(
+            color: AppColors.light,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      state.selectedBiller.name,
+                      style: const TextStyle(
+                        fontFamily: AppTypography.outfitBold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${widget.accountNumberLabel}: ${state.consumerNumber}',
+                      style: const TextStyle(
+                        fontFamily: AppTypography.outfitRegular,
+                        fontSize: 12,
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  context.read<BillPaymentCubit>().loadBillers(
+                    serviceType: widget.serviceType,
+                  );
+                },
+                child: const Text(
+                  'Change',
+                  style: TextStyle(color: AppColors.primary),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Search Bar
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: TextField(
+            onChanged: (q) =>
+                context.read<BillPaymentCubit>().searchDthPlans(q),
+            decoration: InputDecoration(
+              hintText: 'Search plans by amount or description...',
+              hintStyle: const TextStyle(
+                fontFamily: AppTypography.outfitRegular,
+                fontSize: 13,
+                color: AppColors.grey,
+              ),
+              prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              filled: true,
+              fillColor: AppColors.light,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 6),
+
+        // Category Tabs
+        if (state.plans.categories.length > 1)
+          PlanCategoryTabsWidget(
+            categories: state.plans.categories,
+            selectedCategory: state.selectedCategory,
+            onSelectCategory: (cat) {
+              context.read<BillPaymentCubit>().selectDthPlanCategory(cat);
+            },
+          ),
+
+        const SizedBox(height: 6),
+
+        // Plans List
+        Expanded(
+          child: state.displayedPlans.isEmpty
+              ? const Center(
+                  child: EmptyStateWidget(
+                    icon: Icons.tv_off_outlined,
+                    title: 'No Plans Found',
+                    subtitle: 'No recharge plans available for this category.',
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  itemCount: state.displayedPlans.length,
+                  itemBuilder: (context, index) {
+                    final plan = state.displayedPlans[index];
+                    return PlanCardWidget(
+                      plan: plan,
+                      onTap: () {
+                        PlanDetailsBottomSheet.show(
+                          context: context,
+                          plan: plan,
+                          onProceedToPay: () {
+                            context.read<BillPaymentCubit>().selectPlan(plan);
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 

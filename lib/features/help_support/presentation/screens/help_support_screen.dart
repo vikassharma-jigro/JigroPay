@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:jigrotech/core/constants/app_assets.dart';
 import 'package:jigrotech/core/mixins/ui_feedback_mixin.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +82,7 @@ class _HelpSupportViewState extends State<_HelpSupportView>
     return Scaffold(
       backgroundColor: AppColors.light,
       appBar: AppBar(
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.light,
         elevation: 0,
         automaticallyImplyLeading: false,
         title: const Text(
@@ -107,7 +109,7 @@ class _HelpSupportViewState extends State<_HelpSupportView>
             const Text(
               'Frequently Asked Questions',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontFamily: AppTypography.outfitBold,
                 fontWeight: FontWeight.w600,
                 color: AppColors.black,
@@ -121,7 +123,7 @@ class _HelpSupportViewState extends State<_HelpSupportView>
             const Text(
               'Send Us a Message',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontFamily: AppTypography.outfitBold,
                 fontWeight: FontWeight.w600,
                 color: AppColors.black,
@@ -158,10 +160,11 @@ class _HelpSupportViewState extends State<_HelpSupportView>
           children: [
             Expanded(
               child: _buildContactTile(
-                icon: Icons.call_outlined,
+                image: AppAssets.phone,
                 title: 'Helpline',
-                subtitle: contact,
                 color: AppColors.primary,
+                textColor: AppColors.white,
+                subtitle: contact,
                 onTap: () => _launchPhone(
                   phoneDialNumber.isNotEmpty ? phoneDialNumber : contact,
                 ),
@@ -170,10 +173,11 @@ class _HelpSupportViewState extends State<_HelpSupportView>
             const SizedBox(width: 12),
             Expanded(
               child: _buildContactTile(
-                icon: Icons.email_outlined,
+                image: AppAssets.email,
+                color: AppColors.lightPurple.withValues(alpha: .1),
+                textColor: AppColors.primary,
                 title: 'Email Us',
                 subtitle: email,
-                color: AppColors.secondary,
                 onTap: () => _launchEmail(email),
               ),
             ),
@@ -184,10 +188,11 @@ class _HelpSupportViewState extends State<_HelpSupportView>
   }
 
   Widget _buildContactTile({
-    required IconData icon,
+    required String image,
     required String title,
     required String subtitle,
     required Color color,
+    required Color textColor,
     required VoidCallback onTap,
   }) {
     return InkWell(
@@ -196,7 +201,7 @@ class _HelpSupportViewState extends State<_HelpSupportView>
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: color,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.border),
         ),
@@ -205,19 +210,16 @@ class _HelpSupportViewState extends State<_HelpSupportView>
           children: [
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: color, size: 20),
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: SvgPicture.asset(image),
             ),
             const SizedBox(height: 10),
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontFamily: AppTypography.outfitBold,
-                color: AppColors.black,
+                color: textColor,
               ),
             ),
             const SizedBox(height: 2),
@@ -225,10 +227,10 @@ class _HelpSupportViewState extends State<_HelpSupportView>
               subtitle,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontFamily: AppTypography.outfitRegular,
-                color: AppColors.grey,
+                color: textColor,
               ),
             ),
           ],
@@ -257,7 +259,9 @@ class _HelpSupportViewState extends State<_HelpSupportView>
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.border),
+            border: Border.all(
+              color: AppColors.lightPurple.withValues(alpha: .3),
+            ),
           ),
           child: ListView.separated(
             shrinkWrap: true,
@@ -268,12 +272,15 @@ class _HelpSupportViewState extends State<_HelpSupportView>
             itemBuilder: (context, index) {
               final faq = faqs[index];
               return ExpansionTile(
+                shape: const Border(),
+                collapsedShape: const Border(),
                 title: Text(
                   faq.question,
                   style: const TextStyle(
-                    fontFamily: AppTypography.outfitMedium,
+                    fontFamily: AppTypography.outfitBold,
                     fontSize: 14,
-                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.grey,
                   ),
                 ),
                 childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
@@ -302,7 +309,7 @@ class _HelpSupportViewState extends State<_HelpSupportView>
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.border),
+        border: Border.all(color: AppColors.lightPurple.withValues(alpha: .3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

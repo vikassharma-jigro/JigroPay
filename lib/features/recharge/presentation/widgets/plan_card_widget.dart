@@ -93,8 +93,12 @@ class PlanCardWidget extends StatelessWidget {
                 ],
                 if (plan.data != null && plan.data!.isNotEmpty) ...[
                   _buildPill(
-                    icon: Icons.data_usage_outlined,
-                    label: 'Data: ${plan.data}',
+                    icon: plan.data!.toLowerCase().contains('channel')
+                        ? Icons.tv_outlined
+                        : Icons.data_usage_outlined,
+                    label: plan.data!.toLowerCase().contains('channel')
+                        ? plan.data!
+                        : 'Data: ${plan.data}',
                   ),
                 ],
               ],

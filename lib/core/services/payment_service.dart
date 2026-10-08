@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../config/env_configu.dart';
 import '../utils/api_message_cleaner.dart';
 
 // ── Result types ─────────────────────────────────────────────────────────────
@@ -32,14 +33,6 @@ final class PaymentDismissed extends PaymentResult {
 }
 
 // ── Service ───────────────────────────────────────────────────────────────────
-
-/// Razorpay payment gateway service.
-///
-/// Replaces [RazorpayHelper]. Key improvements:
-/// - **No [BuildContext]** — returns a [Future<PaymentResult>] instead.
-/// - **No GetX** — uses a completer for result passing.
-/// - Caller (Cubit) handles navigation and toasts based on the result type.
-/// - Lifecycle: call [dispose()] when the containing widget is disposed.
 class PaymentService {
   PaymentService({Razorpay? razorpay}) : _razorpay = razorpay {
     if (_razorpay != null) {
@@ -85,7 +78,7 @@ class PaymentService {
 
     final effectiveKey = (apiKey != null && apiKey.isNotEmpty)
         ? apiKey
-        : _razorpayLiveKey;
+        : _razorpayKeyConstant;
 
     final options = {
       'key': effectiveKey,
@@ -99,9 +92,7 @@ class PaymentService {
         'contact': (contactNumber != null && contactNumber.isNotEmpty)
             ? contactNumber
             : '9694870658',
-        'email': (email != null && email.isNotEmpty)
-            ? email
-            : 'user@jigropay.com',
+        'email': (email != null && email.isNotEmpty) ? email : '',
       },
       'external': {
         'wallets': ['paytm'],
@@ -114,7 +105,9 @@ class PaymentService {
     } catch (e) {
       final msg = cleanApiMessage(e);
       _completer!.complete(
-        PaymentFailure(message: msg.isNotEmpty ? msg : 'Failed to open payment.'),
+        PaymentFailure(
+          message: msg.isNotEmpty ? msg : 'Failed to open payment.',
+        ),
       );
     }
 
@@ -166,8 +159,4 @@ class PaymentService {
 }
 
 // ── Razorpay key ─────────────────────────────────────────────────────────────
-// ⚠️  SECURITY: Move to --dart-define build variable in CI/CD pipeline.
-// e.g. flutter build apk --dart-define=RAZORPAY_KEY=rzp_live_...
-// Then use: const String.fromEnvironment('RAZORPAY_KEY', defaultValue: '')
-const String _razorpayLiveKey =
-    String.fromEnvironment('RAZORPAY_KEY', defaultValue: 'rzp_live_TLKy91eX8x6Xum');
+final String _razorpayKeyConstant = EnvConfig.razorpayLiveKey;

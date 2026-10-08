@@ -41,6 +41,7 @@ abstract final class AppEndpoints {
   static const String rechargePlans = 'inspay/recharge/plans';
   static const String dthOperatorFetch = 'fetch/dth/operators';
   static const String dthRechargePlans = 'ekyc/fetch/dth/plan';
+  static const String dthRechargeInfo = 'ekyc/fetch/dth/info';
   static const String rOffer = 'ekyc/fetch/roffer';
 
   /// Append service-type slug: e.g. [operatorsByType] + 'water_bill'

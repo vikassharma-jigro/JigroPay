@@ -124,7 +124,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             margin: const EdgeInsets.only(right: 6),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2),
-                              gradient: isActive ? AppColors.brandGradient : null,
+                              gradient: isActive
+                                  ? AppColors.brandGradient
+                                  : null,
                               color: isActive ? null : Colors.grey.shade300,
                             ),
                           ),
@@ -222,7 +224,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     const SizedBox(width: 4),
                                     Icon(
                                       item.icon,
-                                      color: item.iconColor ?? AppColors.secondary,
+                                      color:
+                                          item.iconColor ?? AppColors.secondary,
                                       size: 32,
                                     ),
                                   ],

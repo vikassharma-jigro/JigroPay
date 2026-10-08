@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:jigrotech/core/constants/app_assets.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_typography.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../../../auth/presentation/cubit/auth_state.dart';
 import '../cubit/dashboard_cubit.dart';
@@ -62,28 +62,33 @@ class HomeHeaderWidget extends StatelessWidget {
               },
             ),
             const SizedBox(width: 12),
-            RichText(
-              text: const TextSpan(
-                text: 'Jigro',
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: AppTypography.outfitBold,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Pay',
-                    style: TextStyle(
-                      color: AppColors.secondary,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: AppTypography.outfitBold,
-                    ),
-                  ),
-                ],
-              ),
+            Image.asset(
+              AppAssets.jigroPayHeading,
+              fit: BoxFit.cover,
+              width: 75,
             ),
+            // RichText(
+            //   text: const TextSpan(
+            //     text: 'Jigro',
+            //     style: TextStyle(
+            //       color: AppColors.black,
+            //       fontSize: 22,
+            //       fontWeight: FontWeight.w700,
+            //       fontFamily: AppTypography.outfitBold,
+            //     ),
+            //     children: <TextSpan>[
+            //       TextSpan(
+            //         text: 'Pay',
+            //         style: TextStyle(
+            //           color: AppColors.secondary,
+            //           fontSize: 22,
+            //           fontWeight: FontWeight.w700,
+            //           fontFamily: AppTypography.outfitBold,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
 

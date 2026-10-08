@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/app_assets.dart';
@@ -51,7 +52,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
       ),
       ServiceItem(
         title: 'Electricity\nBill',
-        iconPath: AppAssets.electricity1,
+        iconPath: AppAssets.electricity,
         iconHeight: 32,
         onTap: () => context.push(
           '/bill-payment',
@@ -65,7 +66,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
       ),
       ServiceItem(
         title: 'DTH\nRecharge',
-        iconPath: AppAssets.dthR,
+        iconPath: AppAssets.dthRecharge,
         iconHeight: 32,
         iconWidth: 32,
         onTap: () => context.push(
@@ -83,7 +84,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
     final List<ServiceItem> row2 = [
       ServiceItem(
         title: 'Water\nBill',
-        iconPath: AppAssets.water1,
+        iconPath: AppAssets.water,
         iconHeight: 32,
         iconWidth: 32,
         onTap: () => context.push(
@@ -145,7 +146,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
     final List<ServiceItem> financialServices = [
       ServiceItem(
         title: 'Loan\nRepayment',
-        iconPath: AppAssets.loanRe,
+        iconPath: AppAssets.loanRepayment,
         iconHeight: 32,
         iconWidth: 32,
         onTap: () => context.push(
@@ -160,7 +161,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
       ),
       ServiceItem(
         title: 'Insurance\nPremium',
-        iconPath: AppAssets.insu,
+        iconPath: AppAssets.insurance,
         iconHeight: 32,
         iconWidth: 32,
         onTap: () => context.push(
@@ -175,7 +176,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
       ),
       ServiceItem(
         title: 'Credit Card\nBill',
-        iconPath: AppAssets.crCard,
+        iconPath: AppAssets.creditCard,
         iconHeight: 32,
         iconWidth: 32,
         tintColor: const Color(0xFFEC4899),
@@ -223,7 +224,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
       ),
       ServiceItem(
         title: 'Municipal\nTaxes',
-        iconPath: AppAssets.munci,
+        iconPath: AppAssets.muncipal,
         iconHeight: 32,
         iconWidth: 32,
         onTap: () => context.push(
@@ -260,43 +261,19 @@ class ServiceCategoriesWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _buildGridItem(row1[0])),
-                    _buildVerticalDivider(isRow1: true),
                     Expanded(child: _buildGridItem(row1[1])),
-                    _buildVerticalDivider(isRow1: true),
                     Expanded(child: _buildGridItem(row1[2])),
-                    _buildVerticalDivider(isRow1: true),
                     Expanded(child: _buildGridItem(row1[3])),
                   ],
                 ),
               ),
-
-              //. Vertical Divider
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 4; i++)
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          height: 1,
-                          color: const Color(0xFFE6E6E6),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-
               IntrinsicHeight(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(child: _buildGridItem(row2[0])),
-                    _buildVerticalDivider(isRow1: false),
                     Expanded(child: _buildGridItem(row2[1])),
-                    _buildVerticalDivider(isRow1: false),
                     Expanded(child: _buildGridItem(row2[2])),
-                    _buildVerticalDivider(isRow1: false),
                     Expanded(child: _buildGridItem(row2[3])),
                   ],
                 ),
@@ -314,9 +291,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildGridItem(financialServices[0])),
-                _buildUniformVerticalDivider(),
                 Expanded(child: _buildGridItem(financialServices[1])),
-                _buildUniformVerticalDivider(),
                 Expanded(child: _buildGridItem(financialServices[2])),
               ],
             ),
@@ -332,7 +307,6 @@ class ServiceCategoriesWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: _buildGridItem(moreServices[2])),
-                _buildUniformVerticalDivider(),
                 Expanded(child: _buildGridItem(moreServices[3])),
               ],
             ),
@@ -382,9 +356,9 @@ class ServiceCategoriesWidget extends StatelessWidget {
                         actionText,
                         style: const TextStyle(
                           fontSize: 14,
-                          fontFamily: AppTypography.outfitBold,
+                          fontFamily: AppTypography.outfitMedium,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.secondary,
+                          color: AppColors.grey,
                         ),
                       ),
                     ),
@@ -399,19 +373,19 @@ class ServiceCategoriesWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildUniformVerticalDivider() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Container(width: 1, color: const Color(0xFFE6E6E6)),
-    );
-  }
+  // Widget _buildUniformVerticalDivider() {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(vertical: 6),
+  //     child: Container(width: 1, color: const Color(0xFFE6E6E6)),
+  //   );
+  // }
 
-  Widget _buildVerticalDivider({required bool isRow1}) {
-    return Padding(
-      padding: EdgeInsets.only(top: isRow1 ? 40 : 4, bottom: 4),
-      child: Container(width: 1, color: const Color(0xFFE6E6E6)),
-    );
-  }
+  // Widget _buildVerticalDivider({required bool isRow1}) {
+  //   return Padding(
+  //     padding: EdgeInsets.only(top: isRow1 ? 40 : 4, bottom: 4),
+  //     child: Container(width: 1, color: const Color(0xFFE6E6E6)),
+  //   );
+  // }
 
   Widget _buildGridItem(ServiceItem item) {
     return InkWell(
@@ -422,18 +396,22 @@ class ServiceCategoriesWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 46,
-              child: Center(
-                child: Image.asset(
-                  item.iconPath,
-                  height: item.iconHeight,
-                  width: item.iconWidth,
-                  fit: BoxFit.contain,
-                  color: item.tintColor,
-                  colorBlendMode: item.tintColor != null
-                      ? BlendMode.srcIn
-                      : null,
+            Container(
+              height: 68,
+              width: 68,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: AppColors.lightGrey, width: 1.5),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Center(
+                  child: SvgPicture.asset(
+                    item.iconPath,
+                    height: item.iconHeight,
+                    width: item.iconWidth,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
@@ -443,9 +421,9 @@ class ServiceCategoriesWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 2,
               style: const TextStyle(
-                fontSize: 13,
-                fontFamily: AppTypography.outfitBold,
-                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                fontFamily: AppTypography.outfitMedium,
+                fontWeight: FontWeight.w500,
                 color: Color(0xFF1A1A1A),
                 height: 1.22,
               ),
@@ -532,7 +510,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                         ),
                         ServiceItem(
                           title: 'DTH\nRecharge',
-                          iconPath: AppAssets.dthR,
+                          iconPath: AppAssets.dthRecharge,
                           iconHeight: 38,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -594,7 +572,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                       items: [
                         ServiceItem(
                           title: 'Electricity\nBill',
-                          iconPath: AppAssets.electricity1,
+                          iconPath: AppAssets.electricity,
                           iconHeight: 38,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -613,7 +591,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                         ),
                         ServiceItem(
                           title: 'Water\nBill',
-                          iconPath: AppAssets.water1,
+                          iconPath: AppAssets.water,
                           iconHeight: 36,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -693,7 +671,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                       items: [
                         ServiceItem(
                           title: 'Credit\nCard',
-                          iconPath: AppAssets.crCard,
+                          iconPath: AppAssets.creditCard,
                           iconHeight: 32,
                           tintColor: const Color(0xFFEC4899),
                           onTap: () {
@@ -712,7 +690,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                         ),
                         ServiceItem(
                           title: 'Loan\nRepayment',
-                          iconPath: AppAssets.loanRe,
+                          iconPath: AppAssets.loanRepayment,
                           iconHeight: 38,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -730,7 +708,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                         ),
                         ServiceItem(
                           title: 'Insurance\nPremium',
-                          iconPath: AppAssets.insu,
+                          iconPath: AppAssets.insurance,
                           iconHeight: 38,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -755,7 +733,7 @@ class ServiceCategoriesWidget extends StatelessWidget {
                       items: [
                         ServiceItem(
                           title: 'Municipal\nTaxes',
-                          iconPath: AppAssets.munci,
+                          iconPath: AppAssets.muncipal,
                           iconHeight: 38,
                           onTap: () {
                             Navigator.pop(ctx);
@@ -832,15 +810,11 @@ class ServiceCategoriesWidget extends StatelessWidget {
                       SizedBox(
                         height: 40,
                         child: Center(
-                          child: Image.asset(
+                          child: SvgPicture.asset(
                             item.iconPath,
                             height: item.iconHeight,
                             width: item.iconWidth,
                             fit: BoxFit.contain,
-                            color: item.tintColor,
-                            colorBlendMode: item.tintColor != null
-                                ? BlendMode.srcIn
-                                : null,
                           ),
                         ),
                       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:jigrotech/core/constants/app_assets.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_typography.dart';
@@ -99,65 +100,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildBottomNavigation() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [AppColors.secondary, AppColors.primary],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
-        ),
+    return BottomNavigationBar(
+      backgroundColor: AppColors.white,
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _currentIndex,
+      selectedItemColor: AppColors.primary,
+      unselectedItemColor: AppColors.black,
+      selectedFontSize: 12,
+      unselectedFontSize: 12,
+      selectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontFamily: AppTypography.outfitBold,
       ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontFamily: AppTypography.outfitBold,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontFamily: AppTypography.outfitMedium,
-          ),
-          onTap: _onTabTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.home),
-              activeIcon: Icon(IconsaxPlusBold.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.info_circle),
-              activeIcon: Icon(IconsaxPlusBold.info_circle),
-              label: "Help",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.clock_1),
-              activeIcon: Icon(IconsaxPlusBold.clock_1),
-              label: "History",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(IconsaxPlusLinear.user),
-              activeIcon: Icon(IconsaxPlusBold.user),
-              label: "Profile",
-            ),
-          ],
-        ),
+      unselectedLabelStyle: const TextStyle(
+        fontWeight: FontWeight.w500,
+        fontFamily: AppTypography.outfitMedium,
       ),
+      onTap: _onTabTapped,
+      items: [
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(AppAssets.homeIcon),
+          activeIcon: SvgPicture.asset(AppAssets.homeFilledIcon),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(AppAssets.helpIcon),
+          activeIcon: SvgPicture.asset(AppAssets.helpFilledIcon),
+          label: "Help",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(AppAssets.historyIcon),
+          activeIcon: SvgPicture.asset(AppAssets.historyFilledIcon),
+          label: "History",
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(AppAssets.profileIcon),
+          activeIcon: SvgPicture.asset(AppAssets.profileFilledIcon),
+          label: "Profile",
+        ),
+      ],
     );
   }
 }

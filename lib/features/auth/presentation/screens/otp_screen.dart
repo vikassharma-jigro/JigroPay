@@ -160,7 +160,7 @@ class _OtpScreenState extends State<OtpScreen> with UiFeedbackMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset(AppAssets.lMobile)),
+                  Center(child: Image.asset(AppAssets.loginPoster)),
                   const SizedBox(height: 20),
                   Center(
                     child: Row(

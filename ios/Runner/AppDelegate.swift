@@ -8,16 +8,25 @@ import flutter_local_notifications
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+
+    // Notification Setup
     FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { registry in
       GeneratedPluginRegistrant.register(with: registry)
     }
 
+
+    // Available iOS Version
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as UNUserNotificationCenterDelegate
     }
 
+
+    // Notification Permission
     application.registerForRemoteNotifications()
+
+    // Flutter Plugins Registration
     GeneratedPluginRegistrant.register(with: self)
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
@@ -34,4 +43,3 @@ import flutter_local_notifications
     }
   }
 }
-

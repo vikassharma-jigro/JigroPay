@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 /// Brand secondary: vivid magenta [AppColors.secondary]
 abstract final class AppColors {
   // ── Brand ───────────────────────────────────────────────────────────────────
-  static const Color primary = Color(0xff8c2ac4);
+  static const Color primary = Color(0xff8B01F7);
   static const Color secondary = Color(0xffe81ecd);
   static const Color primaryGradientEnd = Color(0xff7834eb);
 
@@ -26,12 +26,12 @@ abstract final class AppColors {
   // ── Neutrals ─────────────────────────────────────────────────────────────────
   static const Color white = Color(0xffFFFFFF);
   static const Color black = Color(0xff212121);
-  static const Color grey = Color(0xff6e6e6e);
+  static const Color grey = Color(0xff4B5563);
   static const Color text = Color(0xff4d4d4d);
   static const Color lightGrey = Color(0xffe5e7eb);
   static const Color lightWhite = Color(0xffd7cece);
   static const Color lightWhite1 = Color(0xfff3f4f6);
-  static const Color light = Color(0xfff9fafb);
+  static const Color light = Color(0xffF8F7FA);
   static const Color border = Color(0xffe5e7eb);
 
   // ── Accent ───────────────────────────────────────────────────────────────────
